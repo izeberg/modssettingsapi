@@ -122,10 +122,6 @@ def write(package, path, data):
 with open('./build.json', 'r') as fh:
 	CONFIG = json.loads(fh.read())
 
-resources = {
-	'meta.xml': createMeta(**CONFIG['meta'])
-}
-
 if CONFIG.get('append_version', True):
 	packageName = '%s_%s.wotmod' % (CONFIG['meta']['id'], CONFIG['meta']['version'])
 else:
@@ -138,6 +134,8 @@ if not os.path.exists('bin'):
 	os.makedirs('bin')
 
 with zipfile.ZipFile('bin/' + packageName, 'w') as package:
+	write(package, 'meta.xml', createMeta(**CONFIG['meta']))
+
 	sources = os.path.abspath('./sources')
 
 	for dirName, _, files in os.walk(sources):
@@ -158,3 +156,7 @@ with zipfile.ZipFile('bin/' + packageName, 'w') as package:
 
 	for source, dst in CONFIG.get('flash_fdbs', {}).items():
 		write(package, dst, buildFlashFD(source))
+
+	for path, dst in CONFIG.get('copy', {}).items():
+		with open(path, 'rb') as f:
+			write(package, dst, f.read())
