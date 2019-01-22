@@ -1,0 +1,11 @@
+{
+	"meta": {
+		"id": "izeberg.modsettingsapi",
+		"name": "Mod configurator",
+		"description": "This mod allows you to easily configure installed mods",
+		"version": "1.1.2"
+	},
+	"flash_fdbs": {
+		"flash/modsSettingsWindow.as3proj": "res/gui/flash/modsSettingsWindow.swf"
+	}
+}

@@ -1,0 +1,440 @@
+﻿package poliroid.utils
+{
+	import net.wg.gui.components.controls.SoundButtonEx;
+	import net.wg.gui.components.controls.TextInput;
+	import poliroid.events.ComponentEvent;
+	import poliroid.components.HotKeyControl;
+	
+	import net.wg.gui.components.controls.CheckBox;
+	import net.wg.gui.components.controls.DropdownMenu;
+	import net.wg.gui.components.controls.ButtonIconNormal;
+	import net.wg.gui.components.controls.LabelControl;
+	import net.wg.gui.components.controls.SoundButton;
+	import net.wg.gui.components.controls.InfoIcon;
+	import net.wg.gui.components.controls.Slider;
+	import net.wg.gui.components.controls.RadioButton;
+	import net.wg.gui.components.advanced.FieldSet;
+	
+	import scaleform.clik.controls.ButtonGroup;
+	
+	import scaleform.clik.core.UIComponent;
+	
+	import scaleform.clik.events.SliderEvent;
+	import scaleform.clik.events.ListEvent;
+	import scaleform.clik.events.InputEvent;
+	import scaleform.clik.events.ButtonEvent;
+	
+	import scaleform.clik.data.DataProvider;
+	
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
+	import flash.display.MovieClip;
+	import flash.display.DisplayObject;
+	
+	import poliroid.views.lobby.ModsSettingsApi;
+	
+	public class ComponentsHelper
+	{
+		
+		public function ComponentsHelper()
+		{
+			super();
+		}
+		
+		public static function handleComponentEvent(event:Event):void
+		{
+			event.target.dispatchEvent(new ComponentEvent(ComponentEvent.VALUE_CHANGED, true));
+		}
+		
+		
+		public static function createEmpty(width:Number, height:Number):MovieClip
+		{
+			var mc:MovieClip = new MovieClip();
+			mc.width = width;
+			mc.height = height;
+			return mc;
+		}
+		
+		public static function createLabel(text:String, tooltipText:String = ""):DisplayObject
+		{
+			var labelUI:UIComponent = new UIComponent();
+			var lb:LabelControl = LabelControl(App.utils.classFactory.getComponent("LabelControl", LabelControl));
+			lb.width = 800;
+			lb.text = text;
+			if (tooltipText)
+			{
+				lb.toolTip = tooltipText;
+				lb.infoIcoType = InfoIcon.TYPE_INFO;
+			}
+			labelUI.addChild(lb);
+			lb.validateNow();
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(labelUI);
+			result["label"] = lb;
+			return result;
+		}
+		
+		public static function createCheckBox(componentCFG:Object, modLinkage:String, label:String, selected:Boolean, tooltipText:String = ""):DisplayObject
+		{
+			var checkboxUI:UIComponent = new UIComponent();
+			var cb:CheckBox = CheckBox(App.utils.classFactory.getComponent("CheckBox", CheckBox));
+			cb.label = label;
+			cb.selected = true;
+			cb.invalidateSize();
+			cb.invalidateState();
+			cb.invalidateData();
+			cb.selected = selected;
+			cb.toolTip = tooltipText;
+			cb.infoIcoType = tooltipText ? InfoIcon.TYPE_INFO : "";
+			cb.width = 800;
+			checkboxUI.addChild(cb);
+			cb.addEventListener(Event.SELECT, handleComponentEvent);
+			
+			
+			
+			if (componentCFG.hasOwnProperty("button")) {
+				
+				var button:*;
+				
+				if (componentCFG.button.hasOwnProperty("text") && componentCFG.button.text != "") {
+					button = SoundButtonEx(App.utils.classFactory.getComponent("ButtonNormal", SoundButtonEx));
+					button.label = componentCFG.button.text;
+				} 
+				
+				if (componentCFG.button.hasOwnProperty("iconSource") && componentCFG.button.iconSource != "") {
+					button = ButtonIconNormal(App.utils.classFactory.getComponent("ButtonIconNormalUI", ButtonIconNormal));
+					button.iconSource  = componentCFG.button.hasOwnProperty("iconSource") ?  componentCFG.button.iconSource : "";
+					button.iconOffsetTop = componentCFG.button.hasOwnProperty("iconOffsetTop") ? componentCFG.button.iconOffsetTop: 0;
+					button.iconOffsetLeft = componentCFG.button.hasOwnProperty("iconOffsetLeft") ? componentCFG.button.iconOffsetLeft: 0;
+				}
+				
+				button.y = cb.y + Constants.MOD_MARGIN_BOTTOM - 3;
+				
+				button.x = cb.x + cb.textField.textWidth + Constants.BUTTON_MARGIN_LEFT + 20;
+				
+				if (tooltipText) {
+					button.x = button.x + 25;
+				}
+				
+				if (componentCFG.button.hasOwnProperty("offsetLeft")) button.x = button.x + componentCFG.button.offsetLeft;
+				if (componentCFG.button.hasOwnProperty("offsetTop")) button.y = button.y + componentCFG.button.offsetTop;
+				
+				button.width = componentCFG.button.hasOwnProperty("width") ? componentCFG.button.width: 30;
+				button.height = componentCFG.button.hasOwnProperty("height") ? componentCFG.button.height: 25;
+				button.validateNow();
+				
+				button.addEventListener(ButtonEvent.CLICK, function():void {
+					ModsSettingsApi.proxy.callButtonsS(modLinkage, componentCFG.varName, cb.selected);
+				});
+				
+				checkboxUI.addChild(button);
+				
+			}
+			
+			
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(checkboxUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(cb, "selected");
+			return result;
+		}
+		
+		public static function createRadioButtonGroup(componentCFG:Object, modLinkage:String, groupName:String, options:Array, headerText:String = "", tooltipText:String = "", selectedIndex:Number = 0):DisplayObject
+		{
+			var radioButtonsUI:UIComponent = new UIComponent();
+			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			if (headerText)
+			{
+				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				lb.x = lb.y = 0;
+				radioButtonsUI.addChild(lb);
+			}
+			
+			var buttonGroup:ButtonGroup = ButtonGroup.getGroup(groupName, radioButtonsUI);
+			for (var i:Number = 0; i < options.length; i++)
+			{
+				var radioButton:RadioButton = RadioButton(App.utils.classFactory.getComponent("RadioButton", RadioButton));
+				radioButton.y = i * Constants.RADIO_BUTTONS_MARGIN + headerMargin;
+				radioButton.label = options[i].label;
+				radioButtonsUI.addChild(radioButton);
+				buttonGroup.addButton(radioButton);
+				radioButton.addEventListener(MouseEvent.CLICK, handleComponentEvent);
+			}
+			buttonGroup.setSelectedButtonByIndex(selectedIndex);
+			
+			
+			
+			if (componentCFG.hasOwnProperty("button")) {
+				
+				var button:*;
+				
+				if (componentCFG.button.hasOwnProperty("text") && componentCFG.button.text != "") {
+					button = SoundButtonEx(App.utils.classFactory.getComponent("ButtonNormal", SoundButtonEx));
+					button.label = componentCFG.button.text;
+				} 
+				
+				if (componentCFG.button.hasOwnProperty("iconSource") && componentCFG.button.iconSource != "") {
+					button = ButtonIconNormal(App.utils.classFactory.getComponent("ButtonIconNormalUI", ButtonIconNormal));
+					button.iconSource  = componentCFG.button.hasOwnProperty("iconSource") ?  componentCFG.button.iconSource : "";
+					button.iconOffsetTop = componentCFG.button.hasOwnProperty("iconOffsetTop") ? componentCFG.button.iconOffsetTop: 0;
+					button.iconOffsetLeft = componentCFG.button.hasOwnProperty("iconOffsetLeft") ? componentCFG.button.iconOffsetLeft: 0;
+				}
+				
+				var rb:* = buttonGroup.getButtonAt(0);
+				
+				button.y = 0;
+				
+				if (headerText) {
+					button.x = lb.x + lb["label"].textField.textWidth + Constants.BUTTON_MARGIN_LEFT;
+					if (tooltipText) {
+						button.x = button.x + 25;
+					}
+				} else {
+					button.x = rb.x + rb.width + Constants.BUTTON_MARGIN_LEFT;
+				}
+				
+				if (componentCFG.button.hasOwnProperty("offsetLeft")) button.x = button.x + componentCFG.button.offsetLeft;
+				if (componentCFG.button.hasOwnProperty("offsetTop")) button.y = button.y + componentCFG.button.offsetTop;
+				
+				button.width = componentCFG.button.hasOwnProperty("width") ? componentCFG.button.width: 30;
+				button.height = componentCFG.button.hasOwnProperty("height") ? componentCFG.button.height: 25;
+				button.validateNow();
+				
+				button.addEventListener(ButtonEvent.CLICK, function():void {
+					ModsSettingsApi.proxy.callButtonsS(modLinkage, componentCFG.varName, buttonGroup.selectedIndex);
+				});
+				
+				radioButtonsUI.addChild(button);
+				
+			}
+			
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(radioButtonsUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(buttonGroup, "selectedIndex");
+			return result;
+		}
+		
+		public static function createDropdown(componentCFG:Object, modLinkage:String, options:Array, headerText:String = "", tooltipText:String = "", selectedIndex:Number = 0):DisplayObject
+		{
+			var dropdownUI:UIComponent = new UIComponent();
+			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			if (headerText)
+			{
+				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				lb.x = lb.y = 0;
+				dropdownUI.addChild(lb);
+			}
+			
+			var dropdown:DropdownMenu = DropdownMenu(App.utils.classFactory.getObject("DropdownMenuUI"));
+			dropdown.y = headerMargin;
+			dropdown.width = componentCFG.hasOwnProperty("width") ? componentCFG.width: 200;
+			
+			dropdown.rowCount = options.length;
+			dropdown.scrollBar = "";
+			
+			dropdown.itemRenderer = App.utils.classFactory.getClass("DropDownListItemRendererSound");
+			dropdown.dropdown = "DropdownMenu_ScrollingList";
+			dropdown.dataProvider = new DataProvider(options);
+			dropdown.selectedIndex = selectedIndex;
+			dropdown.validateNow();
+			dropdownUI.addChild(dropdown);
+			dropdown.handleScroll = false;
+			dropdown.addEventListener(ListEvent.INDEX_CHANGE, handleComponentEvent);
+			
+			dropdown["componentInspectorSetting"] = true;
+			dropdown.inspectableMenuOffset = { "top":-5, "right":-6, "bottom":0, "left":3 };
+			dropdown["componentInspectorSetting"] = false;
+			
+			if (componentCFG.hasOwnProperty("button")) {
+				
+				var button:*;
+				
+				if (componentCFG.button.hasOwnProperty("text") && componentCFG.button.text != "") {
+					button = SoundButtonEx(App.utils.classFactory.getComponent("ButtonNormal", SoundButtonEx));
+					button.label = componentCFG.button.text;
+				} 
+				
+				if (componentCFG.button.hasOwnProperty("iconSource") && componentCFG.button.iconSource != "") {
+					button = ButtonIconNormal(App.utils.classFactory.getComponent("ButtonIconNormalUI", ButtonIconNormal));
+					button.iconSource  = componentCFG.button.hasOwnProperty("iconSource") ?  componentCFG.button.iconSource : "";
+					button.iconOffsetTop = componentCFG.button.hasOwnProperty("iconOffsetTop") ? componentCFG.button.iconOffsetTop: 0;
+					button.iconOffsetLeft = componentCFG.button.hasOwnProperty("iconOffsetLeft") ? componentCFG.button.iconOffsetLeft: 0;
+				}
+				
+				button.y = dropdown.y + Constants.MOD_MARGIN_BOTTOM - 3;
+				button.x = dropdown.x + dropdown.width + Constants.BUTTON_MARGIN_LEFT;
+				
+				
+				if (componentCFG.button.hasOwnProperty("offsetLeft")) button.x = button.x + componentCFG.button.offsetLeft;
+				if (componentCFG.button.hasOwnProperty("offsetTop")) button.y = button.y + componentCFG.button.offsetTop;
+				
+				button.width = componentCFG.button.hasOwnProperty("width") ? componentCFG.button.width: 30;
+				button.height = componentCFG.button.hasOwnProperty("height") ? componentCFG.button.height: 25;
+				button.validateNow();
+				
+				button.addEventListener(ButtonEvent.CLICK, function():void {
+					ModsSettingsApi.proxy.callButtonsS(modLinkage, componentCFG.varName, dropdown.selectedIndex);
+				});
+				
+				dropdownUI.addChild(button);
+				
+			}
+			
+			
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(dropdownUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(dropdown, "selectedIndex");
+			return result;
+		}
+		
+		public static function createSlider(componentCFG:Object, modLinkage:String, min:Number, max:Number, interval:Number, value:Number, format:String, headerText:String = "", tooltipText:String = ""):DisplayObject
+		{
+			var sliderUI:UIComponent = new UIComponent();
+			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			if (headerText)
+			{
+				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				lb.x = lb.y = 0;
+				sliderUI.addChild(lb);
+			}
+			
+			var slider:Slider = Slider(App.utils.classFactory.getComponent("Slider", Slider));
+			slider.y = headerMargin;
+			slider.width = componentCFG.hasOwnProperty("width") ? componentCFG.width: 200;
+			slider.minimum = min;
+			slider.maximum = max;
+			slider.snapInterval = interval;
+			slider.snapping = true;
+			slider.liveDragging = true;
+			slider.value = value;
+			sliderUI.addChild(slider);
+			
+			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
+			
+			function getFormattedString(format:String, value:*):String
+			{
+				return format.split(Constants.SLIDER_VALUE_KEY).join(value);
+			}
+			
+			if (format)
+			{
+				var formattedString:String = getFormattedString(format, slider.value);
+				var valueLabel:DisplayObject = ComponentsHelper.createLabel(formattedString, "");
+				valueLabel.y = slider.y + 2;
+				valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
+				sliderUI.addChild(valueLabel);
+				slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):* {
+					valueLabel["label"].text = getFormattedString(format, event.value.toFixed(2));
+				});
+			}
+			
+			
+			
+			
+			
+			if (componentCFG.hasOwnProperty("button")) {
+				
+				var button:*;
+				
+				if (componentCFG.button.hasOwnProperty("text") && componentCFG.button.text != "") {
+					button = SoundButtonEx(App.utils.classFactory.getComponent("ButtonNormal", SoundButtonEx));
+					button.label = componentCFG.button.text;
+				} 
+				
+				if (componentCFG.button.hasOwnProperty("iconSource") && componentCFG.button.iconSource != "") {
+					button = ButtonIconNormal(App.utils.classFactory.getComponent("ButtonIconNormalUI", ButtonIconNormal));
+					button.iconSource  = componentCFG.button.hasOwnProperty("iconSource") ?  componentCFG.button.iconSource : "";
+					button.iconOffsetTop = componentCFG.button.hasOwnProperty("iconOffsetTop") ? componentCFG.button.iconOffsetTop: 0;
+					button.iconOffsetLeft = componentCFG.button.hasOwnProperty("iconOffsetLeft") ? componentCFG.button.iconOffsetLeft: 0;
+				}
+				
+				
+				button.y = headerMargin;
+				button.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN + 15;
+				if (format) {
+					button.x = button.x + 15;
+				}
+				
+				
+				if (componentCFG.button.hasOwnProperty("offsetLeft")) button.x = button.x + componentCFG.button.offsetLeft;
+				if (componentCFG.button.hasOwnProperty("offsetTop")) button.y = button.y + componentCFG.button.offsetTop;
+				
+				button.width = componentCFG.button.hasOwnProperty("width") ? componentCFG.button.width: 30;
+				button.height = componentCFG.button.hasOwnProperty("height") ? componentCFG.button.height: 25;
+				button.validateNow();
+				
+				button.addEventListener(ButtonEvent.CLICK, function():void {
+					ModsSettingsApi.proxy.callButtonsS(modLinkage, componentCFG.varName, slider.value);
+				});
+				
+				sliderUI.addChild(button);
+				
+			}
+			
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(sliderUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(slider, "value");
+			
+			slider.addEventListener(MouseEvent.MOUSE_WHEEL, function (e:MouseEvent):* { 
+				e.stopImmediatePropagation(); 
+				result.parent.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, e.bubbles, e.cancelable, e.localX, e.localY, e.relatedObject, e.ctrlKey, e.altKey, e.shiftKey, e.buttonDown, e.delta));
+			});
+			
+			return result;
+		}
+		
+		public static function createTextInput(componentCFG:Object, headerText:String = "", tooltipText:String = "", value:String = ""):DisplayObject
+		{
+			var textInputUI:UIComponent = new UIComponent();
+			
+			
+			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			if (headerText)
+			{
+				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				lb.x = lb.y = 0;
+				textInputUI.addChild(lb);
+			}
+			
+			
+			var textinput:TextInput = TextInput(App.utils.classFactory.getComponent("TextInput", TextInput));
+			textinput.y = headerMargin;
+			textinput.width = componentCFG.hasOwnProperty("width") ? componentCFG.width: 200;
+			textinput.text = value;
+			textinput.validateNow();
+			textInputUI.addChild(textinput);
+			
+			textinput.addEventListener(InputEvent.INPUT, handleComponentEvent);
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(textInputUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(textinput, "text");
+			return result;
+		}
+		
+		public static function createHotKey(componentCFG:Object, modLinkage:String, value:Array, headerText:String = "", tooltipText:String = ""):DisplayObject
+		{
+			var hotKeyUI:UIComponent = new UIComponent();
+			
+			
+			var hotkeyctrl:HotKeyControl = new HotKeyControl(modLinkage, componentCFG.varName, headerText, tooltipText);
+			hotkeyctrl.x = 0;
+			hotkeyctrl.y = 0;
+			hotKeyUI.addChild(hotkeyctrl);
+			
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(hotKeyUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(hotkeyctrl, "keySet");
+			result["control"] = hotkeyctrl;
+			return result;
+		}
+		
+	}
+
+}
