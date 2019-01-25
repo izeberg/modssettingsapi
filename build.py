@@ -10,32 +10,15 @@ import imp
 import time
 import struct
 import shutil
+import sys
 
 from datetime import datetime
 from xml.etree import ElementTree
 from xml.dom import minidom
 
 
-def buildFLA(path):
+def readSWF(path):
 	path = str(os.path.abspath(path))
-
-	with open('build.jsfl', 'wb') as fh:
-		fh.write('fl.publishDocument("file:///%s", "Default");' % path.replace('\\', '/').replace(':', '|'))
-		fh.write('\r\n')
-		fh.write('fl.quit(false);')
-
-	try:
-		subprocess.check_output([os.environ.get('ANIMATE'), '-e', 'build.jsfl', '-AlwaysRunJSFL'],
-								universal_newlines=True,
-								stderr=subprocess.STDOUT)
-	except subprocess.CalledProcessError as error:
-		print path
-		print error.output.strip()
-
-	try:
-		os.remove('build.jsfl')
-	except Exception as ex:
-		print ex.message
 
 	name, _ = os.path.splitext(os.path.basename(path))
 	swf = os.path.join(os.path.dirname(path), 'bin', os.path.basename(name) + '.swf')
@@ -45,6 +28,34 @@ def buildFLA(path):
 			return f.read()
 	else:
 		print swf, 'not found'
+
+
+def buildFLA(path):
+	path = str(os.path.abspath(path))
+	
+	if os.path.isfile(path):
+		if '-f' in sys.argv:
+			with open('build.jsfl', 'wb') as fh:
+				fh.write('fl.publishDocument("file:///%s", "Default");' % path.replace('\\', '/').replace(':', '|'))
+				fh.write('\r\n')
+				fh.write('fl.quit(false);')
+
+			try:
+				subprocess.check_output([os.environ.get('ANIMATE'), '-e', 'build.jsfl', '-AlwaysRunJSFL'],
+										universal_newlines=True,
+										stderr=subprocess.STDOUT)
+			except subprocess.CalledProcessError as error:
+				print path
+				print error.output.strip()
+
+			try:
+				os.remove('build.jsfl')
+			except Exception as ex:
+				print ex.message
+
+		return readSWF(path)
+	else:
+		print path, 'not found'
 
 
 def buildFlashFD(path):
@@ -66,13 +77,10 @@ def buildFlashFD(path):
 		name, _ = os.path.splitext(os.path.basename(path))
 		swf = os.path.join(os.path.dirname(path), 'bin', os.path.basename(name) + '.swf')
 
-		if os.path.isfile(swf):
-			with open(swf, 'rb') as f:
-				return f.read()
-		else:
-			print swf, 'not found'
+		return readSWF(path)
 	else:
 		print path, 'not found'
+
 
 def buildPython(path, filename):
 	def read(self, path, filename):
@@ -150,47 +158,48 @@ def write(package, path, data):
 		info.external_attr = 33206 << 16 # -rw-rw-rw-
 		package.writestr(info, data)
 
-with open('./build.json', 'r') as fh:
-	CONFIG = json.loads(fh.read())
+if __name__ == '__main__':
+	with open('./build.json', 'r') as fh:
+		CONFIG = json.loads(fh.read())
 
-if CONFIG.get('append_version', True):
-	packageName = '%s_%s.wotmod' % (CONFIG['meta']['id'], CONFIG['meta']['version'])
-else:
-	packageName = '%s.wotmod' % CONFIG['meta']['id']
+	if CONFIG.get('append_version', True):
+		packageName = '%s_%s.wotmod' % (CONFIG['meta']['id'], CONFIG['meta']['version'])
+	else:
+		packageName = '%s.wotmod' % CONFIG['meta']['id']
 
-if os.path.exists('bin'):
-	shutil.rmtree('bin')
+	if os.path.exists('bin'):
+		shutil.rmtree('bin')
 
-if not os.path.exists('bin'):
-	os.makedirs('bin')
+	if not os.path.exists('bin'):
+		os.makedirs('bin')
 
-with zipfile.ZipFile('bin/' + packageName, 'w') as package:
-	write(package, 'meta.xml', createMeta(**CONFIG['meta']))
+	with zipfile.ZipFile('bin/' + packageName, 'w') as package:
+		write(package, 'meta.xml', createMeta(**CONFIG['meta']))
 
-	sources = os.path.abspath('./sources')
+		sources = os.path.abspath('./sources')
 
-	for dirName, _, files in os.walk(sources):
-		for filename in files:
-			path = os.path.join(dirName, filename)
-			name = path.replace(sources, '').replace('\\', '/')
-			dst = 'res' + name
-			
-			fname, fext = os.path.splitext(dst)
-			if fext == '.py':
-				write(package, fname + '.pyc', buildPython(path, name))
-			elif fext == '.po':
-				import polib
-				write(package, fname + '.mo', polib.pofile(path).to_binary())
-			else:
-				with open(path, 'rb') as f:
-					write(package, dst, f.read())
+		for dirName, _, files in os.walk(sources):
+			for filename in files:
+				path = os.path.join(dirName, filename)
+				name = path.replace(sources, '').replace('\\', '/')
+				dst = 'res' + name
+				
+				fname, fext = os.path.splitext(dst)
+				if fext == '.py':
+					write(package, fname + '.pyc', buildPython(path, name))
+				elif fext == '.po':
+					import polib
+					write(package, fname + '.mo', polib.pofile(path).to_binary())
+				else:
+					with open(path, 'rb') as f:
+						write(package, dst, f.read())
 
-	for source, dst in CONFIG.get('flash_fdbs', {}).items():
-		write(package, dst, buildFlashFD(source))
+		for source, dst in CONFIG.get('flash_fdbs', {}).items():
+			write(package, dst, buildFlashFD(source))
 
-	for source, dst in CONFIG.get('flash_fla', {}).items():
-		write(package, dst, buildFLA(source))
+		for source, dst in CONFIG.get('flash_fla', {}).items():
+			write(package, dst, buildFLA(source))
 
-	for path, dst in CONFIG.get('copy', {}).items():
-		with open(path, 'rb') as f:
-			write(package, dst, f.read())
+		for path, dst in CONFIG.get('copy', {}).items():
+			with open(path, 'rb') as f:
+				write(package, dst, f.read())
