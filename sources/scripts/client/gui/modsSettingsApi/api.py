@@ -244,12 +244,17 @@ class ModsSettingsApi(object):
 		
 		return baseFunc(event)
 	
-	def onHotkeyAccept(self, linkage, varName):
+	def onHotkeyStartAccept(self, linkage, varName):
 		if self.__acceptingKey is not None:
 			self.__acceptingKey = (linkage, varName)
 			self.updateHotKeys()
 		else:
 			self.__acceptingKey = (linkage, varName)
+	
+	def onHotkeyStopAccept(self, linkage, varName):
+		if self.__acceptingKey is not None:
+			self.__acceptingKey = None
+		self.updateHotKeys()
 	
 	def onHotkeyDefault(self, linkage, varName):
 		template = self.__config['templates'][linkage]
@@ -286,7 +291,7 @@ class ModsSettingsApi(object):
 		def parseKeySet(keyset):
 			
 			if not len(keyset):
-				return [False, '', False, False, False]
+				return [True, '', False, False, False]
 			
 			key_name = None
 			is_alt = False
@@ -319,7 +324,7 @@ class ModsSettingsApi(object):
 					is_shift = False
 
 			
-			return [True, key_name, is_alt, is_control, is_shift]
+			return [False, key_name, is_alt, is_control, is_shift]
 		
 		for linkage in self.__config['templates'].keys():
 			if linkage in self.__activeMods:
@@ -335,15 +340,18 @@ class ModsSettingsApi(object):
 							c_linkage, c_varName = '', ''
 							if self.__acceptingKey is not None:
 								c_linkage, c_varName = self.__acceptingKey
+							isAccepting = linkage == c_linkage and component['varName'] == c_varName
 							result[linkage][component['varName']] = {
-								'is_setted': keySet[0],
-								'is_alt': keySet[2],
-								'is_control': keySet[3],
-								'is_shift': keySet[4],
-								'button_text': keySet[1],
-								'accepting': c_linkage + c_varName,
-								'value': value
+								"linkage": linkage,
+								"varName": component['varName'],
+								"value": keySet[1],
+								"isEmpty": keySet[0],
+								"isAccepting": isAccepting,
+								"modifierAlt": keySet[2],
+								"modifierCtrl": keySet[3],
+								"modiferShift": keySet[4]
 							}
+				
 				if 'column2' in template:
 					for component in template['column2']:
 						if 'type' in component  and component['type'] == 'HotKey' and 'varName' in component and 'value' in component:
@@ -353,14 +361,16 @@ class ModsSettingsApi(object):
 							c_linkage, c_varName = '', ''
 							if self.__acceptingKey is not None:
 								c_linkage, c_varName = self.__acceptingKey
+							isAccepting = linkage == c_linkage and component['varName'] == c_varName
 							result[linkage][component['varName']] = {
-								'is_setted': keySet[0],
-								'is_alt': keySet[2],
-								'is_control': keySet[3],
-								'is_shift': keySet[4],
-								'button_text': keySet[1],
-								'accepting': c_linkage + c_varName,
-								'value': value
+								"linkage": linkage,
+								"varName": component['varName'],
+								"value": keySet[1],
+								"isEmpty": keySet[0],
+								"isAccepting": isAccepting,
+								"modifierAlt": keySet[2],
+								"modifierCtrl": keySet[3],
+								"modiferShift": keySet[4]
 							}
 		return result
 	

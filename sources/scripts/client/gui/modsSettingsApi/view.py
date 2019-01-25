@@ -39,9 +39,6 @@ class ModsSettingsApiWindow(AbstractWindowView):
 		self.api.updateHotKeys -= self.as_updateHotKeysS
 		super(ModsSettingsApiWindow, self)._dispose()
 
-	def flashLogS(self, args):
-		print "LOG", args
-
 	def sendModsDataS(self, data):
 		data = byteify(json.loads(data))
 		for linkage in data:
@@ -52,11 +49,13 @@ class ModsSettingsApiWindow(AbstractWindowView):
 		self.api.onButtonClicked(linkage, varName, value)
 
 	def handleHotKeysS(self, linkage, varName, command):
-		if command == 'accept':
-			self.api.onHotkeyAccept(linkage, varName)
+		if command == 'startAccept':
+			self.api.onHotkeyStartAccept(linkage, varName)
+		if command == 'stopAccept':
+			self.api.onHotkeyStopAccept(linkage, varName)
 		if command == 'default':
 			self.api.onHotkeyDefault(linkage, varName)
-		if command == 'clear':
+		if command == 'clean':
 			self.api.onHotkeyClear(linkage, varName)
 
 	def requestModsDataS(self):
@@ -64,7 +63,7 @@ class ModsSettingsApiWindow(AbstractWindowView):
 		if self.api.userSettings:
 			self.as_setUserSettingsS(self.api.userSettings)
 		self.as_setDataS(self.api.getAllTemplates())
-		self.as_updateHotKeysS(True)
+		self.as_updateHotKeysS()
 
 	def as_setUserSettingsS(self, data):
 		if self._isDAAPIInited():
@@ -74,10 +73,10 @@ class ModsSettingsApiWindow(AbstractWindowView):
 		if self._isDAAPIInited():
 			self.flashObject.as_setData(data)
 
-	def as_updateHotKeysS(self, premature=False):
+	def as_updateHotKeysS(self):
 		if self._isDAAPIInited():
 			data = self.api.getAllHotKeys()
-			self.flashObject.as_updateHotKeys(data, premature)
+			self.flashObject.as_updateHotKeys(data)
 
 	def onWindowClose(self):
 		self.api.saveConfig()

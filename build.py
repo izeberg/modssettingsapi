@@ -16,6 +16,37 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 
 
+def buildFLA(path):
+	path = str(os.path.abspath(path))
+
+	with open('build.jsfl', 'wb') as fh:
+		fh.write('fl.publishDocument("file:///%s", "Default");' % path.replace('\\', '/').replace(':', '|'))
+		fh.write('\r\n')
+		fh.write('fl.quit(false);')
+
+	try:
+		subprocess.check_output([os.environ.get('ANIMATE'), '-e', 'build.jsfl', '-AlwaysRunJSFL'],
+								universal_newlines=True,
+								stderr=subprocess.STDOUT)
+	except subprocess.CalledProcessError as error:
+		print path
+		print error.output.strip()
+
+	try:
+		os.remove('build.jsfl')
+	except Exception as ex:
+		print ex.message
+
+	name, _ = os.path.splitext(os.path.basename(path))
+	swf = os.path.join(os.path.dirname(path), 'bin', os.path.basename(name) + '.swf')
+
+	if os.path.isfile(swf):
+		with open(swf, 'rb') as f:
+			return f.read()
+	else:
+		print swf, 'not found'
+
+
 def buildFlashFD(path):
 	path = str(os.path.abspath(path))
 	if os.path.isfile(path):
@@ -156,6 +187,9 @@ with zipfile.ZipFile('bin/' + packageName, 'w') as package:
 
 	for source, dst in CONFIG.get('flash_fdbs', {}).items():
 		write(package, dst, buildFlashFD(source))
+
+	for source, dst in CONFIG.get('flash_fla', {}).items():
+		write(package, dst, buildFLA(source))
 
 	for path, dst in CONFIG.get('copy', {}).items():
 		with open(path, 'rb') as f:
