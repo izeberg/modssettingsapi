@@ -8,7 +8,7 @@ package poliroid.gui.lobby.modsSettingsApi.events
 		
 		public static const HOTKEY_ACTION:String = "hotkeyAction";
 		
-		public static const BUTTON_CLICK:String = "buttonClick";
+		public static const BUTTON_CLICK:String = "buttonAction";
 		
 		public static const SETTINGS_CHANGED:String = "onModSettingsChanged";
 
