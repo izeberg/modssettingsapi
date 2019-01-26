@@ -6,15 +6,17 @@
 		public var target:*;
 		public var key:*;
 		
-		public function ValueProxy(target:* = null, key:* = null)
+		public function ValueProxy(target:*, key:*)
 		{
-			target = target;
-			key = key;
+			if (!target) throw new Error("Wrong target");
+			if (!key) throw new Error("Wrong key");
+			this.target = target;
+			this.key = key;
 		}
 		
 		public function get value():*
 		{
-			return key != null ? target[key] : target;
+			return target[key];
 		}
 	}
 }
