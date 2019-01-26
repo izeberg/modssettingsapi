@@ -191,6 +191,8 @@
 					return ComponentsHelper.createTextInput(componentObj, componentObj.text, componentObj.tooltip, componentObj.value);
 				case "HotKey": 
 					return ComponentsHelper.createHotKey(componentObj, this.modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+				case "NumericStepper": 
+					return ComponentsHelper.createNumericStepper(componentObj, this.modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.header, componentObj.tooltip);
 				default: 
 					return new MovieClip();
 			}

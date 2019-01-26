@@ -1,5 +1,6 @@
 ﻿package poliroid.gui.lobby.modsSettingsApi.utils
 {
+	import net.wg.gui.components.controls.NumericStepper;
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.gui.components.controls.TextInput;
 	import net.wg.gui.components.controls.CheckBox;
@@ -18,6 +19,7 @@
 	import scaleform.clik.events.ListEvent;
 	import scaleform.clik.events.InputEvent;
 	import scaleform.clik.events.ButtonEvent;
+	import scaleform.clik.events.IndexEvent;
 	import scaleform.clik.data.DataProvider;
 	
 	import flash.events.Event;
@@ -301,6 +303,31 @@
 			var result:MovieClip = new MovieClip();
 			result.addChild(textInputUI);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(textinput, "text");
+			return result;
+		}
+		
+		public static function createNumericStepper(componentCFG:Object, modLinkage:String, minimum:Number, maximum:Number, stepSize:Number, value:Number, header:String, tooltip:String):DisplayObject
+		{
+			var numericStepperUI:UIComponent = new UIComponent();
+
+			if (header) {
+				numericStepperUI.addChild(ComponentsHelper.createLabel(header, tooltip));
+			}
+
+			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent("NumericStepper", NumericStepper));
+			numericStepper.y = header ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			numericStepper.minimum = minimum;
+			numericStepper.maximum = maximum;
+			numericStepper.stepSize = stepSize;
+			numericStepper.value = value;
+			numericStepper.validateNow();
+			numericStepper.addEventListener(IndexEvent.INDEX_CHANGE, handleComponentEvent);
+
+			numericStepperUI.addChild(numericStepper);
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(numericStepperUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(numericStepper, "value");
 			return result;
 		}
 		
