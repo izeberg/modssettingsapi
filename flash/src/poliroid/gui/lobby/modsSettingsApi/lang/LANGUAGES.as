@@ -1,7 +1,7 @@
-﻿package poliroid.lang
+﻿package poliroid.gui.lobby.modsSettingsApi.lang
 {
 	
-	import poliroid.lang.*;
+	import poliroid.gui.lobby.modsSettingsApi.lang.*;
 	
 	public class LANGUAGES extends Object
 	{
@@ -13,7 +13,5 @@
 		public function LANGUAGES()
 		{
 		}
-	
 	}
-
 }

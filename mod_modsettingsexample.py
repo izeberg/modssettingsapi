@@ -73,7 +73,17 @@ template  = {
 			'tooltip': '{HEADER}Включение/отключение по кнопке{/HEADER}{BODY}Активирует либо деактивирует модификацию при нажатии кнопки/комбинации кнопок{/BODY}',
 			'value': [Keys.KEY_J],
 			'varName': 'stateKeySet'          
-		}
+		},
+		{
+			'type': 'NumericStepper',
+			'text': 'NumericStepper test',
+			'tooltip': '{HEADER}NumericStepper tooltip header{/HEADER}{BODY}NumericStepper tooltip body{/BODY}',
+			'minimum': 1,
+			'maximum': 15,
+			'snapInterval': 0.1,
+			'value': 5,
+			'varName': 'numStepperTest'
+		},
 	]
 }
 
@@ -84,7 +94,8 @@ settings = {
 	'neadHelp' : True,
 	'enabled' : True,
 	'minimapClick' : True,
-	'aliveCounter' : 5
+	'aliveCounter' : 5,
+	'numStepperTest' : 5,
 }
 
 def onModSettingsChanged(linkage, newSettings):    
@@ -107,4 +118,3 @@ else:
 	settings = g_modsSettingsApi.setModTemplate((modLinkage, ), template, onModSettingsChanged, onButtonClicked)   
 
 
-	
