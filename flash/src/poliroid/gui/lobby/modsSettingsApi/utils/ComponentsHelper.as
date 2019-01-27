@@ -311,11 +311,13 @@
 			var numericStepperUI:UIComponent = new UIComponent();
 
 			if (text) {
-				numericStepperUI.addChild(ComponentsHelper.createLabel(text, tooltip));
+				var lb = ComponentsHelper.createLabel(text, tooltip)
+				lb.y = 4
+				numericStepperUI.addChild(lb);
 			}
 
 			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent("NumericStepper", NumericStepper));
-			numericStepper.y = header ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			numericStepper.x = 315;
 			numericStepper.minimum = minimum;
 			numericStepper.maximum = maximum;
 			numericStepper.stepSize = stepSize;
