@@ -76,7 +76,7 @@ template  = {
 		},
 		{
 			'type': 'NumericStepper',
-			'header': 'NumericStepper test',
+			'text': 'NumericStepper test',
 			'tooltip': '{HEADER}NumericStepper tooltip header{/HEADER}{BODY}NumericStepper tooltip body{/BODY}',
 			'minimum': 1,
 			'maximum': 15,

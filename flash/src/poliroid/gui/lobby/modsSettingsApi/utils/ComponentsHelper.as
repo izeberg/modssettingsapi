@@ -306,12 +306,12 @@
 			return result;
 		}
 		
-		public static function createNumericStepper(componentCFG:Object, modLinkage:String, minimum:Number, maximum:Number, stepSize:Number, value:Number, header:String, tooltip:String):DisplayObject
+		public static function createNumericStepper(componentCFG:Object, modLinkage:String, minimum:Number, maximum:Number, stepSize:Number, value:Number, text:String, tooltip:String):DisplayObject
 		{
 			var numericStepperUI:UIComponent = new UIComponent();
 
-			if (header) {
-				numericStepperUI.addChild(ComponentsHelper.createLabel(header, tooltip));
+			if (text) {
+				numericStepperUI.addChild(ComponentsHelper.createLabel(text, tooltip));
 			}
 
 			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent("NumericStepper", NumericStepper));
