@@ -318,6 +318,9 @@
 
 			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent("NumericStepper", NumericStepper));
 			numericStepper.x = 315;
+			if (componentCFG.hasOwnProperty('canManualInput')) {
+				numericStepper.canManualInput = componentCFG.canManualInput;
+			}
 			numericStepper.minimum = minimum;
 			numericStepper.maximum = maximum;
 			numericStepper.stepSize = stepSize;
