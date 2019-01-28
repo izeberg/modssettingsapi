@@ -7,6 +7,7 @@
 	import flash.geom.Point;
 	import flash.text.TextField;
 	
+	import scaleform.clik.events.InputEvent;
 	import net.wg.data.daapi.ContextMenuOptionVO
 	import net.wg.infrastructure.interfaces.IContextMenu;
 	import net.wg.gui.components.controls.ContextMenu;
@@ -29,12 +30,14 @@
 		private static const STATE_ACCEPTING:String = 'accepting';
 		private static const STATE_EMPTY:String = 'empty';
 		private static const STATE_NORMAL:String = 'normal';
+		private static const MODIFIERS_PREFIX:String = 'mod_';
 		
-		public var hitAreaA:MovieClip = null;
 		public var valueTF:TextField = null;
 		public var statesMC:MovieClip = null;
 		public var modifiersMC:MovieClip = null;
-		
+		public var keySet:Array = null;
+		public var hitAreaA:MovieClip = null;
+
 		private var model:HotKeyControlVO = null;
 		private var _contextMenu:ContextMenu = null;
 		
@@ -46,6 +49,7 @@
 		override protected function configUI() : void 
 		{
 			super.configUI();
+			
 			scaleX = 1;
 			scaleY = 1;
 			preventAutosizing = true;
@@ -54,11 +58,17 @@
 			valueTF.selectable = false;
 		}
 		
-		public function updateData(ctx:Object) : void
+		public function updateData(data:HotKeyControlVO) : void
 		{
+			model = data;
+
+			if (keySet && (keySet.toString() != model.keySet.toString()))
+			{
+				dispatchEvent(new InputEvent(InputEvent.INPUT, null));
+			}
 			
-			model = new HotKeyControlVO(ctx);
-			
+			keySet = model.keySet;
+
 			if (model.isAccepting)
 			{
 				statesMC.gotoAndPlay(STATE_ACCEPTING);
@@ -75,58 +85,50 @@
 				valueTF.text = model.value;
 			}
 			
+
+			var modifiers_label:String = MODIFIERS_PREFIX;
 			
-			var modifiers_label:String = "mod_";
 			if (model.modifierCtrl)
-			{
 				modifiers_label += 'ctrl';
-			}
 			if (model.modifierAlt)
-			{
 				modifiers_label += 'alt';
-			}
 			if (model.modiferShift)
-			{
 				modifiers_label += 'shift';
-			}	
-			modifiersMC.gotoAndStop(modifiers_label);
+			
+			if (model.isAccepting || model.isEmpty)
+				modifiersMC.gotoAndStop(MODIFIERS_PREFIX);
+			else
+				modifiersMC.gotoAndStop(modifiers_label);
 		}
 		
-		override protected function onMouseDownHandler(e:MouseEvent) : void
+		override protected function onMouseDownHandler(event:MouseEvent) : void
 		{
-			if (App.utils.commons.isLeftButton(e)) 
+			super.onMouseDownHandler(event);
+			
+			if (App.utils.commons.isLeftButton(event)) 
 			{
 				if (!model.isAccepting)
 				{
 					dispatchEvent(new InteractiveEvent(InteractiveEvent.HOTKEY_ACTION, model.linkage, model.varName, COMMAND_START_ACCEPT));
-					statesMC.gotoAndPlay(STATE_ACCEPTING);
 				}
 			}
 			
-			if (App.utils.commons.isRightButton(e)) 
+			if (App.utils.commons.isRightButton(event)) 
 			{
 				if (model.isAccepting)
 				{
 					dispatchEvent(new InteractiveEvent(InteractiveEvent.HOTKEY_ACTION, model.linkage, model.varName, COMMAND_STOP_ACCEPT));
-					if (model.isEmpty)
-					{
-						statesMC.gotoAndPlay(STATE_EMPTY);
-					}
-					else
-					{
-						statesMC.gotoAndStop(STATE_NORMAL);
-					}
 				}
-				
+
 				hidePopUp();
 				
 				_contextMenu = ContextMenu(App.utils.classFactory.getComponent("ContextMenu", ContextMenu));
 				var options:Vector.<IContextItem> = new Vector.<IContextItem>();
 				options.push( new ContextMenuOptionVO( { id:0, label: STRINGS.CONTEXT_DEFAULT, initData: 0, submenu: [] } ));
 				options.push( new ContextMenuOptionVO( { id:1, label: STRINGS.CONTEXT_CLEAN, initData: 1, submenu: [] } ));
-				App.utils.popupMgr.show(_contextMenu, e.stageX, e.stageY);
+				App.utils.popupMgr.show(_contextMenu, event.stageX, event.stageY);
 				
-				var clickPoint:Point = new Point(e.stageX - 65, e.stageY + 30);
+				var clickPoint:Point = new Point(event.stageX - 65, event.stageY + 30);
 				clickPoint.x = clickPoint.x / App.appScale >> 0;
 				clickPoint.y = clickPoint.y / App.appScale >> 0;
 				_contextMenu.build(options, clickPoint);

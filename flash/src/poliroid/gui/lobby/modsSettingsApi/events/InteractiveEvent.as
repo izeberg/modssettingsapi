@@ -13,7 +13,15 @@ package poliroid.gui.lobby.modsSettingsApi.events
 		public static const SETTINGS_CHANGED:String = "onModSettingsChanged";
 
 		public static const VALUE_CHANGED:String = "onValueChanged";
-		
+
+		public static const BUTTON_OK_CLICK:String = "buttonOKClick";
+
+		public static const BUTTON_CANCEL_CLICK:String = "buttonCancelClick";
+
+		public static const BUTTON_APPLY_CLICK:String = "buttonApplyClick";
+
+		public static const BUTTON_CLOSE_CLICK:String = "buttonCloseClick";
+
 		private var _modLinkage:String = "";
 		
 		private var _varName:String = "";

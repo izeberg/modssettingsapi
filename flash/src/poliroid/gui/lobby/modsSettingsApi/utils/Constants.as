@@ -3,7 +3,9 @@
 	
 	public class Constants extends Object
 	{
-		public static const MOD_COMPONENT_WIDTH:Number = 840;
+		public static const WINDOW_BACKGROUND_IMAGE:String = '../../gui/maps/uiKit/dialogs/noize_bg.png';
+
+		public static const MOD_COMPONENT_WIDTH:Number = 900;
 		
 		public static const COMPONENT_HEADER_MARGIN:Number = 20;
 		public static const COMPONENT_MARGIN_BOTTOM:Number = 10;

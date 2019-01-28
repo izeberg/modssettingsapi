@@ -245,15 +245,11 @@ class ModsSettingsApi(object):
 		return baseFunc(event)
 	
 	def onHotkeyStartAccept(self, linkage, varName):
-		if self.__acceptingKey is not None:
-			self.__acceptingKey = (linkage, varName)
-			self.updateHotKeys()
-		else:
-			self.__acceptingKey = (linkage, varName)
+		self.__acceptingKey = (linkage, varName)
+		self.updateHotKeys()
 	
 	def onHotkeyStopAccept(self, linkage, varName):
-		if self.__acceptingKey is not None:
-			self.__acceptingKey = None
+		self.__acceptingKey = None
 		self.updateHotKeys()
 	
 	def onHotkeyDefault(self, linkage, varName):
@@ -289,8 +285,7 @@ class ModsSettingsApi(object):
 		result = {}
 		
 		def parseKeySet(keyset):
-			
-			if not len(keyset):
+			if not keyset:
 				return [True, '', False, False, False]
 			
 			key_name = None
@@ -345,6 +340,7 @@ class ModsSettingsApi(object):
 								"linkage": linkage,
 								"varName": component['varName'],
 								"value": keySet[1],
+								"keySet": component['value'],
 								"isEmpty": keySet[0],
 								"isAccepting": isAccepting,
 								"modifierAlt": keySet[2],
@@ -366,6 +362,7 @@ class ModsSettingsApi(object):
 								"linkage": linkage,
 								"varName": component['varName'],
 								"value": keySet[1],
+								"keySet": component['value'],
 								"isEmpty": keySet[0],
 								"isAccepting": isAccepting,
 								"modifierAlt": keySet[2],
