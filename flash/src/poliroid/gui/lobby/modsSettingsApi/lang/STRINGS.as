@@ -1,13 +1,14 @@
 ﻿package poliroid.gui.lobby.modsSettingsApi.lang
 {
-	
+	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
+
 	public class STRINGS extends Object
 	{
-		
 		public static var WINDOW_TITLE:String = "WINDOW_TITLE";
 		public static var BUTTON_APPLY:String = "BUTTON_APPLY";
 		public static var BUTTON_OK:String = "BUTTON_OK";
-		public static var BUTTON_CANCEL:String = "BUTTON_CLOSE";
+		public static var BUTTON_CANCEL:String = "BUTTON_CANCEL";
+		public static var BUTTON_CLOSE:String = "BUTTON_CLOSE";
 		public static var BUTTON_ENABLED_TOOLTIP:String = "BUTTON_ENABLED_TOOLTIP";
 		public static var CONTEXT_DEFAULT:String = "CONTEXT_DEFAULT";
 		public static var CONTEXT_CLEAN:String = "CONTEXT_CLEAN";
@@ -17,16 +18,16 @@
 			super();
 		}
 		
-		public static function setLang(lang:Object):void
+		public static function updateStaticData(data:ModsSettingsStaticVO):void
 		{
-			WINDOW_TITLE = lang.WINDOW_TITLE;
-			BUTTON_APPLY = lang.BUTTON_APPLY;
-			BUTTON_OK = lang.BUTTON_OK;
-			BUTTON_CANCEL = lang.BUTTON_CANCEL;
-			BUTTON_ENABLED_TOOLTIP = lang.BUTTON_ENABLED_TOOLTIP;
-			CONTEXT_DEFAULT = lang.CONTEXT_DEFAULT;
-			CONTEXT_CLEAN = lang.CONTEXT_CLEAN;
+			WINDOW_TITLE = data.windowTitle;
+			BUTTON_APPLY = data.buttonApply;
+			BUTTON_OK = data.buttonOK;
+			BUTTON_CANCEL = data.buttonCancel;
+			BUTTON_CLOSE = data.buttonClose;
+			BUTTON_ENABLED_TOOLTIP = data.stateTooltip;
+			CONTEXT_DEFAULT = data.contextDefault;
+			CONTEXT_CLEAN = data.contextClean;
 		}
 	}
-
 }

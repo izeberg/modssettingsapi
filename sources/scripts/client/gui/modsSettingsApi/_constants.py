@@ -14,9 +14,10 @@ del _preferences_path
 
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 if DEFAULT_LANGUAGE == 'ru':
-    MOD_NAME = 'Настройка модов'
+    MOD_NAME = 'Настройка модификаций'
     MOD_DESCRIPTION = 'Данная модификация позволяет легко и просто изменять настройки установленных модов.'
+    STATE_TOOLTIP = '{HEADER}Включить / Отключить мод{/HEADER}{BODY}Красный индикатор - мод отключен<br>Зелёный индикатор - мод включен{/BODY}'
 else:
     MOD_NAME = 'Mod configurator'
     MOD_DESCRIPTION = 'This mod allows you to easily configure installed mods.'
-
+    STATE_TOOLTIP = '{HEADER}Enable / Disable mod {/ HEADER} {BODY} Red indicator - mod disabled <br> Green indicator - mod enabled{/BODY}'

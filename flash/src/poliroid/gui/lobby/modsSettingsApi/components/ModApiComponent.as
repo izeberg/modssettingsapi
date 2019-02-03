@@ -60,7 +60,8 @@
 					result[component.data.varName] = component.componentObject[Constants.COMPONENT_RETURN_VALUE_KEY].value;
 				}
 			}
-			if (this.data.hasOwnProperty("enabled")) {
+			if (this.data.hasOwnProperty("enabled"))
+			{
 				result["enabled"] = this.modEnabled;
 			}
 			return result;
@@ -106,7 +107,7 @@
 				this.modEnabledButton = App.utils.classFactory.getComponent('StatusSwitcherUI', StatusSwitcher);
 				this.modEnabledButton.isEnabled = this.modEnabled;
 				this.modEnabledButton.y = 16;
-				this.modEnabledButton.x = 800;
+				this.modEnabledButton.x = Constants.MOD_COMPONENT_WIDTH - 41;
 				this.addChild(this.modEnabledButton);
 				this.modEnabledButton.addEventListener(MouseEvent.CLICK, this.handleButtonEnableClick);
 			}

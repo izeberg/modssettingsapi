@@ -4,7 +4,6 @@ package poliroid.gui.lobby.modsSettingsApi.data
 	
 	public class HotKeyControlVO extends DAAPIDataClass
 	{
-		
 		public var linkage:String = "";
 		
 		public var varName:String = "";
@@ -20,6 +19,8 @@ package poliroid.gui.lobby.modsSettingsApi.data
 		public var modifierCtrl:Boolean = false;
 		
 		public var modiferShift:Boolean = false;
+
+		public var keySet:Array = [];
 		
 		public function HotKeyControlVO(data:Object) 
 		{

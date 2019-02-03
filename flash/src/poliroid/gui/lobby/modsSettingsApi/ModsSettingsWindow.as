@@ -1,141 +1,111 @@
 ﻿package poliroid.gui.lobby.modsSettingsApi
 {
 	
-	/*
-	import poliroid.events.LoggerEvent;
-
-	import poliroid.utils.Constants;
-	import poliroid.utils.Logger;
-	import org.idmedia.as3commons.lang.NullPointerException;
-	import poliroid.components.*;
-	import poliroid.components.lobby.ModsSettingsApiComponent;
-	import poliroid.events.*;
-	import poliroid.lang.*;
-	import poliroid.events.ModsSettingsApiComponentEvent;
-	import poliroid.utils.*;
-	import flash.display.*;
-	import flash.events.*;
-	import net.wg.gui.components.controls.*;
-	import net.wg.infrastructure.base.*;	
-	*/
-	
-	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
+	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 
+	import scaleform.clik.events.InputEvent;
 	import net.wg.infrastructure.base.AbstractView;
-	import net.wg.infrastructure.base.AbstractWindowView;
-	import net.wg.gui.components.controls.ScrollPane;
-	import net.wg.gui.components.controls.ScrollBar;
-	import net.wg.gui.components.controls.SoundButton;
 	
 	import poliroid.gui.lobby.modsSettingsApi.components.ModApiComponent;
-	import poliroid.gui.lobby.modsSettingsApi.lang.LANGUAGES;
-	import poliroid.gui.lobby.modsSettingsApi.lang.STRINGS;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowBackground;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowContent;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowFooter;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowHeader;
+	import poliroid.gui.lobby.modsSettingsApi.data.HotKeyControlVO;
+	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettingsApi.lang.STRINGS;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModsSettingsWindow extends AbstractWindowView
+	public class ModsSettingsWindow extends AbstractView
 	{
+		public var requestModsData:Function = null;
+		public var sendModsData:Function = null;
+		public var buttonAction:Function = null;
+		public var hotKeyAction:Function = null;
+		public var closeView:Function = null;
 		
-		public var scrollPane:ScrollPane;
-		public var scrollBar:ScrollBar;
-		public var modsContainer:MovieClip;
-		public var modsArray:Array;
-		public var modsData:Object;
+		private var modsArray:Array = null;
+		private var modsData:Object = null;
+		private var configChanged:Boolean = false;
+		private var configChangedLinkages:Array = null;
 		
-		public var requestModsDataS:Function = null;
-		public var sendModsDataS:Function = null;
-		public var callButtonsS:Function = null;
-		public var handleHotKeysS:Function = null;
-		
-		public var currentLang:Object;
-		public var btnOk:SoundButton;
-		public var btnCancel:SoundButton;
-		public var btnApply:SoundButton;
-		private var configChanged:Boolean;
-		private var configChangedLinkages:Array;
-		
+		public var header:ModApiWindowHeader = null;
+		public var content:ModApiWindowContent = null;
+		public var footer:ModApiWindowFooter = null;
+		public var background:ModApiWindowBackground = null;
+
 		public function ModsSettingsWindow() : void
 		{
 			super();
-			
-			currentLang = LANGUAGES.RU;
 			configChanged = false;
 			configChangedLinkages = new Array();
 			modsArray = new Array();
-			
-			width = 860;
-			height = 600;
-			canResize = false;
-			isCentered = true;
 		}
 		
 		override protected function onPopulate() : void
 		{
 			super.onPopulate();
 			
-			STRINGS.setLang(currentLang);
+			App.gameInputMgr.setKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler, true);
 			
-			window.useBottomBtns = true;
-			
-			btnApply.enabled = configChanged;
-			btnOk.addEventListener(MouseEvent.CLICK, handleBtnOkClick);
-			btnCancel.addEventListener(MouseEvent.CLICK, handleWindowClose);
-			btnApply.addEventListener(MouseEvent.CLICK, handleBtnApplyClick);
-			
-			window.title = STRINGS.WINDOW_TITLE;
-			btnApply.label = STRINGS.BUTTON_APPLY;
-			btnOk.label = STRINGS.BUTTON_OK;
-			btnCancel.label = STRINGS.BUTTON_CANCEL
-			
-			modsContainer = new MovieClip();
-			modsContainer.addEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
-			modsContainer.addEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
-			modsContainer.addEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
-			
-			scrollPane.scrollStepFactor = 20;
-			scrollPane.scrollBar = scrollBar;
-			scrollPane.isScrollBarHaveToBeShown = true;
-			scrollPane.setSize(850, 570);
-			scrollPane.target = modsContainer;
+			footer.addEventListener(InteractiveEvent.BUTTON_OK_CLICK, handleButtonOK);
+			footer.addEventListener(InteractiveEvent.BUTTON_CANCEL_CLICK, handleButtonCancel);
+			footer.addEventListener(InteractiveEvent.BUTTON_APPLY_CLICK, handleButtonApply);
 
-			requestModsDataS();
+			header.addEventListener(InteractiveEvent.BUTTON_CLOSE_CLICK, handleButtonClose);
+			
+			content.container.addEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
+			content.container.addEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
+			content.container.addEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
+			
+			App.stage.addEventListener(Event.RESIZE, updatePositions);
+			
+			updatePositions();
+			requestModsData();
 		}
 		
 		override protected function onDispose() : void
 		{
+			
+			App.gameInputMgr.clearKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler);
+			
+			footer.removeEventListener(InteractiveEvent.BUTTON_OK_CLICK, handleButtonOK);
+			footer.removeEventListener(InteractiveEvent.BUTTON_CANCEL_CLICK, handleButtonCancel);
+			footer.removeEventListener(InteractiveEvent.BUTTON_APPLY_CLICK, handleButtonApply);
+			
+			header.removeEventListener(InteractiveEvent.BUTTON_CLOSE_CLICK, handleButtonClose);
+			
+			App.stage.removeEventListener(Event.RESIZE, updatePositions);
+
 			App.toolTipMgr.hide();
 			
-			btnOk.removeEventListener(MouseEvent.CLICK, handleBtnOkClick);
-			btnCancel.removeEventListener(MouseEvent.CLICK, handleWindowClose);
-			btnApply.removeEventListener(MouseEvent.CLICK, handleBtnApplyClick);
+			footer = null;
+			header = null;
+			content = null;
+			background = null;
 			
 			super.onDispose();
 		}
 		
-		public function as_setUserSettings(data:Object) : void
+		private function updatePositions(e:Event = null) : void
 		{
-			if (data.windowTitle)
-			{
-				window.title = data.windowTitle;
-			}
-			if (data.buttonOK)
-			{
-				btnOk.label = data.buttonOK;
-			}
-			if (data.buttonCancel)
-			{
-				btnCancel.label = data.buttonCancel;
-			}
-			if (data.buttonApply)
-			{
-				btnApply.label = data.buttonApply;
-			}
-			if (data.enableButtonTooltip)
-			{
-				STRINGS.BUTTON_ENABLED_TOOLTIP = data.enableButtonTooltip;
-			}
+			var appWidth:Number = App.appWidth;
+			var appHeight:Number = App.appHeight;
+			background.updateStage(appWidth, appHeight);
+			header.updateStage(appWidth, appHeight);
+			content.updateStage(appWidth, appHeight);
+			footer.updateStage(appWidth, appHeight);
+		}
+
+		public function as_setStaticData(data:Object) : void
+		{
+			var model:ModsSettingsStaticVO = new ModsSettingsStaticVO(data);
+			header.updateStaticData(model);
+			footer.updateStaticData(model);
+			STRINGS.updateStaticData(model);
 		}
 		
 		public function as_setData(data:Object):void
@@ -151,24 +121,24 @@
 				mod.y = lastPos;
 				lastPos = mod.y + mod.height + Constants.MOD_MARGIN_BOTTOM;
 				
-				modsContainer.addChild(mod);
+				content.container.addChild(mod);
 				modsArray.push(mod);
 			}
 		}
 		
-		public function as_updateHotKeys(hotkeys_data:Object) : void 
+		public function as_updateHotKeys(data:Object) : void 
 		{
-			for (var mod_iter:Number = 0; mod_iter < modsArray.length; mod_iter++)
+			for each (var mod:ModApiComponent in modsArray)
 			{
-				var mod:ModApiComponent = modsArray[mod_iter];
-				if (mod.modLinkage in hotkeys_data)
+				if (data.hasOwnProperty(mod.modLinkage))
 				{
-					for (var component_iter:Number = 0; component_iter < mod.components.length; component_iter++)
+					for each (var component:Object in mod.components)
 					{
-						var component:Object = mod.components[component_iter];
-						if ("varName" in component.data && component.data.varName in hotkeys_data[mod.modLinkage])
+						if (component.data.hasOwnProperty('varName') && component.data.varName in data[mod.modLinkage])
 						{
-							component.componentObject['control'].updateData(hotkeys_data[mod.modLinkage][component.data.varName]);
+							var hotKeyData:Object = data[mod.modLinkage][component.data.varName]
+							var hotKeyControlVO:Object = new HotKeyControlVO(hotKeyData);
+							component.componentObject['control'].updateData(hotKeyControlVO);
 						}
 					}
 				}
@@ -178,10 +148,9 @@
 		private function collectModsData():Object
 		{
 			var result:Object = new Object();
-		
-			for (var i:Number = 0; i < modsArray.length; i++)
+			
+			for each (var mod:ModApiComponent in modsArray)
 			{
-				var mod:ModApiComponent = modsArray[i];
 				if (configChangedLinkages.indexOf(mod.modLinkage) != -1)
 				{
 					result[mod.modLinkage] = mod.getConfigData();
@@ -190,28 +159,10 @@
 			return result;
 		}
 		
-		private function handleBtnOkClick(event:MouseEvent):void
-		{
-			if(configChanged) {
-				var config:Object = collectModsData();
-				sendModsDataS(App.utils.JSON.encode(config));
-			}			
-			handleWindowClose();
-		}
-		
-		private function handleBtnApplyClick(event:MouseEvent):void
-		{
-			var config:Object = collectModsData();
-			sendModsDataS(App.utils.JSON.encode(config));
-			configChanged = false;
-			btnApply.enabled = configChanged;
-		}
-		
 		private function handleModSettingsChanged(event:InteractiveEvent):void
 		{
 			configChanged = true;
-			btnApply.enabled = true;
-			btnOk.enabled = true;
+			footer.buttonApply.enabled = true;
 			if (configChangedLinkages.indexOf(event.linkage) == -1)
 			{
 				configChangedLinkages.push(event.linkage);
@@ -220,12 +171,45 @@
 		
 		private function handleModSettingsButtonClick(event:InteractiveEvent):void
 		{
-			callButtonsS(event.linkage, event.varName, event.value);
+			buttonAction(event.linkage, event.varName, event.value);
 		}
 		
 		private function handleModSettingsHotkeyAction(event:InteractiveEvent):void
 		{
-			handleHotKeysS(event.linkage, event.varName, event.value);
+			hotKeyAction(event.linkage, event.varName, event.value);
+		}
+		
+		private function handleButtonOK(event:InteractiveEvent) : void
+		{
+			if (configChanged)
+			{
+				var config:Object = collectModsData();
+				sendModsData(App.utils.JSON.encode(config));
+			}
+			closeView();
+		}
+		
+		private function handleButtonApply(event:InteractiveEvent) : void
+		{
+			var config:Object = collectModsData();
+			sendModsData(App.utils.JSON.encode(config));
+			configChanged = false;
+			footer.buttonApply.enabled = false;
+		}
+
+		private function handleButtonCancel(event:InteractiveEvent) : void
+		{
+			closeView();
+		}
+		
+		private function handleButtonClose(event:InteractiveEvent) : void
+		{
+			closeView();
+		}
+		
+		private function onEscapeKeyDownHandler(event:InputEvent) : void
+		{
+			closeView();
 		}
 	}
 }

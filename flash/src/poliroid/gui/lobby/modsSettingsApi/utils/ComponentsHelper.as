@@ -235,9 +235,10 @@
 			
 			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
 			
-			function getFormattedString(format:String, value:*):String
+			function getFormattedString(format:String, value:Number):String
 			{
-				return format.split(Constants.SLIDER_VALUE_KEY).join(value);
+				value = Math.round(value * 100) / 100
+				return format.split(Constants.SLIDER_VALUE_KEY).join(value.toString());
 			}
 			
 			if (format)
@@ -248,7 +249,7 @@
 				valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
 				sliderUI.addChild(valueLabel);
 				slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):* {
-					valueLabel["label"].text = getFormattedString(format, event.value.toFixed(2));
+					valueLabel["label"].text = getFormattedString(format, event.value);
 				});
 			}
 			
@@ -349,7 +350,7 @@
 			hotkeyctrl.x = 315;
 			hotkeyctrl.y = 0;
 			hotKeyUI.addChild(hotkeyctrl);
-			
+			hotkeyctrl.addEventListener(InputEvent.INPUT, handleComponentEvent);
 			
 			var result:MovieClip = new MovieClip();
 			result.addChild(hotKeyUI);
