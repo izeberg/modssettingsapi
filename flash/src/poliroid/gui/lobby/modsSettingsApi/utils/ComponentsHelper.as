@@ -28,6 +28,7 @@
 	import flash.display.DisplayObject;
 	
 	import poliroid.gui.lobby.modsSettingsApi.controls.HotKeyControl;
+	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoiceButton;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
 	
 	public class ComponentsHelper
@@ -356,6 +357,28 @@
 			result.addChild(hotKeyUI);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(hotkeyctrl, "keySet");
 			result["control"] = hotkeyctrl;
+			return result;
+		}
+		
+		public static function createColorChoice(componentCFG:Object, modLinkage:String, value:String, headerText:String = "", tooltipText:String = "") : DisplayObject
+		{
+			var colorChoiceUI:UIComponent = new UIComponent();
+			
+			var label:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+			label.x = 0;
+			label.y = 4;
+			colorChoiceUI.addChild(label);
+			
+			var controller:ColorChoiceButton = App.utils.classFactory.getComponent("ColorChoiceButtonUI", ColorChoiceButton);
+			controller.x = 315;
+			controller.y = 0;
+			controller.color = value;
+			colorChoiceUI.addChild(controller);
+			controller.addEventListener(InputEvent.INPUT, handleComponentEvent);
+			
+			var result:MovieClip = new MovieClip();
+			result.addChild(colorChoiceUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(controller, "color");
 			return result;
 		}
 		
