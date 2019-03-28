@@ -84,6 +84,13 @@ template  = {
 			'value': 5,
 			'varName': 'numStepperTest'
 		},
+		{
+			'type': 'ColorChoice',
+			'text': 'ColorChoice test',
+			'tooltip': '{HEADER}ColorChoice tooltip header{/HEADER}{BODY}ColorChoice tooltip body{/BODY}',
+			'value': "FFFFFF",
+			'varName': 'colorChoice'
+		},
 	]
 }
 
@@ -96,6 +103,7 @@ settings = {
 	'minimapClick' : True,
 	'aliveCounter' : 5,
 	'numStepperTest' : 5,
+	'colorChoice' : 'FFFFFF',
 }
 
 def onModSettingsChanged(linkage, newSettings):    

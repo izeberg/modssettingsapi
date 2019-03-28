@@ -31,7 +31,7 @@ def loadView(api):
 def genModApiStaticVO(userSettings):
 	from gui.Scaleform.locale.SETTINGS import SETTINGS
 	from gui.Scaleform.locale.VEH_COMPARE import VEH_COMPARE
-	from gui.modsSettingsApi._constants import MOD_NAME, STATE_TOOLTIP
+	from gui.modsSettingsApi._constants import MOD_NAME, STATE_TOOLTIP, POPUP_COLOR
 	
 	return {
 		'windowTitle': userSettings.get('windowTitle') or MOD_NAME,
@@ -41,7 +41,8 @@ def genModApiStaticVO(userSettings):
 		'buttonApply': SETTINGS.APPLY_BUTTON,
 		'buttonClose': VEH_COMPARE.HEADER_CLOSEBTN_LABEL,
 		'contextDefault': SETTINGS.DEFAULTBTN,
-		'contextClean': VEH_COMPARE.VEHCONF_BTNCLEANUP
+		'contextClean': VEH_COMPARE.VEHCONF_BTNCLEANUP,
+		'popupColor': POPUP_COLOR
 	}
 	
 class ModsSettingsApiWindow(View):

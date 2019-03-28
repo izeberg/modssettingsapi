@@ -194,6 +194,8 @@
 					return ComponentsHelper.createHotKey(componentObj, this.modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
 				case "NumericStepper": 
 					return ComponentsHelper.createNumericStepper(componentObj, this.modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.text, componentObj.tooltip);
+				case "ColorChoice":
+					return ComponentsHelper.createColorChoice(componentObj, this.modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
 				default: 
 					return new MovieClip();
 			}
