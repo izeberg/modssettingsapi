@@ -4,7 +4,7 @@ __author__ = 'Iliev Renat'
 __copyright__ = 'Copyright 2019, Wargaming'
 __credits__ = ['Andruschyshyn Andrey', 'Iliev Renat']
 __license__ = 'CC BY-NC-SA 4.0'
-__version__ = '1.1.3'
+__version__ = '1.1.6'
 __maintainer__ = 'Iliev Renat'
 __email__ = 'mods@izeberg.ru'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
@@ -48,11 +48,11 @@ class ModsSettingsApi(object):
 			linkage = linkage[0]
 		return self.__instance.registerCallback(linkage, callback, buttonHandler)
 
-	def getModSettings(self, linkage, template=None):
+	def getModSettings(self, linkage, template):
 		""" Получение сохраненных настроек
 		:param linkage: Идентификатор настроек
 		:param template: Шаблон настроек
-		:return: Сохраненные настройки, если таковых нет - None
+		:return: Сохраненные настройки, если таковых нет (либо есть, но устаревшие) - None
 		"""
 		if isinstance(linkage, collections.Iterable):
 			linkage = linkage[0]
