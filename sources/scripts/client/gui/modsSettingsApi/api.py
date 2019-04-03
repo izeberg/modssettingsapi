@@ -20,9 +20,10 @@ from gui.modsSettingsApi.utils_common import override, jsonLoad, jsonDump
 class ModsSettingsApi(object):
 	def __init__(self):
 		self.__activeMods = list()
-		self.__config = dict()
-		self.__config['templates'] = dict()
-		self.__config['settings'] = dict()
+		self.__config = {
+			'templates': {},
+			'settings': {},
+		}
 		
 		self.onSettingsChanged = Event.Event()
 		self.onButtonClicked = Event.Event()
@@ -66,6 +67,7 @@ class ModsSettingsApi(object):
 			try:
 				with open(CONFIG_PATH, 'rb') as config:
 					self.__config = jsonLoad(config)
+					map(self.__correctTemplate, self.__config['templates'].values())
 			except:
 				LOG_CURRENT_EXCEPTION()
 		else:
@@ -97,15 +99,8 @@ class ModsSettingsApi(object):
 		try:
 			if linkage not in self.__activeMods:
 				self.__activeMods.append(linkage)
-			
-			if 'column1' in template:
-				for component in template['column1']:
-					if 'type' in component and component['type'] == 'HotKey' and 'value' in component:
-						component['defaultValue'] = component['value']
-			if 'column2' in template:
-				for component in template['column2']:
-					if 'type' in component and component['type'] == 'HotKey' and 'value' in component:
-						component['defaultValue'] = component['value']
+
+			self.__correctTemplate(template)
 			
 			currentTemplate = self.__getModTemplate(linkage)
 			if currentTemplate:
@@ -131,7 +126,17 @@ class ModsSettingsApi(object):
 			return self.__config['templates'].get(linkage)
 		except:
 			LOG_CURRENT_EXCEPTION()
-	
+
+	def __correctTemplate(self, template):
+		if 'settingsVersion' not in template:
+			# calculate version by getting the hash of json dump of template
+			template['settingsVersion'] = hash(json.dumps(template, sort_keys=True))
+				
+		for column in ('column1', 'column2'):
+			for component in template[column]:
+				if 'type' in component and component['type'] == 'HotKey' and 'value' in component:
+					component['defaultValue'] = component['value']
+
 	def registerCallback(self, linkage, callback, buttonHandler = None):
 		if linkage not in self.__activeMods:
 			self.__activeMods.append(linkage)
@@ -142,6 +147,7 @@ class ModsSettingsApi(object):
 	def getModSettings(self, linkage, template=None):
 		result = None
 		if template:
+			self.__correctTemplate(template)
 			currentTemplate = self.__getModTemplate(linkage)
 			if currentTemplate:
 				if template['settingsVersion'] <= currentTemplate['settingsVersion']:
@@ -157,18 +163,11 @@ class ModsSettingsApi(object):
 		self.onSettingsChanged(linkage, newSettings)
 			
 	def __updateModTemplate(self, linkage, settings):
-		modTemplate = self.__config['templates'][linkage]
+		template = self.__config['templates'][linkage]
 		if 'enabled' in self.__config['settings'][linkage]:
-			modTemplate['enabled'] = self.__config['settings'][linkage]['enabled']
-		if 'column1' in modTemplate:
-			for component in modTemplate['column1']:
-				if 'varName' in component:
-					component['value'] = self.__config['settings'][linkage][component['varName']]
-		if 'column2' in modTemplate:
-			for component in modTemplate['column2']:
-				if 'varName' in component:
-					component['value'] = self.__config['settings'][linkage][component['varName']]
-		self.__config['templates'][linkage] = modTemplate
+			template['enabled'] = self.__config['settings'][linkage]['enabled']
+		self.__correctTemplate(template)
+		self.__config['templates'][linkage] = template
 		
 	def cleanConfig(self):
 		for linkage in self.__config['templates'].keys():
@@ -253,17 +252,6 @@ class ModsSettingsApi(object):
 		self.updateHotKeys()
 	
 	def onHotkeyDefault(self, linkage, varName):
-		template = self.__config['templates'][linkage]
-		if 'column1' in template:
-			for component in template['column1']:
-				if 'varName' in component and component['varName'] == varName:
-					component['value'] = component['defaultValue']
-					self.__config['settings'][linkage][varName] = component['defaultValue']
-		if 'column2' in template:
-			for component in template['column2']:
-				if 'varName' in component and component['varName'] == varName:
-					component['value'] = component['defaultValue']
-					self.__config['settings'][linkage][varName] = component['defaultValue']
 		self.__acceptingKey = None
 		self.updateHotKeys()
 		
