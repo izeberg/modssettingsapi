@@ -130,7 +130,7 @@ class ModsSettingsApi(object):
 	def __correctTemplate(self, template):
 		if 'settingsVersion' not in template:
 			# calculate version by getting the hash of json dump of template
-			template['settingsVersion'] = hash(json.dumps(template, sort_keys=True))
+			template['settingsVersion'] = abs(hash(json.dumps(template, sort_keys=True)))
 				
 		for column in ('column1', 'column2'):
 			for component in template[column]:
