@@ -196,7 +196,10 @@
 					return ComponentsHelper.createNumericStepper(componentObj, this.modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.text, componentObj.tooltip);
 				case "ColorChoice":
 					return ComponentsHelper.createColorChoice(componentObj, this.modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+				case "RangeSlider":
+					return ComponentsHelper.createRangeSlider(componentObj, this.modLinkage);
 				default: 
+					DebugUtils.LOG_ERROR('Unexpected type of component:', componentObj.type)
 					return new MovieClip();
 			}
 		}

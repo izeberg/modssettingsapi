@@ -11,6 +11,7 @@
 	import net.wg.gui.components.controls.InfoIcon;
 	import net.wg.gui.components.controls.Slider;
 	import net.wg.gui.components.controls.RadioButton;
+	import net.wg.gui.components.controls.RangeSlider;
 	import net.wg.gui.components.advanced.FieldSet;
 	
 	import scaleform.clik.controls.ButtonGroup;
@@ -412,6 +413,59 @@
 			button.validateNow();
 
 			return button;
+		}
+
+		public static function createRangeSlider(componentCFG:Object, modLinkage:String) : DisplayObject
+		{			
+			var rangeSliderUI:UIComponent = new UIComponent();
+			rangeSliderUI.y = rangeSliderUI.y + 7;
+
+			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text,"");
+			lb.y = -7;
+			lb.x = 0;
+			rangeSliderUI.addChild(lb);
+
+			var rangeSlider:RangeSlider = RangeSlider(App.utils.classFactory.getComponent("RangeSliderUI", RangeSlider));
+			rangeSlider.y = rangeSlider.y + 33;
+			rangeSlider.x = rangeSlider.x + 5;
+			rangeSlider.width = 240;
+
+			rangeSlider.maximum = componentCFG.maximum;
+			rangeSlider.minimum = componentCFG.minimum;
+			rangeSlider.divisionLabelPostfix = componentCFG.divisionLabelPostfix;
+			rangeSlider.divisionLabelStep = componentCFG.divisionLabelStep;
+			rangeSlider.divisionStep = componentCFG.divisionStep;
+			rangeSlider.minRangeDistance = componentCFG.minRangeDistance;
+			rangeSlider.snapInterval = componentCFG.snapInterval;
+			rangeSlider.leftValue = componentCFG.value[0];
+			rangeSlider.rightValue = componentCFG.value[1];
+
+			rangeSlider.focusable = true;
+			rangeSlider.snapping = true;
+			rangeSlider.rangeMode = true;
+
+			rangeSlider["valueProxyValue"] = [rangeSlider.leftValue, rangeSlider.rightValue];
+
+			var valueLabel:DisplayObject = ComponentsHelper.createLabel("","");
+			valueLabel.y = rangeSlider.y + 2;
+			valueLabel.x = rangeSlider.x + rangeSlider.width + Constants.SLIDER_VALUE_MARGIN + 5;
+			valueLabel["label"].text = rangeSlider.leftValue + " / " + rangeSlider.rightValue;
+			rangeSliderUI.addChild(valueLabel);
+
+			rangeSlider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:*):*
+			{
+				valueLabel["label"].text = rangeSlider.leftValue + " / " + rangeSlider.rightValue;
+				rangeSlider["valueProxyValue"] = [rangeSlider.leftValue, rangeSlider.rightValue];
+				handleComponentEvent(event);
+			});
+			rangeSlider.validateNow();
+			rangeSliderUI.addChild(rangeSlider);
+
+			var result:MovieClip = new MovieClip();
+			result.addChild(rangeSliderUI);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(rangeSlider, "valueProxyValue");
+
+			return result;
 		}
 	}
 
