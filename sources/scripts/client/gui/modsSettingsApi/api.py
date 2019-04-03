@@ -6,6 +6,7 @@ import collections
 import json
 import os
 import functools
+import copy
 
 from debug_utils import LOG_CURRENT_EXCEPTION
 from constants import AUTH_REALM
@@ -72,13 +73,6 @@ class ModsSettingsApi(object):
 				LOG_CURRENT_EXCEPTION()
 		else:
 			self.saveConfig()
-	
-	def saveConfig(self):
-		try:
-			with open(CONFIG_PATH, 'wb') as config:
-				config.write(jsonDump(self.__config))
-		except:
-			LOG_CURRENT_EXCEPTION()
 
 	def __getSettingsFromTemplate(self, template):
 		result = dict()
@@ -94,7 +88,19 @@ class ModsSettingsApi(object):
 			if 'varName' in elem and 'value' in elem:
 				result[elem['varName']] = elem['value']
 		return result
-			
+
+	def saveConfig(self):
+		try:
+			with open(CONFIG_PATH, 'wb') as config:
+				config.write(jsonDump(self.__config))
+		except:
+			LOG_CURRENT_EXCEPTION()
+
+	def compareTemplates(self, newTemplate, oldTemplate):
+		if 'settingsVersion' in newTemplate and 'settingsVersion' in oldTemplate:
+			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
+		return json.dumps(newTemplate, sort_keys=True) != json.dumps(oldTemplate, sort_keys=True)
+
 	def setModTemplate(self, linkage, template, callback, buttonHandler = None):
 		try:
 			if linkage not in self.__activeMods:
@@ -103,12 +109,7 @@ class ModsSettingsApi(object):
 			self.__correctTemplate(template)
 			
 			currentTemplate = self.__getModTemplate(linkage)
-			if currentTemplate:
-				if template['settingsVersion'] > currentTemplate['settingsVersion']:
-					self.__config['templates'][linkage] = template
-					self.__config['settings'][linkage] = self.__getSettingsFromTemplate(template)
-					self.saveConfig()
-			else:
+			if not currentTemplate or self.compareTemplates(template, currentTemplate):
 				self.__config['templates'][linkage] = template
 				self.__config['settings'][linkage] = self.__getSettingsFromTemplate(template)
 				self.saveConfig()
@@ -128,10 +129,6 @@ class ModsSettingsApi(object):
 			LOG_CURRENT_EXCEPTION()
 
 	def __correctTemplate(self, template):
-		if 'settingsVersion' not in template:
-			# calculate version by getting the hash of json dump of template
-			template['settingsVersion'] = abs(hash(json.dumps(template, sort_keys=True)))
-				
 		for column in ('column1', 'column2'):
 			for component in template[column]:
 				if 'type' in component and component['type'] == 'HotKey' and 'value' in component:
@@ -150,7 +147,7 @@ class ModsSettingsApi(object):
 			self.__correctTemplate(template)
 			currentTemplate = self.__getModTemplate(linkage)
 			if currentTemplate:
-				if template['settingsVersion'] <= currentTemplate['settingsVersion']:
+				if not self.compareTemplates(template, currentTemplate):
 					result = self.__config['settings'].get(linkage)
 			
 				if linkage not in self.__activeMods:
@@ -159,15 +156,7 @@ class ModsSettingsApi(object):
 		
 	def updateModSettings(self, linkage, newSettings):
 		self.__config['settings'][linkage] = newSettings
-		self.__updateModTemplate(linkage, newSettings)
 		self.onSettingsChanged(linkage, newSettings)
-			
-	def __updateModTemplate(self, linkage, settings):
-		template = self.__config['templates'][linkage]
-		if 'enabled' in self.__config['settings'][linkage]:
-			template['enabled'] = self.__config['settings'][linkage]['enabled']
-		self.__correctTemplate(template)
-		self.__config['templates'][linkage] = template
 		
 	def cleanConfig(self):
 		for linkage in self.__config['templates'].keys():
@@ -175,8 +164,17 @@ class ModsSettingsApi(object):
 				del self.__config['templates'][linkage]
 				del self.__config['settings'][linkage]
 			
-	def getAllTemplates(self):
-		return self.__config['templates']
+	def getTemplatesForUI(self):
+		# Make copy of current templates and updates component's values from actual settings
+		templates = copy.deepcopy(self.__config['templates'])
+		for linkage, template in templates.items():
+			settings = self.getModSettings(linkage, template)
+			template['enabled'] = settings['enabled']
+			for column in ('column1', 'column2'):
+				if column in template:
+					for component in template[column]:
+						component['value'] = settings[component['varName']]
+		return templates
 	
 	def __game_handleKeyEvent(self, baseFunc, event):
 		if self.__acceptingKey is not None:
