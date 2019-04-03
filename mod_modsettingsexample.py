@@ -8,7 +8,6 @@ modLinkage = 'test_iamspotted'
 
 template  = {
 	'modDisplayName': 'Мод «Я обнаружен»',
-	'settingsVersion': 0,
 	'enabled': True,
 	'column1': [
 		{
