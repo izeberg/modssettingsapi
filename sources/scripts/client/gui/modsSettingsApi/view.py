@@ -102,7 +102,7 @@ class ModsSettingsApiWindow(View):
 	def requestModsData(self):
 		self.api.cleanConfig()
 		self.as_setStaticDataS(genModApiStaticVO(self.api.userSettings))
-		self.as_setDataS(self.api.getAllTemplates())
+		self.as_setDataS(self.api.getTemplatesForUI())
 		self.as_updateHotKeysS()
 
 	def as_setStaticDataS(self, data):

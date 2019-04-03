@@ -8,7 +8,6 @@ modLinkage = 'test_iamspotted'
 
 template  = {
 	'modDisplayName': 'Мод «Я обнаружен»',
-	'settingsVersion': 0,
 	'enabled': True,
 	'column1': [
 		{
@@ -91,6 +90,19 @@ template  = {
 			'value': "FFFFFF",
 			'varName': 'colorChoice'
 		},
+		{
+			'type': 'RangeSlider',
+			'text': 'RangeSlider test',
+			'divisionLabelPostfix': '',
+			'divisionLabelStep': 50,
+			'divisionStep': 50,
+			'maximum': 100,
+			'minimum': 0,
+			'minRangeDistance': 10,
+			'snapInterval': 1,
+			'value': [20, 50],
+			'varName': 'rangeSlider'
+		},
 	]
 }
 
@@ -104,6 +116,7 @@ settings = {
 	'aliveCounter' : 5,
 	'numStepperTest' : 5,
 	'colorChoice' : 'FFFFFF',
+	'rangeSlider' : [20, 50],
 }
 
 def onModSettingsChanged(linkage, newSettings):    
