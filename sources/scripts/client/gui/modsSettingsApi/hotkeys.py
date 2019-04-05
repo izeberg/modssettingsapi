@@ -44,7 +44,7 @@ class HotkeysContoller(object):
 	def checkKeySet(self, keys):
 		if not keys:
 			return False
-		return any(map(self.isKeyDown, self._migrateKeys(keys)))
+		return all(map(self.isKeyDown, self._migrateKeys(keys)))
 	
 	def _migrateKeys(self, keys):
 		migrated = set()
