@@ -8,7 +8,7 @@ package poliroid.gui.lobby.modsSettingsApi.data
 		
 		public var varName:String = "";
 		
-		public var value:String = "";
+		public var text:String = "";
 		
 		public var isEmpty:Boolean = false;
 		

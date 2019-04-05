@@ -13,9 +13,10 @@ import Event
 import collections
 
 from gui.modsSettingsApi.api import ModsSettingsApi as ModsSettingsApiBase
+from gui.modsSettingsApi._constants import SPECIAL_KEYS
 
 
-__all__ = ('g_modsSettingsApi', )
+__all__ = ('g_modsSettingsApi', 'SPECIAL_KEYS')
 
 
 class ModsSettingsApi(object):
