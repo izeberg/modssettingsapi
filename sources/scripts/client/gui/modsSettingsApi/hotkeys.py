@@ -51,7 +51,7 @@ class HotkeysContoller(object):
 		for key in keys:
 			if isinstance(key, list):
 				# Make flat set of keys
-				migrated |= self.migrateKeys(key)
+				migrated |= self._migrateKeys(key)
 			else:
 				# Migrate special keys to virtual keys
 				migrated.add(SPECIAL_KEYS.KEYS_TO_SPECIAL.get(key, key))
