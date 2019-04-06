@@ -146,7 +146,8 @@ class ModsSettingsApi(object):
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
-						component['value'] = settings[component['varName']]
+						if 'varName' in component:
+							component['value'] = settings[component['varName']]
 		return templates
 	
 	def onHotkeyStartAccept(self, linkage, varName):
