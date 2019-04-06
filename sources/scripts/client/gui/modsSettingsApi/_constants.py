@@ -10,6 +10,9 @@ VIEW_SWF = 'modsSettingsWindow.swf'
 USER_SETTINGS_PATH = os.path.join('mods', 'configs', 'modsSettingsApi.json')
 
 _preferences_path = os.path.dirname(unicode(BigWorld.wg_getPreferencesFilePath(), 'utf-8', errors='ignore'))
+if not os.path.exists(_preferences_path):
+	os.makedirs(_preferences_path)
+
 CONFIG_PATH = os.path.join(_preferences_path, 'modsettings.dat')
 del _preferences_path
 
