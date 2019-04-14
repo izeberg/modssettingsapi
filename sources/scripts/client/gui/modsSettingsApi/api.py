@@ -142,7 +142,7 @@ class ModsSettingsApi(object):
 		templates = copy.deepcopy(self.config['templates'])
 		for linkage, template in templates.items():
 			settings = self.getModSettings(linkage, template)
-			template['enabled'] = settings['enabled']
+			template['enabled'] = settings.get('enabled', True)
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
