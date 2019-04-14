@@ -4,7 +4,7 @@ __author__ = 'Iliev Renat'
 __copyright__ = 'Copyright 2019, Wargaming'
 __credits__ = ['Andruschyshyn Andrey', 'Iliev Renat']
 __license__ = 'CC BY-NC-SA 4.0'
-__version__ = '1.1.6'
+__version__ = '1.1.7'
 __maintainer__ = 'Iliev Renat'
 __email__ = 'mods@izeberg.ru'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
@@ -13,9 +13,10 @@ import Event
 import collections
 
 from gui.modsSettingsApi.api import ModsSettingsApi as ModsSettingsApiBase
+from gui.modsSettingsApi._constants import SPECIAL_KEYS
 
 
-__all__ = ('g_modsSettingsApi', )
+__all__ = ('g_modsSettingsApi', 'SPECIAL_KEYS')
 
 
 class ModsSettingsApi(object):

@@ -84,7 +84,7 @@ class ModsSettingsApiWindow(View):
 		data = byteify(json.loads(data))
 		for linkage in data:
 			self.api.updateModSettings(linkage, data[linkage])
-		self.api.saveConfig()
+		self.api.configSave()
 
 	def buttonAction(self, linkage, varName, value):
 		self.api.onButtonClicked(linkage, varName, value)
@@ -119,7 +119,7 @@ class ModsSettingsApiWindow(View):
 			self.flashObject.as_updateHotKeys(data)
 	
 	def closeView(self):
-		self.api.saveConfig()
+		self.api.configSave()
 		self.destroy()
 	
 	def onFocusIn(self, *args):

@@ -82,7 +82,7 @@
 			else
 			{
 				statesMC.gotoAndStop(STATE_NORMAL);
-				valueTF.text = model.value;
+				valueTF.text = model.text;
 			}
 			
 

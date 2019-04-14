@@ -1,61 +1,53 @@
-import BigWorld
 import Event
-import game
-import Keys
-import collections
-import json
 import os
 import functools
 import copy
 
 from debug_utils import LOG_CURRENT_EXCEPTION
-from constants import AUTH_REALM
 
 from gui.modsListApi import g_modsListApi
 
 from gui.modsSettingsApi.view import loadView
-from gui.modsSettingsApi._constants import USER_SETTINGS_PATH, CONFIG_PATH
+from gui.modsSettingsApi.hotkeys import HotkeysContoller
+from gui.modsSettingsApi._constants import USER_SETTINGS_PATH, CONFIG_PATH, COLUMNS
 from gui.modsSettingsApi._constants import MOD_ICON, MOD_NAME, MOD_DESCRIPTION
-from gui.modsSettingsApi.utils_common import override, jsonLoad, jsonDump
+from gui.modsSettingsApi.utils_common import jsonLoad, jsonDump
+
 
 class ModsSettingsApi(object):
 	def __init__(self):
-		self.__activeMods = list()
-		self.__config = {
+		super(ModsSettingsApi, self).__init__()
+
+		self.activeMods = set()
+		self.config = {
 			'templates': {},
 			'settings': {},
 		}
-		
+
 		self.onSettingsChanged = Event.Event()
 		self.onButtonClicked = Event.Event()
 		self.updateHotKeys = Event.Event()
+
+		self.hotkeys = HotkeysContoller(self)
+		self.hotkeys.onUpdated += self.updateHotKeys
 		
 		self.userSettings = {}
 	
-		self.__userSettingsLoad()
-		self.__configLoad()
-		self.__initModsList()
+		self.settingsLoad()
+		self.configLoad()
 		
-		self.__acceptingKey = None
-		override(game, 'handleKeyEvent', self.__game_handleKeyEvent)
-		
-	def __initModsList(self):
-		name = self.userSettings.get('modsListApiName') or MOD_NAME
-		description = self.userSettings.get('modsListApiDescription') or MOD_DESCRIPTION
-		icon = self.userSettings.get('modsListApiIcon') or MOD_ICON
-	
 		g_modsListApi.addModification(
 			id='modsSettingsApi',
-			name=name, 
-			description=description, 
-			icon=icon, 
+			name=self.userSettings.get('modsListApiName') or MOD_NAME, 
+			description=self.userSettings.get('modsListApiDescription') or MOD_DESCRIPTION, 
+			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON, 
 			enabled=True, 
 			login=True, 
 			lobby=True,
 			callback=functools.partial(loadView, self)
 		)
 	
-	def __userSettingsLoad(self):
+	def settingsLoad(self):
 		if os.path.exists(USER_SETTINGS_PATH):
 			try:
 				with open(USER_SETTINGS_PATH, 'rb') as config:
@@ -63,80 +55,63 @@ class ModsSettingsApi(object):
 			except:
 				LOG_CURRENT_EXCEPTION()
 	
-	def __configLoad(self):
+	def configLoad(self):
 		if os.path.exists(CONFIG_PATH):
 			try:
 				with open(CONFIG_PATH, 'rb') as config:
-					self.__config = jsonLoad(config)
-					map(self.__correctTemplate, self.__config['templates'].values())
+					self.config = jsonLoad(config)
 			except:
 				LOG_CURRENT_EXCEPTION()
 		else:
-			self.saveConfig()
+			self.configSave()
 
-	def __getSettingsFromTemplate(self, template):
+	def configSave(self):
+		try:
+			with open(CONFIG_PATH, 'wb') as config:
+				config.write(jsonDump(self.config, True))
+		except:
+			LOG_CURRENT_EXCEPTION()
+
+	def getSettingsFromTemplate(self, template):
 		result = dict()
-		result.update(self.__getSettingsFromColumn(template['column1']))
-		result.update(self.__getSettingsFromColumn(template['column2']))
+		for column in COLUMNS:
+			if column in template:
+				result.update(self.getSettingsFromColumn(template[column]))
 		if 'enabled' in template:
 			result['enabled'] = template['enabled']
 		return result
 		
-	def __getSettingsFromColumn(self, column):
+	def getSettingsFromColumn(self, column):
 		result = dict()
 		for elem in column:
 			if 'varName' in elem and 'value' in elem:
 				result[elem['varName']] = elem['value']
 		return result
 
-	def saveConfig(self):
-		try:
-			with open(CONFIG_PATH, 'wb') as config:
-				config.write(jsonDump(self.__config))
-		except:
-			LOG_CURRENT_EXCEPTION()
-
 	def compareTemplates(self, newTemplate, oldTemplate):
 		if 'settingsVersion' in newTemplate and 'settingsVersion' in oldTemplate:
 			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
-		return json.dumps(newTemplate, sort_keys=True) != json.dumps(oldTemplate, sort_keys=True)
+		return jsonDump(newTemplate, True) != jsonDump(oldTemplate, True)
 
 	def setModTemplate(self, linkage, template, callback, buttonHandler = None):
 		try:
-			if linkage not in self.__activeMods:
-				self.__activeMods.append(linkage)
-
-			self.__correctTemplate(template)
-			
-			currentTemplate = self.__getModTemplate(linkage)
+			self.activeMods.add(linkage)
+			currentTemplate = self.config['templates'].get(linkage)
 			if not currentTemplate or self.compareTemplates(template, currentTemplate):
-				self.__config['templates'][linkage] = template
-				self.__config['settings'][linkage] = self.__getSettingsFromTemplate(template)
-				self.saveConfig()
+				self.config['templates'][linkage] = template
+				self.config['settings'][linkage] = self.getSettingsFromTemplate(template)
+				self.configSave()
 			
 			self.onSettingsChanged += callback
 			if buttonHandler is not None:
 				self.onButtonClicked += buttonHandler
 			
-			return self.getModSettings(linkage, self.__config['templates'][linkage])
+			return self.getModSettings(linkage, self.config['templates'][linkage])
 		except:
 			LOG_CURRENT_EXCEPTION()			
-		
-	def __getModTemplate(self, linkage):
-		try:
-			return self.__config['templates'].get(linkage)
-		except:
-			LOG_CURRENT_EXCEPTION()
-
-	def __correctTemplate(self, template):
-		for column in ('column1', 'column2'):
-			for component in template[column]:
-				if 'type' in component and component['type'] == 'HotKey' and 'value' in component:
-					component['defaultValue'] = component['value']
 
 	def registerCallback(self, linkage, callback, buttonHandler = None):
-		if linkage not in self.__activeMods:
-			self.__activeMods.append(linkage)
+		self.activeMods.add(linkage)
 		self.onSettingsChanged += callback
 		if buttonHandler is not None:
 			self.onButtonClicked += buttonHandler
@@ -144,227 +119,51 @@ class ModsSettingsApi(object):
 	def getModSettings(self, linkage, template=None):
 		result = None
 		if template:
-			self.__correctTemplate(template)
-			currentTemplate = self.__getModTemplate(linkage)
+			currentTemplate = self.config['templates'].get(linkage)
 			if currentTemplate:
 				if not self.compareTemplates(template, currentTemplate):
-					result = self.__config['settings'].get(linkage)
+					result = self.config['settings'].get(linkage)
 			
-				if linkage not in self.__activeMods:
-					self.__activeMods.append(linkage)
+				self.activeMods.add(linkage)
 		return result
 		
 	def updateModSettings(self, linkage, newSettings):
-		self.__config['settings'][linkage] = newSettings
+		self.config['settings'][linkage] = newSettings
 		self.onSettingsChanged(linkage, newSettings)
 		
 	def cleanConfig(self):
-		for linkage in self.__config['templates'].keys():
-			if linkage not in self.__activeMods:
-				del self.__config['templates'][linkage]
-				del self.__config['settings'][linkage]
+		for linkage in self.config['templates'].keys():
+			if linkage not in self.activeMods:
+				del self.config['templates'][linkage]
+				del self.config['settings'][linkage]
 			
 	def getTemplatesForUI(self):
 		# Make copy of current templates and updates component's values from actual settings
-		templates = copy.deepcopy(self.__config['templates'])
+		templates = copy.deepcopy(self.config['templates'])
 		for linkage, template in templates.items():
 			settings = self.getModSettings(linkage, template)
-			template['enabled'] = settings['enabled']
-			for column in ('column1', 'column2'):
+			template['enabled'] = settings.get('enabled', True)
+			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
-						component['value'] = settings[component['varName']]
+						if 'varName' in component:
+							component['value'] = settings[component['varName']]
 		return templates
 	
-	def __game_handleKeyEvent(self, baseFunc, event):
-		if self.__acceptingKey is not None:
-			
-			if event.key == Keys.KEY_ESCAPE:
-				self.__acceptingKey = None
-				self.updateHotKeys()
-				return True
-			
-			if event.isKeyUp() and event.key not in [0, Keys.KEY_CAPSLOCK, Keys.KEY_RETURN, Keys.KEY_MOUSE0, Keys.KEY_LEFTMOUSE, Keys.KEY_MOUSE1, Keys.KEY_RIGHTMOUSE, Keys.KEY_MOUSE2, Keys.KEY_MIDDLEMOUSE]:
-				
-				new_keyset = []
-				
-				if event.key == Keys.KEY_LCONTROL or event.key == Keys.KEY_RCONTROL: new_keyset.append([Keys.KEY_LCONTROL, Keys.KEY_RCONTROL])
-				if event.key == Keys.KEY_LSHIFT or event.key == Keys.KEY_RSHIFT: new_keyset.append([Keys.KEY_LSHIFT, Keys.KEY_RSHIFT])
-				if event.key == Keys.KEY_LALT or event.key == Keys.KEY_RALT: new_keyset.append([Keys.KEY_LALT, Keys.KEY_RALT])
-				
-				if BigWorld.isKeyDown(Keys.KEY_LCONTROL) or BigWorld.isKeyDown(Keys.KEY_RCONTROL): new_keyset.append([Keys.KEY_LCONTROL, Keys.KEY_RCONTROL])
-				if BigWorld.isKeyDown(Keys.KEY_LSHIFT) or BigWorld.isKeyDown(Keys.KEY_RSHIFT): new_keyset.append([Keys.KEY_LSHIFT, Keys.KEY_RSHIFT])
-				if BigWorld.isKeyDown(Keys.KEY_LALT) or BigWorld.isKeyDown(Keys.KEY_RALT): new_keyset.append([Keys.KEY_LALT, Keys.KEY_RALT])
-				
-				linkage, varName = self.__acceptingKey
-				self.__config['settings'][linkage][varName] = new_keyset
-				
-				template = self.__config['templates'][linkage]
-				if 'column1' in template:
-					for component in template['column1']:
-						if 'varName' in component and component['varName'] == varName:
-							component['value'] = new_keyset	
-				if 'column2' in template:
-					for component in template['column2']:
-						if 'varName' in component and component['varName'] == varName:
-							component['value'] = new_keyset	
-							
-				self.__acceptingKey = None
-				self.updateHotKeys()
-				return True
-			
-			if event.isKeyDown() and event.key not in [0, Keys.KEY_LCONTROL, Keys.KEY_LSHIFT, Keys.KEY_LALT, Keys.KEY_RCONTROL, Keys.KEY_RSHIFT, Keys.KEY_RALT, Keys.KEY_CAPSLOCK, Keys.KEY_RETURN,
-				Keys.KEY_MOUSE0, Keys.KEY_LEFTMOUSE, Keys.KEY_MOUSE1, Keys.KEY_RIGHTMOUSE, Keys.KEY_MOUSE2, Keys.KEY_MIDDLEMOUSE]:
-				
-				new_keyset = [event.key]
-				
-				if BigWorld.isKeyDown(Keys.KEY_LCONTROL) or BigWorld.isKeyDown(Keys.KEY_RCONTROL): new_keyset.append([Keys.KEY_LCONTROL, Keys.KEY_RCONTROL])
-				if BigWorld.isKeyDown(Keys.KEY_LSHIFT) or BigWorld.isKeyDown(Keys.KEY_RSHIFT): new_keyset.append([Keys.KEY_LSHIFT, Keys.KEY_RSHIFT])
-				if BigWorld.isKeyDown(Keys.KEY_LALT) or BigWorld.isKeyDown(Keys.KEY_RALT): new_keyset.append([Keys.KEY_LALT, Keys.KEY_RALT])
-				
-				linkage, varName = self.__acceptingKey
-				self.__config['settings'][linkage][varName] = new_keyset
-				
-				template = self.__config['templates'][linkage]
-				if 'column1' in template:
-					for component in template['column1']:
-						if 'varName' in component and component['varName'] == varName:
-							component['value'] = new_keyset	
-				if 'column2' in template:
-					for component in template['column2']:
-						if 'varName' in component and component['varName'] == varName:
-							component['value'] = new_keyset	
-							
-				self.__acceptingKey = None
-				self.updateHotKeys()
-				return True
-		
-		return baseFunc(event)
-	
 	def onHotkeyStartAccept(self, linkage, varName):
-		self.__acceptingKey = (linkage, varName)
-		self.updateHotKeys()
+		return self.hotkeys.startAccept(linkage, varName)
 	
 	def onHotkeyStopAccept(self, linkage, varName):
-		self.__acceptingKey = None
-		self.updateHotKeys()
+		return self.hotkeys.stopAccept()
 	
 	def onHotkeyDefault(self, linkage, varName):
-		self.__acceptingKey = None
-		self.updateHotKeys()
+		return self.hotkeys.reset(linkage, varName)
 		
 	def onHotkeyClear(self, linkage, varName):
-		self.__config['settings'][linkage][varName] = []
-		template = self.__config['templates'][linkage]
-		if 'column1' in template:
-			for component in template['column1']:
-				if 'varName' in component and component['varName'] == varName:
-					component['value'] = []
-		if 'column2' in template:
-			for component in template['column2']:
-				if 'varName' in component and component['varName'] == varName:
-					component['value'] = []
-		self.__acceptingKey = None
-		self.updateHotKeys()
+		return self.hotkeys.clear(linkage, varName)
 	
 	def getAllHotKeys(self):
-		result = {}
-		
-		def parseKeySet(keyset):
-			if not keyset:
-				return [True, '', False, False, False]
-			
-			key_name = None
-			is_alt = False
-			is_control = False
-			is_shift = False
-			
-			for item in keyset:
-				if isinstance(item, list):
-					for key in item:
-						if key == Keys.KEY_LALT or key == Keys.KEY_RALT:	
-							is_alt = True
-						if key == Keys.KEY_LCONTROL or key == Keys.KEY_LCONTROL:	
-							is_control = True
-						if key == Keys.KEY_LSHIFT or key == Keys.KEY_LSHIFT:	
-							is_shift = True
-				else:
-					for attr in dir(Keys):
-						if 'KEY_' in attr and getattr(Keys, attr) == item:
-							key_name = attr.replace('KEY_', '')
-			
-			if not key_name:
-				if is_alt:
-					key_name = 'ALT'
-					is_alt = False
-				elif is_control:
-					key_name = 'CTRL'
-					is_control = False
-				elif is_shift:
-					key_name = 'SHIFT'
-					is_shift = False
-
-			
-			return [False, key_name, is_alt, is_control, is_shift]
-		
-		for linkage in self.__config['templates'].keys():
-			if linkage in self.__activeMods:
-				
-				template = self.__config['templates'][linkage]
-				
-				if 'column1' in template:
-					for component in template['column1']:
-						if 'type' in component  and component['type'] == 'HotKey' and 'varName' in component and 'value' in component:
-							if linkage not in result: result[linkage] = {}
-							keySet = parseKeySet(component['value'])
-							value = self.__config['settings'][linkage][component['varName']]
-							c_linkage, c_varName = '', ''
-							if self.__acceptingKey is not None:
-								c_linkage, c_varName = self.__acceptingKey
-							isAccepting = linkage == c_linkage and component['varName'] == c_varName
-							result[linkage][component['varName']] = {
-								"linkage": linkage,
-								"varName": component['varName'],
-								"value": keySet[1],
-								"keySet": component['value'],
-								"isEmpty": keySet[0],
-								"isAccepting": isAccepting,
-								"modifierAlt": keySet[2],
-								"modifierCtrl": keySet[3],
-								"modiferShift": keySet[4]
-							}
-				
-				if 'column2' in template:
-					for component in template['column2']:
-						if 'type' in component  and component['type'] == 'HotKey' and 'varName' in component and 'value' in component:
-							if linkage not in result: result[linkage] = {}
-							keySet = parseKeySet(component['value'])
-							value = self.__config['settings'][linkage][component['varName']]
-							c_linkage, c_varName = '', ''
-							if self.__acceptingKey is not None:
-								c_linkage, c_varName = self.__acceptingKey
-							isAccepting = linkage == c_linkage and component['varName'] == c_varName
-							result[linkage][component['varName']] = {
-								"linkage": linkage,
-								"varName": component['varName'],
-								"value": keySet[1],
-								"keySet": component['value'],
-								"isEmpty": keySet[0],
-								"isAccepting": isAccepting,
-								"modifierAlt": keySet[2],
-								"modifierCtrl": keySet[3],
-								"modiferShift": keySet[4]
-							}
-		return result
+		return self.hotkeys.getAllHotKeys()
 	
-	def checkKeySet(self, keyset):
-		if not keyset:
-			return False
-		result = True
-		for item in keyset:
-			if isinstance(item, int) and not BigWorld.isKeyDown(item):
-				result = False
-			if isinstance(item, list):
-				if not BigWorld.isKeyDown(item[0]) and not BigWorld.isKeyDown(item[1]):
-					result = False
-		return result
+	def checkKeySet(self, keys):
+		return self.hotkeys.checkKeySet(keys)

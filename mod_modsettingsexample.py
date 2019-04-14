@@ -131,11 +131,11 @@ def onGameKeyDown(event):
 	if g_modsSettingsApi.checkKeySet(settings['stateKeySet']):
 		print 'onHandleKeyEvent', settings['stateKeySet']
 
-savedSettings = g_modsSettingsApi.getModSettings((modLinkage, ), template)
+savedSettings = g_modsSettingsApi.getModSettings(modLinkage, template)
 if savedSettings:
 	settings = savedSettings
-	g_modsSettingsApi.registerCallback((modLinkage, ), onModSettingsChanged, onButtonClicked)
+	g_modsSettingsApi.registerCallback(modLinkage, onModSettingsChanged, onButtonClicked)
 else:
-	settings = g_modsSettingsApi.setModTemplate((modLinkage, ), template, onModSettingsChanged, onButtonClicked)   
+	settings = g_modsSettingsApi.setModTemplate(modLinkage, template, onModSettingsChanged, onButtonClicked)   
 
 
