@@ -49,13 +49,13 @@ class HotkeysContoller(object):
 	def _migrateKeys(self, keys):
 		migrated = set()
 		for key in keys:
-			if isinstance(key, list):
+			if isinstance(key, collections.Iterable):
 				# Make flat set of keys
 				migrated |= self._migrateKeys(key)
 			else:
 				# Migrate special keys to virtual keys
 				migrated.add(SPECIAL_KEYS.KEYS_TO_SPECIAL.get(key, key))
-		return sorted(list(migrated))
+		return migrated
 
 	def _game_handleKeyEvent(self, baseFunc, event):
 		if self.acceptingKey:
