@@ -10,7 +10,7 @@ import os
 from debug_utils import LOG_CURRENT_EXCEPTION
 from constants import AUTH_REALM
 
-from gui.app_loader.loader import g_appLoader
+from gui.shared.personality import ServicesLocator
 from gui.app_loader.settings import APP_NAME_SPACE
 from gui.Scaleform.genConsts.APP_CONTAINERS_NAMES import APP_CONTAINERS_NAMES
 from gui.Scaleform.framework import ScopeTemplates, ViewSettings, ViewTypes, g_entitiesFactories
@@ -26,7 +26,7 @@ __all__ = ('loadView')
 
 
 def loadView(api):
-	g_appLoader.getDefLobbyApp().loadView(SFViewLoadParams(VIEW_ALIAS, VIEW_ALIAS), ctx=api)
+	ServicesLocator.appLoader.getDefLobbyApp().loadView(SFViewLoadParams(VIEW_ALIAS, VIEW_ALIAS), ctx=api)
 
 def genModApiStaticVO(userSettings):
 	from gui.Scaleform.locale.SETTINGS import SETTINGS
@@ -56,7 +56,7 @@ class ModsSettingsApiWindow(View):
 		self.api.updateHotKeys += self.as_updateHotKeysS
 		
 		self._blur = GUI.WGUIBackgroundBlur()
-		app = g_appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
+		app = ServicesLocator.appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
 		if app:
 			self._blur.enable = True
 			ownLayer = APP_CONTAINERS_NAMES.VIEWS
@@ -73,7 +73,7 @@ class ModsSettingsApiWindow(View):
 		if self._blur is not None:
 			self._blur.enable = False
 			self._blur = None
-		app = g_appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
+		app = ServicesLocator.appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
 		if app:
 			app.unblurBackgroundViews()
 		
