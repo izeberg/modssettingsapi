@@ -10,7 +10,6 @@ __email__ = 'mods@izeberg.ru'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
 import Event
-import collections
 
 from gui.modsSettingsApi.api import ModsSettingsApi as ModsSettingsApiBase
 from gui.modsSettingsApi._constants import SPECIAL_KEYS
@@ -35,8 +34,6 @@ class ModsSettingsApi(object):
 		:param buttonHandler: Функция-обработчик нажатий на кнопку
 		:return: Сохраненные настройки
 		"""
-		if isinstance(linkage, collections.Iterable):
-			linkage = linkage[0]
 		return self.__instance.setModTemplate(linkage, template, callback, buttonHandler)
 
 	def registerCallback(self, linkage, callback, buttonHandler=None):
@@ -45,8 +42,6 @@ class ModsSettingsApi(object):
 		:param callback: Функция-обработчик новых настроек
 		:param buttonHandler: Функция-обработчик нажатий на кнопку
 		"""
-		if isinstance(linkage, collections.Iterable):
-			linkage = linkage[0]
 		return self.__instance.registerCallback(linkage, callback, buttonHandler)
 
 	def getModSettings(self, linkage, template):
@@ -55,8 +50,6 @@ class ModsSettingsApi(object):
 		:param template: Шаблон настроек
 		:return: Сохраненные настройки, если таковых нет (либо есть, но устаревшие) - None
 		"""
-		if isinstance(linkage, collections.Iterable):
-			linkage = linkage[0]
 		return self.__instance.getModSettings(linkage, template)
 
 	def updateModSettings(self, linkage, newSettings):
@@ -64,8 +57,6 @@ class ModsSettingsApi(object):
 		:param linkage: Идентификатор настроек
 		:param newSettings: Новые настройки
 		"""
-		if isinstance(linkage, collections.Iterable):
-			linkage = linkage[0]
 		return self.__instance.updateModSettings(linkage, newSettings)
 
 	def checkKeySet(self, keyset):
