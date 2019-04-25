@@ -26,6 +26,7 @@ class ModsSettingsApi(object):
 
 		self.onSettingsChanged = Event.Event()
 		self.onButtonClicked = Event.Event()
+		self.onWindowClosed = Event.Event()
 		self.updateHotKeys = Event.Event()
 
 		self.hotkeys = HotkeysContoller(self)

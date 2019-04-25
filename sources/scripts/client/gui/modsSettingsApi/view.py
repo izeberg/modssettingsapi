@@ -78,6 +78,7 @@ class ModsSettingsApiWindow(View):
 			app.unblurBackgroundViews()
 		
 		self.api.updateHotKeys -= self.as_updateHotKeysS
+		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
 
 	def sendModsData(self, data):
