@@ -56,26 +56,22 @@ class ModsSettingsApiWindow(View):
 		self.api.updateHotKeys += self.as_updateHotKeysS
 		
 		self._blur = GUI.WGUIBackgroundBlur()
-		app = ServicesLocator.appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
-		if app:
-			self._blur.enable = True
-			ownLayer = APP_CONTAINERS_NAMES.VIEWS
-			blurAnimRepeatCount = 10
-			layers = [
-				APP_CONTAINERS_NAMES.SYSTEM_MESSAGES,
-				APP_CONTAINERS_NAMES.SERVICE_LAYOUT,
-				APP_CONTAINERS_NAMES.MARKER
-			]
-			app.blurBackgroundViews(ownLayer, layers, blurAnimRepeatCount)
+		self._blur.enable = True
+		ownLayer = APP_CONTAINERS_NAMES.VIEWS
+		blurAnimRepeatCount = 10
+		layers = [
+			APP_CONTAINERS_NAMES.SYSTEM_MESSAGES,
+			APP_CONTAINERS_NAMES.SERVICE_LAYOUT,
+			APP_CONTAINERS_NAMES.MARKER
+		]
+		self.app.blurBackgroundViews(ownLayer, layers, blurAnimRepeatCount)
 	
 	def _dispose(self):
 		
 		if self._blur is not None:
 			self._blur.enable = False
 			self._blur = None
-		app = ServicesLocator.appLoader.getApp(APP_NAME_SPACE.SF_LOBBY)
-		if app:
-			app.unblurBackgroundViews()
+		self.app.unblurBackgroundViews()
 		
 		self.api.updateHotKeys -= self.as_updateHotKeysS
 		self.api.onWindowClosed()
