@@ -374,7 +374,6 @@
 			controller.y = 0;
 			controller.color = value;
 			colorChoiceUI.addChild(controller);
-			controller.addEventListener(InputEvent.INPUT, handleComponentEvent);
 			
 			var result:MovieClip = new MovieClip();
 			result.addChild(colorChoiceUI);

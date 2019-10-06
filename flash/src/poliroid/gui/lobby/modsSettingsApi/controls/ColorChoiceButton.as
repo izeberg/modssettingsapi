@@ -5,13 +5,13 @@
 	import flash.geom.Point;
 	
 	import scaleform.clik.constants.InvalidationType;
-	import scaleform.clik.events.InputEvent;
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.gui.components.popovers.PopOverConst;
 	import net.wg.gui.interfaces.ISoundButtonEx;
 	
 	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoisePopup;
-	
+	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
+
 	public class ColorChoiceButton extends SoundButtonEx implements ISoundButtonEx
 	{
 		public var hitAreaA:MovieClip;
@@ -97,7 +97,7 @@
 		public function onValueChanged(newColor:String) : void
 		{
 			color = newColor;
-			dispatchEvent(new InputEvent(InputEvent.INPUT, null));
+			dispatchEvent(new InteractiveEvent(InteractiveEvent.VALUE_CHANGED));
 		}
 		
 		public function set color(newColor:String) : void
