@@ -3,10 +3,13 @@ import os
 import functools
 import copy
 
+from helpers import dependency
+
 from debug_utils import LOG_CURRENT_EXCEPTION
 
 from gui.modsListApi import g_modsListApi
 
+from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
 from gui.modsSettingsApi.view import loadView
 from gui.modsSettingsApi.hotkeys import HotkeysContoller
 from gui.modsSettingsApi._constants import USER_SETTINGS_PATH, CONFIG_PATH, COLUMNS
@@ -14,7 +17,7 @@ from gui.modsSettingsApi._constants import MOD_ICON, MOD_NAME, MOD_DESCRIPTION
 from gui.modsSettingsApi.utils_common import jsonLoad, jsonDump
 
 
-class ModsSettingsApi(object):
+class ModsSettingsApi(IModsSettingsApiInternal):
 	def __init__(self):
 		super(ModsSettingsApi, self).__init__()
 
@@ -47,6 +50,8 @@ class ModsSettingsApi(object):
 			lobby=True,
 			callback=functools.partial(loadView, self)
 		)
+
+		dependency._g_manager.addInstance(IModsSettingsApiInternal, self)
 	
 	def settingsLoad(self):
 		if os.path.exists(USER_SETTINGS_PATH):

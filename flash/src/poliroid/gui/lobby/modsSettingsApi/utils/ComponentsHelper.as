@@ -352,7 +352,6 @@
 			hotkeyctrl.x = 315;
 			hotkeyctrl.y = 0;
 			hotKeyUI.addChild(hotkeyctrl);
-			hotkeyctrl.addEventListener(InputEvent.INPUT, handleComponentEvent);
 			
 			var result:MovieClip = new MovieClip();
 			result.addChild(hotKeyUI);
