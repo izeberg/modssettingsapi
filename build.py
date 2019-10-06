@@ -30,6 +30,10 @@ def call(*args):
 def getVersion(meta):
 	if 'version' in meta:
 		return meta['version']
+
+	tag = call('git', 'describe', '--abbrev=0', '--tags')
+	if 'fatal:' not in tag:
+		return tag
 	
 	if 'not a git repository' not in call('git', 'log'):
 		tree = call('git', 'rev-parse', '--abbrev-ref', 'HEAD')
