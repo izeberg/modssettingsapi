@@ -10,8 +10,6 @@
 		public static var BUTTON_CANCEL:String = "BUTTON_CANCEL";
 		public static var BUTTON_CLOSE:String = "BUTTON_CLOSE";
 		public static var BUTTON_ENABLED_TOOLTIP:String = "BUTTON_ENABLED_TOOLTIP";
-		public static var CONTEXT_DEFAULT:String = "CONTEXT_DEFAULT";
-		public static var CONTEXT_CLEAN:String = "CONTEXT_CLEAN";
 		public static var POPUP_COLOR:String = "POPUP_COLOR";
 		
 		public function STRINGS():void
@@ -27,8 +25,6 @@
 			BUTTON_CANCEL = data.buttonCancel;
 			BUTTON_CLOSE = data.buttonClose;
 			BUTTON_ENABLED_TOOLTIP = data.stateTooltip;
-			CONTEXT_DEFAULT = data.contextDefault;
-			CONTEXT_CLEAN = data.contextClean;
 			POPUP_COLOR = data.popupColor;
 		}
 	}

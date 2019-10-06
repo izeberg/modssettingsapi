@@ -10,20 +10,25 @@ __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
 import Event
 
-from gui.modsSettingsApi.api import ModsSettingsApi as ModsSettingsApiBase
+from helpers import dependency
+
+from gui.modsSettingsApi.skeleton import IModsSettingsApi
+from gui.modsSettingsApi.api import ModsSettingsApi
 from gui.modsSettingsApi._constants import SPECIAL_KEYS
 
 
-__all__ = ('g_modsSettingsApi', 'SPECIAL_KEYS')
+__all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'SPECIAL_KEYS')
 
 
-class ModsSettingsApi(object):
+class _ModsSettingsApi(IModsSettingsApi):
 	"""
 	API доступа к меню настроек
 	"""
 
 	def __init__(self):
-		self.__instance = ModsSettingsApiBase()
+		super(_ModsSettingsApi, self).__init__()
+		self.__instance = ModsSettingsApi()
+		dependency._g_manager.addInstance(IModsSettingsApi, self)
 
 	def __backwardCompatibleLinkage(self, linkage):
 		# I hate this shit

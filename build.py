@@ -12,6 +12,8 @@ import struct
 import shutil
 import sys
 import tempfile
+import psutil
+import polib
 
 from datetime import datetime
 from xml.etree import ElementTree
@@ -19,10 +21,10 @@ from xml.dom import minidom
 
 
 def call(*args):
-    try:
-        return subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT, universal_newlines=True).strip()
-    except subprocess.CalledProcessError as e:
-        return e.output
+	try:
+		return subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT, universal_newlines=True).strip()
+	except subprocess.CalledProcessError as e:
+		return e.output
 
 
 def getVersion(meta):
@@ -53,24 +55,35 @@ def readSWF(path):
 
 def buildFLA(projects):
 	if '-f' in sys.argv and projects:
-		with open('build.jsfl', 'wb') as fh:
+		jsflFile = 'build.jsfl'
+
+		with open(jsflFile, 'wb') as fh:
 			for path in projects.keys():
 				path = str(os.path.abspath(path))
-				fh.write('fl.publishDocument("file:///%s", "Default");' % path.replace('\\', '/').replace(':', '|'))
-				fh.write('\r\n')
-			fh.write('fl.quit(false);')
+				fh.write('fl.publishDocument("file:///%s", "Default");\r\n' % path.replace('\\', '/').replace(':', '|'))
+
+			# detect opened Animate
+			for proc in psutil.process_iter(): 
+				if proc.name().lower() == os.path.basename(os.environ.get('ANIMATE')).lower():
+					break
+			else:
+				fh.write('fl.quit(false);')
 
 		try:
-			subprocess.check_output([os.environ.get('ANIMATE'), '-e', 'build.jsfl', '-AlwaysRunJSFL'],
+			subprocess.check_output([os.environ.get('ANIMATE'), '-e', jsflFile, '-AlwaysRunJSFL'],
 									universal_newlines=True,
 									stderr=subprocess.STDOUT)
-		except subprocess.CalledProcessError as error:
-			print error.output.strip()
+		except subprocess.CalledProcessError as ex:
+			print ex
 
-		try:
-			os.remove('build.jsfl')
-		except Exception as ex:
-			print ex.message
+		# publishing can be asynchronous when Animate is already opened
+		# so waiting script file unlock to remove, which means publishing is done
+		while os.path.exists(jsflFile): 
+			try:
+				os.remove(jsflFile)
+			except:
+				pass
+		
 	return {
 		dst: readSWF(src)
 		for src, dst in projects.items()
@@ -151,26 +164,26 @@ def buildPython(path, filename):
 		return imp.get_magic() + struct.pack('L', timestamp) + marshal.dumps(code)
 
 
-def buildGO(path):
+def buildGO(module, env):
 	"""
 		Calls and returns stdout go in project work dir
 	"""
-
-	env = dict(os.environ)
-	if 'GOBIN' not in env:
-		env['GOBIN'] = os.path.join(os.environ.get('GOPATH'), 'bin')
-
 	with tempfile.NamedTemporaryFile(delete=True) as f:
 		filename = f.name
 
 	try:
-		subprocess.check_output(['go', 'build', '-o', filename], 
-								cwd=path, env=env, shell=True, 
-								stderr=subprocess.STDOUT, universal_newlines=True)
+		cwd = os.path.join(env['GOPATH'], 'src')
+		if not os.path.exists(cwd):
+			os.makedirs(cwd)
+		subprocess.check_output(['go', 'get', '-t', str(module)], cwd=cwd, env=env, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+
+		cwd = os.path.join(cwd, module)
+		subprocess.check_output(['go', 'test'], cwd=cwd, env=env, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
+		subprocess.check_output(['go', 'build', '-o', filename], cwd=cwd, env=env, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
 		with open(filename, 'rb') as f:
 			return f.read()
 	except subprocess.CalledProcessError as e:
-		print path, e.output.strip()
+		print module, e.output.strip()
 
 
 def createMeta(**meta):
@@ -261,7 +274,6 @@ def build(packageFile, config):
 				if fext == '.py':
 					write(excludes, package, fname + '.pyc', buildPython(path, name))
 				elif fext == '.po':
-					import polib
 					write(excludes, package, fname + '.mo', polib.pofile(path).to_binary())
 				elif fext != '.pyc' or CONFIG.get('pass_pyc_files', False):
 					with open(path, 'rb') as f:
@@ -273,8 +285,11 @@ def build(packageFile, config):
 		for dst, data in buildFLA(CONFIG.get('flash_fla', {})).items():
 			write(excludes, package, dst, data)
 
+		env = dict(os.environ)
+		env['GOPATH'] = str(os.path.abspath(CONFIG.get('gopath', tempfile.mkdtemp())))
+
 		for source, dst in CONFIG.get('go', {}).items():
-			write(excludes, package, dst, buildGO(source))
+			write(excludes, package, dst, buildGO(source, env))
 
 		for path, dst in CONFIG.get('copy', {}).items():
 			with open(path, 'rb') as f:

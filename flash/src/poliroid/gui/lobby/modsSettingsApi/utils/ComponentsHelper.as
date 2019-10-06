@@ -352,7 +352,6 @@
 			hotkeyctrl.x = 315;
 			hotkeyctrl.y = 0;
 			hotKeyUI.addChild(hotkeyctrl);
-			hotkeyctrl.addEventListener(InputEvent.INPUT, handleComponentEvent);
 			
 			var result:MovieClip = new MovieClip();
 			result.addChild(hotKeyUI);
@@ -375,7 +374,6 @@
 			controller.y = 0;
 			controller.color = value;
 			colorChoiceUI.addChild(controller);
-			controller.addEventListener(InputEvent.INPUT, handleComponentEvent);
 			
 			var result:MovieClip = new MovieClip();
 			result.addChild(colorChoiceUI);

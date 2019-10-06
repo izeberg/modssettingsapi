@@ -16,10 +16,6 @@ package poliroid.gui.lobby.modsSettingsApi.data
 
 		public var stateTooltip:String = "";
 
-		public var contextDefault:String = "";
-
-		public var contextClean:String = "";
-
 		public var popupColor:String = "";
 		
 		public function ModsSettingsStaticVO(data:Object) 
