@@ -5,6 +5,6 @@
 		"description": "This mod allows you to easily configure installed mods"
 	},
 	"flash_fla": {
-		"flash/modsSettingsWindow.fla": "res/gui/flash/modsSettingsWindow.swf"
+		"flash/modsSettingsWindow/modsSettingsWindow.xfl": "res/gui/flash/modsSettingsWindow.swf"
 	}
 }
