@@ -1,0 +1,277 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ModificationStatusSwitcher/StatusSwitcherUI" itemID="5c4a58c4-00000036" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.StatusSwitcher" linkageClassName="StatusSwitcherUI" lastModified="1553626741" lastUniqueIdentifier="1">
+  <timeline>
+    <DOMTimeline name="StatusSwitcherUI">
+      <layers>
+        <DOMLayer name="as" color="#FF4FFF" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="9" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="9" duration="10" keyMode="9728">
+              <Actionscript>
+                <script><![CDATA[stop();
+]]></script>
+              </Actionscript>
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="19" duration="10" keyMode="9728">
+              <Actionscript>
+                <script><![CDATA[stop();
+]]></script>
+              </Actionscript>
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="29" duration="10" keyMode="9728">
+              <Actionscript>
+                <script><![CDATA[stop();
+]]></script>
+              </Actionscript>
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="39" duration="10" keyMode="9728">
+              <Actionscript>
+                <script><![CDATA[stop();
+]]></script>
+              </Actionscript>
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="49" keyMode="9728">
+              <Actionscript>
+                <script><![CDATA[stop();
+]]></script>
+              </Actionscript>
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="names" color="#943EE8" current="true" isSelected="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="10" name="up" labelType="name" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="10" duration="10" name="over" labelType="name" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="20" duration="10" name="down" labelType="name" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="30" duration="10" name="release" labelType="name" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="40" duration="10" name="out" labelType="name" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="icon" color="#9933CC" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="20" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="20" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
+                  <matrix>
+                    <Matrix ty="1"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="30" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
+                  <matrix>
+                    <Matrix ty="1"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="39" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="40" duration="10" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="pressed" color="#FF4FFF" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="20" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="20" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                  <color>
+                    <Color alphaMultiplier="0"/>
+                  </color>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="30" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="39" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                  <color>
+                    <Color alphaMultiplier="0"/>
+                  </color>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="40" duration="10" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="hover" color="#FF800A" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="10" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+            <DOMFrame index="10" duration="8" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                  <color>
+                    <Color alphaMultiplier="0"/>
+                  </color>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="18" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                  <color>
+                    <Color alphaMultiplier="0.890625"/>
+                  </color>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="19" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="20" duration="19" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="39" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" selected="true" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="40" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+            <DOMFrame index="49" tweenType="motion" motionTweenSnap="true" keyMode="22017">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                  <color>
+                    <Color alphaMultiplier="0"/>
+                  </color>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="normal" color="#009999" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" duration="50" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonNormal" symbolType="graphic" loop="loop">
+                  <transformationPoint>
+                    <Point x="13" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

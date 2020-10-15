@@ -1,0 +1,72 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModApiWindowContentUI" itemID="5c4ecd3c-0000017b" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowContent" linkageClassName="ModApiWindowContentUI" lastModified="1548674006">
+  <timeline>
+    <DOMTimeline name="ModApiWindowContentUI">
+      <layers>
+        <DOMLayer name="scrollBar" color="#FF800A" current="true" isSelected="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMComponentInstance libraryItemName="imports/ScrollBar" name="scrollBar" selected="true" centerPoint3DX="871.5" centerPoint3DY="202" uniqueID="4">
+                  <matrix>
+                    <Matrix d="3.63633728027344" tx="865" ty="2"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="6.5" y="55"/>
+                  </transformationPoint>
+                  <parametersAsXML><![CDATA[   <property id="offsetBottom">
+      <Inspectable name="offsetBottom" variable="offsetBottom" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="offsetTop">
+      <Inspectable name="offsetTop" variable="offsetTop" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="scrollTarget">
+      <Inspectable name="scrollTarget" variable="scrollTarget" category="" verbose="0" defaultValue="" type="String"/>
+   </property>
+   <property id="trackMode">
+      <Inspectable name="trackMode" variable="trackMode" category="" verbose="0" defaultValue="scrollPage" enumeration="scrollPage,scrollToCursor" type="List"/>
+   </property>
+   <property id="visible">
+      <Inspectable name="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+   <property id="height">
+      <Inspectable name="height" variable="height" category="" verbose="0" defaultValue="563" type="Number"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="scrollPane" color="#00FFFF" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="imports/ResizableScrollPaneUI" name="scrollPane">
+                  <transformationPoint>
+                    <Point/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="Layer 1" color="#4F80FF">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="resources/background_content" name="background">
+                  <matrix>
+                    <Matrix tx="-100"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="512" y="13"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

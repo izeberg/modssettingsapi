@@ -12,16 +12,15 @@ from constants import AUTH_REALM
 from helpers import dependency
 
 from gui.shared.personality import ServicesLocator
-from gui.app_loader.settings import APP_NAME_SPACE
-from gui.Scaleform.genConsts.APP_CONTAINERS_NAMES import APP_CONTAINERS_NAMES
-from gui.Scaleform.framework import ScopeTemplates, ViewSettings, ViewTypes, g_entitiesFactories
+from gui.shared.view_helpers.blur_manager import CachedBlur
+from gui.Scaleform.framework import ScopeTemplates, ViewSettings, g_entitiesFactories
 from gui.Scaleform.framework.entities.abstract.AbstractWindowView import AbstractWindowView
 from gui.Scaleform.framework.entities.View import View
 from gui.Scaleform.framework.managers import context_menu
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
-
 from gui.Scaleform.locale.SETTINGS import SETTINGS
 from gui.Scaleform.locale.VEH_COMPARE import VEH_COMPARE
+from frameworks.wulf import WindowLayer
 
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
 from gui.modsSettingsApi._constants import MOD_NAME, STATE_TOOLTIP, POPUP_COLOR, VIEW_ALIAS, VIEW_SWF
@@ -51,25 +50,10 @@ class ModsSettingsApiWindow(View):
 	def _populate(self):
 		super(ModsSettingsApiWindow, self)._populate()
 		self.api.updateHotKeys += self.as_updateHotKeysS
-		
-		self._blur = GUI.WGUIBackgroundBlur()
-		self._blur.enable = True
-		ownLayer = APP_CONTAINERS_NAMES.VIEWS
-		blurAnimRepeatCount = 10
-		layers = [
-			APP_CONTAINERS_NAMES.SYSTEM_MESSAGES,
-			APP_CONTAINERS_NAMES.SERVICE_LAYOUT,
-			APP_CONTAINERS_NAMES.MARKER
-		]
-		self.app.blurBackgroundViews(ownLayer, layers, blurAnimRepeatCount)
-	
+		self._blur = CachedBlur(enabled=True, ownLayer=WindowLayer.OVERLAY-1)
+
 	def _dispose(self):
-		
-		if self._blur is not None:
-			self._blur.enable = False
-			self._blur = None
-		self.app.unblurBackgroundViews()
-		
+		self._blur.fini()
 		self.api.updateHotKeys -= self.as_updateHotKeysS
 		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
@@ -158,7 +142,7 @@ g_entitiesFactories.addSettings(
 		VIEW_ALIAS,
 		ModsSettingsApiWindow,
 		VIEW_SWF,
-		ViewTypes.WINDOW,
+		WindowLayer.OVERLAY,
 		None,
 		ScopeTemplates.GLOBAL_SCOPE
 	)

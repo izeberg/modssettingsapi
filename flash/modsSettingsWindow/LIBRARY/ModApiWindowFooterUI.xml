@@ -1,0 +1,45 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModApiWindowFooterUI" itemID="5c4ecd53-0000017c" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowFooter" linkageClassName="ModApiWindowFooterUI" lastModified="1548674016">
+  <timeline>
+    <DOMTimeline name="ModApiWindowFooterUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;/guidelines&gt;'>
+      <layers>
+        <DOMLayer name="Слой_1" color="#00FFFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="resources/background_highlight.png">
+                  <matrix>
+                    <Matrix tx="-80" ty="-95"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="buttonApply">
+                  <matrix>
+                    <Matrix tx="720" ty="30"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="77.5" y="15"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="imports/ButtonSecondaryLargeUI" name="buttonCancel">
+                  <matrix>
+                    <Matrix tx="550" ty="30"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="77.5" y="15"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="buttonOK">
+                  <matrix>
+                    <Matrix tx="380" ty="30"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="77.5" y="15"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

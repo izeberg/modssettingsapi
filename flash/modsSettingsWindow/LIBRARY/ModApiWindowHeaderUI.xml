@@ -1,0 +1,97 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModApiWindowHeaderUI" itemID="5c4ecd07-00000179" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowHeader" linkageClassName="ModApiWindowHeaderUI" lastModified="1548668167" lastUniqueIdentifier="1">
+  <timeline>
+    <DOMTimeline name="ModApiWindowHeaderUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;/guidelines&gt;'>
+      <layers>
+        <DOMLayer name="Слой_1" color="#00FFFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="resources/background_highlight.png">
+                  <matrix>
+                    <Matrix a="-1" d="-1" tx="954" ty="195"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMComponentInstance libraryItemName="imports/CloseButtonOrangeUI" name="buttonClose" uniqueID="1">
+                  <matrix>
+                    <Matrix tx="800" ty="50"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="35" y="16"/>
+                  </transformationPoint>
+                  <parametersAsXML><![CDATA[   <property id="UIID">
+      <Inspectable name="UIID" variable="UIID" category="" verbose="0" defaultValue="4294967295" type="Number"/>
+   </property>
+   <property id="autoRepeat">
+      <Inspectable name="autoRepeat" variable="autoRepeat" category="" verbose="0" defaultValue="false" type="Boolean"/>
+   </property>
+   <property id="autoSize">
+      <Inspectable name="autoSize" variable="autoSize" category="" verbose="0" defaultValue="none" enumeration="none,left,right,center" type="List"/>
+   </property>
+   <property id="data">
+      <Inspectable name="data" variable="data" category="" verbose="0" defaultValue="" type="Default"/>
+   </property>
+   <property id="inspectableDisabledFillPadding">
+      <Inspectable name="disabledFillPadding" variable="inspectableDisabledFillPadding" category="" verbose="0" defaultValue="top:0,right:0,bottom:0,left:0" type="Object"/>
+   </property>
+   <property id="enabled">
+      <Inspectable name="enabled" variable="enabled" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+   <property id="enableInitCallback">
+      <Inspectable name="enableInitCallback" variable="enableInitCallback" category="" verbose="0" defaultValue="false" type="Boolean"/>
+   </property>
+   <property id="focusable">
+      <Inspectable name="focusable" variable="focusable" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+   <property id="helpDirection">
+      <Inspectable name="helpDirection" variable="helpDirection" category="" verbose="1" defaultValue="T" enumeration="T,L,B,R" type="List"/>
+   </property>
+   <property id="helpText">
+      <Inspectable name="helpText" variable="helpText" category="" verbose="1" defaultValue="" type="String"/>
+   </property>
+   <property id="label">
+      <Inspectable name="label" variable="label" category="" verbose="0" defaultValue="" type="String"/>
+   </property>
+   <property id="paddingHorizontal">
+      <Inspectable name="paddingHorizontal" variable="paddingHorizontal" category="" verbose="0" defaultValue="5" type="Number"/>
+   </property>
+   <property id="selected">
+      <Inspectable name="selected" variable="selected" category="" verbose="0" defaultValue="false" type="Boolean"/>
+   </property>
+   <property id="soundId">
+      <Inspectable name="soundId" variable="soundId" category="" verbose="0" defaultValue="" type="String"/>
+   </property>
+   <property id="soundType">
+      <Inspectable name="soundType" variable="soundType" category="" verbose="0" defaultValue="normal" type="String"/>
+   </property>
+   <property id="toggle">
+      <Inspectable name="toggle" variable="toggle" category="" verbose="0" defaultValue="false" type="Boolean"/>
+   </property>
+   <property id="tooltip">
+      <Inspectable name="tooltip" variable="tooltip" category="" verbose="0" defaultValue="" type="String"/>
+   </property>
+   <property id="visible">
+      <Inspectable name="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMDynamicText name="titleTF" width="496" height="31.35" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="17" ty="47"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>Mods Configuration</characters>
+                      <textAttrs>
+                        <DOMTextAttrs aliasText="false" lineHeight="29.05" size="26" bitmapSize="520" face="$TitleFont*" fillColor="#F3EBCE"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                </DOMDynamicText>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

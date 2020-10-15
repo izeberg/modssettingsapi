@@ -47,7 +47,10 @@ def getVersion(meta):
 def readSWF(path):
 	path = str(os.path.abspath(path))
 
-	name, _ = os.path.splitext(os.path.basename(path))
+	name, ext = os.path.splitext(os.path.basename(path))
+	if ext == '.xfl':
+		path = os.path.dirname(path)
+	
 	swf = os.path.join(os.path.dirname(path), os.path.basename(name) + '.swf')
 
 	if os.path.isfile(swf):

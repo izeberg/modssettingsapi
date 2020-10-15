@@ -1,0 +1,66 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowUI" itemID="5c4add53-0000009d" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.ModsSettingsWindow" linkageClassName="ModsSettingsWindowUI" lastModified="1553778578" lastUniqueIdentifier="5">
+  <timeline>
+    <DOMTimeline name="ModsSettingsWindowUI">
+      <layers>
+        <DOMLayer name="content" color="#9933CC" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="ModApiWindowContentUI" name="content">
+                  <matrix>
+                    <Matrix ty="100"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="429.25" y="201.9"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="header" color="#9933CC" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="ModApiWindowHeaderUI" name="header">
+                  <transformationPoint>
+                    <Point x="442" y="120.75"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="footer" color="#9933CC" current="true" isSelected="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="ModApiWindowFooterUI" name="footer" selected="true">
+                  <matrix>
+                    <Matrix ty="505"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="432" y="-17.75"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="background" color="#9933CC" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="ModApiWindowBackgroundUI" name="background">
+                  <transformationPoint>
+                    <Point x="245" y="185"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

@@ -1,0 +1,273 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoisePopup/ColorChoisePopupUI" itemID="5c9be2e8-00000177" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.ColorChoisePopup" linkageClassName="ColorChoisePopupUI" lastModified="1553785535" lastUniqueIdentifier="3">
+  <timeline>
+    <DOMTimeline name="ColorChoisePopupUI">
+      <layers>
+        <DOMLayer name="colorBorders" color="#FF800A" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance libraryItemName="controls/ColorChoisePopup/resources/ColorPreviewBorder.png">
+                  <matrix>
+                    <Matrix tx="195" ty="9"/>
+                  </matrix>
+                </DOMBitmapInstance>
+                <DOMBitmapInstance libraryItemName="controls/ColorChoisePopup/resources/ColorSpectrumBorder.png">
+                  <matrix>
+                    <Matrix tx="5" ty="5"/>
+                  </matrix>
+                </DOMBitmapInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="colorPreview" color="#FF4FFF" locked="true" outline="true" useOutlineView="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ColorChoisePopup/symbols/hitAreaA" name="colorPreview">
+                  <matrix>
+                    <Matrix a="0.799957275390625" d="0.20001220703125" tx="199.95" ty="14"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="50.25" y="50"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="elements" color="#00FFFF" current="true" isSelected="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMComponentInstance libraryItemName="imports/Slider" name="redSlider" uniqueID="1">
+                  <matrix>
+                    <Matrix a="0.666641235351563" tx="177" ty="40"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="75.15" y="11"/>
+                  </transformationPoint>
+                  <parametersAsXML><![CDATA[   <property id="minimum">
+      <Inspectable name="minimum" variable="minimum" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="maximum">
+      <Inspectable name="maximum" variable="maximum" category="" verbose="0" defaultValue="255" type="Number"/>
+   </property>
+   <property id="snapInterval">
+      <Inspectable name="snapInterval" variable="snapInterval" category="" verbose="0" defaultValue="1" type="Number"/>
+   </property>
+   <property id="snapping">
+      <Inspectable name="snapping" variable="snapping" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMComponentInstance libraryItemName="imports/Slider" name="greenSlider" centerPoint3DX="227.1" centerPoint3DY="76" uniqueID="2">
+                  <matrix>
+                    <Matrix a="0.666641235351563" tx="177" ty="65"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="75.15" y="11"/>
+                  </transformationPoint>
+                  <parametersAsXML><![CDATA[   <property id="minimum">
+      <Inspectable name="minimum" variable="minimum" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="maximum">
+      <Inspectable name="maximum" variable="maximum" category="" verbose="0" defaultValue="255" type="Number"/>
+   </property>
+   <property id="snapInterval">
+      <Inspectable name="snapInterval" variable="snapInterval" category="" verbose="0" defaultValue="1" type="Number"/>
+   </property>
+   <property id="snapping">
+      <Inspectable name="snapping" variable="snapping" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMComponentInstance libraryItemName="imports/Slider" name="blueSLider" uniqueID="3">
+                  <matrix>
+                    <Matrix a="0.666641235351563" tx="177" ty="90"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="75.15" y="11"/>
+                  </transformationPoint>
+                  <parametersAsXML><![CDATA[   <property id="minimum">
+      <Inspectable name="minimum" variable="minimum" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="maximum">
+      <Inspectable name="maximum" variable="maximum" category="" verbose="0" defaultValue="255" type="Number"/>
+   </property>
+   <property id="snapInterval">
+      <Inspectable name="snapInterval" variable="snapInterval" category="" verbose="0" defaultValue="1" type="Number"/>
+   </property>
+   <property id="snapping">
+      <Inspectable name="snapping" variable="snapping" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+]]></parametersAsXML>
+                </DOMComponentInstance>
+                <DOMSymbolInstance libraryItemName="imports/TextInput" name="hexTextInput">
+                  <matrix>
+                    <Matrix a="0.52996826171875" d="1.03799438476563" tx="213" ty="117.95"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="50.1" y="12.5"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMDynamicText width="21" height="16" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="147" ty="44"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>R</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="right" aliasText="false" autoKern="false" lineHeight="14.5" size="13" bitmapSize="260" face="$FieldFont*" fillColor="#C4C0B3"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                  <filters>
+                    <DropShadowFilter blurX="4" blurY="4" distance="0"/>
+                  </filters>
+                </DOMDynamicText>
+                <DOMDynamicText width="21" height="22.6" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="147" ty="69"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>G</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="right" aliasText="false" autoKern="false" lineHeight="14.5" size="13" bitmapSize="260" face="$FieldFont*" fillColor="#C4C0B3"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                  <filters>
+                    <DropShadowFilter blurX="4" blurY="4" distance="0"/>
+                  </filters>
+                </DOMDynamicText>
+                <DOMDynamicText width="21" height="16" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="147" ty="94"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>B</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="right" aliasText="false" autoKern="false" lineHeight="15.6" size="14" bitmapSize="280" face="$FieldFont*" fillColor="#C4C0B3"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                  <filters>
+                    <DropShadowFilter blurX="4" blurY="4" distance="0"/>
+                  </filters>
+                </DOMDynamicText>
+                <DOMDynamicText width="61" height="16" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="146" ty="123"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>RGB-HEX</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="right" aliasText="false" autoKern="false" lineHeight="14.5" size="13" bitmapSize="260" face="$FieldFont*" fillColor="#C4C0B3"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                  <filters>
+                    <DropShadowFilter blurX="4" blurY="4" distance="0"/>
+                  </filters>
+                </DOMDynamicText>
+                <DOMSymbolInstance libraryItemName="imports/ButtonBlack" name="acceptButton" centerPoint3DX="204.5" centerPoint3DY="166">
+                  <matrix>
+                    <Matrix a="0.75830078125" tx="159" ty="154"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="60.15" y="12"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="controls/ColorChoisePopup/symbols/ColorSpectrum" name="colorSpectrum">
+                  <matrix>
+                    <Matrix tx="10" ty="10"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="100" y="75"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMDynamicText name="colorLabel" left="62.25" width="46" height="15.6" isSelectable="false">
+                  <matrix>
+                    <Matrix tx="79.75" ty="16"/>
+                  </matrix>
+                  <textRuns>
+                    <DOMTextRun>
+                      <characters>ЦВЕТ</characters>
+                      <textAttrs>
+                        <DOMTextAttrs alignment="right" aliasText="false" autoKern="false" lineHeight="14.5" size="13" bitmapSize="260" face="$FieldFont*" fillColor="#C4C0B3"/>
+                      </textAttrs>
+                    </DOMTextRun>
+                  </textRuns>
+                  <filters>
+                    <DropShadowFilter blurX="4" blurY="4" distance="0"/>
+                  </filters>
+                </DOMDynamicText>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="hitAreaA" color="#FF800A" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="controls/ColorChoisePopup/symbols/hitAreaA" name="hitAreaA">
+                  <matrix>
+                    <Matrix a="2.89996337890625" d="1.83995056152344"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="50" y="50"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="arrows" color="#9933CC" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="imports/GlowArrowTop_UI" name="arrowTop">
+                  <matrix>
+                    <Matrix tx="145" ty="-1"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="5" y="5"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+                <DOMSymbolInstance libraryItemName="imports/GlowArrowBottom_UI" name="arrowBottom">
+                  <matrix>
+                    <Matrix tx="145" ty="188"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="1.5" y="-9"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer name="background" color="#9933CC" locked="true" autoNamed="false">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMSymbolInstance libraryItemName="imports/popoverBackgroundScale9grid" name="background">
+                  <matrix>
+                    <Matrix tx="-60" ty="-60"/>
+                  </matrix>
+                  <transformationPoint>
+                    <Point x="125" y="125"/>
+                  </transformationPoint>
+                </DOMSymbolInstance>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>
