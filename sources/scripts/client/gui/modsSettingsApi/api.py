@@ -23,6 +23,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 	def __init__(self):
 		super(ModsSettingsApi, self).__init__()
 
+		self.__saveCallbackID = None
+
 		self.activeMods = set()
 		self.config = {
 			'templates': {},
@@ -76,6 +78,11 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			self.configSave()
 
 	def configSave(self):
+		if self.__saveCallbackID is None:
+			self.__saveCallbackID = BigWorld.callback(0.0, self.__save)
+
+	def __save(self):
+		self.__saveCallbackID = None
 		try:
 			with open(CONFIG_PATH, 'wb') as config:
 				config.write(jsonDump(self.config, True))
