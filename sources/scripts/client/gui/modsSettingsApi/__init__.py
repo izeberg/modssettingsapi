@@ -30,6 +30,24 @@ class _ModsSettingsApi(IModsSettingsApi):
 		self.__instance = ModsSettingsApi()
 		dependency._g_manager.addInstance(IModsSettingsApi, self)
 
+	def saveModData(self, linkage, version, data):
+		""" Сохранение данных мода
+		:param linkage: Идентификатор
+		:param version: Версия данных
+		:param data: Данные для сохранения
+		:return: Сохраненные настройки
+		"""
+		return self.__instance.saveModData(linkage, version, data)
+
+	def getModData(self, linkage, version, default):
+		""" Получение данных мода
+		Eсли запрошенная версия не соответствует сохраненной, будут сохранены и возвращены стандартные данные
+		:param linkage: Идентификатор
+		:param version: Версия данных
+		:param default: Стандартные данные
+		:return: Сохраненные настройки
+		"""
+		return self.__instance.getModData(linkage, version, default)
 
 	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
 		""" Инициализация настроек

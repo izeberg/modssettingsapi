@@ -2,6 +2,8 @@ import Event
 import os
 import functools
 import copy
+import cPickle
+import BigWorld
 
 from helpers import dependency
 
@@ -25,6 +27,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.config = {
 			'templates': {},
 			'settings': {},
+			'data': {},
 		}
 
 		self.onSettingsChanged = Event.Event()
@@ -66,6 +69,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			try:
 				with open(CONFIG_PATH, 'rb') as config:
 					self.config = jsonLoad(config)
+					self.config.setdefault('data', {})
 			except:
 				LOG_CURRENT_EXCEPTION()
 		else:
@@ -173,3 +177,17 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 	
 	def checkKeySet(self, keys):
 		return self.hotkeys.checkKeySet(keys)
+
+	def saveModData(self, linkage, version, data):
+		self.config['data'][linkage] = {
+			'version': version,
+			'data': cPickle.dumps(data, -1),
+		}
+		self.configSave()
+
+	def getModData(self, linkage, version, default):
+		data = self.config['data']
+
+		if linkage not in data or data[linkage]['version'] != version:
+			self.saveModData(linkage, version, default)
+		return cPickle.loads(data[linkage]['data'])
