@@ -30,12 +30,24 @@ class _ModsSettingsApi(IModsSettingsApi):
 		self.__instance = ModsSettingsApi()
 		dependency._g_manager.addInstance(IModsSettingsApi, self)
 
-	def __backwardCompatibleLinkage(self, linkage):
-		# I hate this shit
-		# ASAP i'll remove it and all the legacy mods will die (but not now)
-		if isinstance(linkage, (list, tuple)):
-			return linkage[0]
-		return linkage
+	def saveModData(self, linkage, version, data):
+		""" Сохранение данных мода
+		:param linkage: Идентификатор
+		:param version: Версия данных
+		:param data: Данные для сохранения
+		:return: Сохраненные настройки
+		"""
+		return self.__instance.saveModData(linkage, version, data)
+
+	def getModData(self, linkage, version, default):
+		""" Получение данных мода
+		Eсли запрошенная версия не соответствует сохраненной, будут сохранены и возвращены стандартные данные
+		:param linkage: Идентификатор
+		:param version: Версия данных
+		:param default: Стандартные данные
+		:return: Сохраненные настройки
+		"""
+		return self.__instance.getModData(linkage, version, default)
 
 	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
 		""" Инициализация настроек
@@ -45,7 +57,6 @@ class _ModsSettingsApi(IModsSettingsApi):
 		:param buttonHandler: Функция-обработчик нажатий на кнопку
 		:return: Сохраненные настройки
 		"""
-		linkage = self.__backwardCompatibleLinkage(linkage)
 		return self.__instance.setModTemplate(linkage, template, callback, buttonHandler)
 
 	def registerCallback(self, linkage, callback, buttonHandler=None):
@@ -54,7 +65,6 @@ class _ModsSettingsApi(IModsSettingsApi):
 		:param callback: Функция-обработчик новых настроек
 		:param buttonHandler: Функция-обработчик нажатий на кнопку
 		"""
-		linkage = self.__backwardCompatibleLinkage(linkage)
 		return self.__instance.registerCallback(linkage, callback, buttonHandler)
 
 	def getModSettings(self, linkage, template):
@@ -63,7 +73,6 @@ class _ModsSettingsApi(IModsSettingsApi):
 		:param template: Шаблон настроек
 		:return: Сохраненные настройки, если таковых нет (либо есть, но устаревшие) - None
 		"""
-		linkage = self.__backwardCompatibleLinkage(linkage)
 		return self.__instance.getModSettings(linkage, template)
 
 	def updateModSettings(self, linkage, newSettings):
@@ -71,7 +80,6 @@ class _ModsSettingsApi(IModsSettingsApi):
 		:param linkage: Идентификатор настроек
 		:param newSettings: Новые настройки
 		"""
-		linkage = self.__backwardCompatibleLinkage(linkage)
 		return self.__instance.updateModSettings(linkage, newSettings)
 
 	def checkKeySet(self, keyset):

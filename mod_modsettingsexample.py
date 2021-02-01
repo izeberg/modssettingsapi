@@ -5,6 +5,7 @@ import Keys
 from gui.modsSettingsApi import g_modsSettingsApi
 
 modLinkage = 'test_iamspotted'
+modDataVersion = 1
 
 template  = {
 	'modDisplayName': 'Мод «Я обнаружен»',
@@ -125,7 +126,11 @@ def onModSettingsChanged(linkage, newSettings):
 
 def onButtonClicked(linkage, varName, value):    
 	if linkage == modLinkage:
-		print 'onButtonClicked', linkage, varName, value
+		clicks = g_modsSettingsApi.getModData(modLinkage, modDataVersion, 0)
+		clicks += 1
+		g_modsSettingsApi.saveModData(modLinkage, modDataVersion, clicks)
+
+		print 'onButtonClicked', linkage, varName, value, clicks
 	
 def onGameKeyDown(event):
 	if g_modsSettingsApi.checkKeySet(settings['stateKeySet']):
