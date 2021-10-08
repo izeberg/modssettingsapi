@@ -34,6 +34,7 @@
 	
 	public class ComponentsHelper
 	{
+		private static const SCROLL_ITEM_LIMIT: int = 9;
 		
 		public function ComponentsHelper()
 		{
@@ -179,8 +180,16 @@
 			dropdown.y = headerMargin;
 			dropdown.width = componentCFG.hasOwnProperty("width") ? componentCFG.width: 200;
 			
-			dropdown.rowCount = options.length;
-			dropdown.scrollBar = "";
+			if (options.length > SCROLL_ITEM_LIMIT) {
+				dropdown["componentInspectorSetting"] = true;
+				dropdown.scrollBar = "ScrollBar";
+				dropdown.rowCount = SCROLL_ITEM_LIMIT;
+				dropdown.inspectableThumbOffset = {"top": 0,"bottom": 0};
+				dropdown["componentInspectorSetting"] = false;
+			} else {
+				dropdown.rowCount = options.length;
+				dropdown.scrollBar = "";
+			}
 			
 			dropdown.itemRenderer = App.utils.classFactory.getClass("DropDownListItemRendererSound");
 			dropdown.dropdown = "DropdownMenu_ScrollingList";
