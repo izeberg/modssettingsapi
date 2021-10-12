@@ -20,6 +20,9 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 
 
+ANIMATE = os.environ.get('ANIMATE', 'C:\\Program Files\\Adobe\\Adobe Animate CC 2019\\Animate.exe')
+
+
 def call(*args):
 	try:
 		return subprocess.check_output(args, shell=True, stderr=subprocess.STDOUT, universal_newlines=True).strip()
@@ -71,13 +74,13 @@ def buildFLA(projects):
 
 			# detect opened Animate
 			for proc in psutil.process_iter(): 
-				if proc.name().lower() == os.path.basename(os.environ.get('ANIMATE')).lower():
+				if proc.name().lower() == os.path.basename(ANIMATE).lower():
 					break
 			else:
 				fh.write('fl.quit(false);')
 
 		try:
-			subprocess.check_output([os.environ.get('ANIMATE'), '-e', jsflFile, '-AlwaysRunJSFL'],
+			subprocess.check_output([ANIMATE, '-e', jsflFile, '-AlwaysRunJSFL'],
 									universal_newlines=True,
 									stderr=subprocess.STDOUT)
 		except subprocess.CalledProcessError as ex:
