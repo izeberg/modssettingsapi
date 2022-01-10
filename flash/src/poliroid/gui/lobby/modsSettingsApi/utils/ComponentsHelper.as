@@ -128,6 +128,7 @@
 				var radioButton:RadioButton = RadioButton(App.utils.classFactory.getComponent("RadioButton", RadioButton));
 				radioButton.y = i * Constants.RADIO_BUTTONS_MARGIN + headerMargin;
 				radioButton.label = options[i].label;
+				radioButton.width = Constants.MOD_COMPONENT_WIDTH / 2;
 				radioButtonsUI.addChild(radioButton);
 				buttonGroup.addButton(radioButton);
 				radioButton.addEventListener(MouseEvent.CLICK, handleComponentEvent);
