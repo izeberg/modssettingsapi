@@ -1,11 +1,11 @@
 ﻿# coding: utf-8
 
-__author__ = 'Iliev Renat'
-__copyright__ = 'Copyright 2019, Wargaming'
-__credits__ = ['Andruschyshyn Andrey', 'Iliev Renat']
+__author__ = 'Renat Iliev'
+__copyright__ = 'Copyright 2022, Wargaming'
+__credits__ = ['Andrii Andrushchyshyn', 'Renat Iliev']
 __license__ = 'CC BY-NC-SA 4.0'
-__maintainer__ = 'Iliev Renat'
-__email__ = 'mods@izeberg.ru'
+__maintainer__ = 'Renat Iliev'
+__email__ = 'mods@izeberg.me'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
 import Event

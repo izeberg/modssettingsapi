@@ -9,12 +9,19 @@ VIEW_SWF = 'modsSettingsWindow.swf'
 
 USER_SETTINGS_PATH = os.path.join('mods', 'configs', 'modsSettingsApi.json')
 
-_preferences_path = os.path.dirname(unicode(BigWorld.wg_getPreferencesFilePath(), 'utf-8', errors='ignore'))
-if not os.path.exists(_preferences_path):
-	os.makedirs(_preferences_path)
+from external_strings_utils import unicode_from_utf8
+_preferences_path = unicode_from_utf8(BigWorld.wg_getPreferencesFilePath())[1]
+CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(_preferences_path), 'mods', 'modsettings.dat'))
 
-CONFIG_PATH = os.path.join(_preferences_path, 'modsettings.dat')
-del _preferences_path
+try:
+	_config_dir = os.path.dirname(CONFIG_PATH)
+	if not os.path.isdir(_config_dir):
+		os.makedirs(_config_dir)
+except:
+	from debug_utils import LOG_CURRENT_EXCEPTION
+	LOG_CURRENT_EXCEPTION()
+
+del _preferences_path, _config_dir
 
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 if DEFAULT_LANGUAGE == 'ru':
