@@ -35,7 +35,6 @@ package poliroid.gui.lobby.modsSettingsApi.components
 		{
 			scrollPane.dispose();
 			scrollBar.dispose();
-			container.dispose();
 			
 			scrollPane = null;
 			scrollBar = null;
