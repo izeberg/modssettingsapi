@@ -74,7 +74,9 @@
 			 
 			hexTextInput.maxChars = 7;
 			hexTextInput.textField.restrict = "#A-F0-9";
-			 
+			
+			colorLabel.text = STRINGS.POPUP_COLOR;
+			
 			acceptButton.label = SETTINGS.APPLY_BUTTON;
 			
 			App.stage.addEventListener(MouseEvent.MOUSE_DOWN, onAppMouseHandler);
