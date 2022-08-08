@@ -7,11 +7,14 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	import flash.ui.Keyboard;
 	
 	import scaleform.clik.constants.InvalidationType;
+	import scaleform.clik.constants.InputValue;
 	import scaleform.clik.events.ButtonEvent;
 	import scaleform.clik.events.SliderEvent;
 	import scaleform.clik.events.InputEvent;
+	import scaleform.clik.ui.InputDetails;
 	import net.wg.gui.components.assets.GlowArrowAsset;
 	import net.wg.gui.components.controls.Slider;
 	import net.wg.gui.components.controls.TextInput;
@@ -89,6 +92,9 @@
 			acceptButton.addEventListener(ButtonEvent.PRESS, handleAccept);
 			hexTextInput.addEventListener(InputEvent.INPUT, handleTextInput);
 			colorSpectrum.addEventListener(MouseEvent.CLICK, handleSpectrumClick);
+			
+			addEventListener(InputEvent.INPUT, _handleInput);
+			App.utils.focusHandler.setFocus(this);
 		}
 		
 		override protected function onDispose() : void
@@ -96,6 +102,7 @@
 			App.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onAppMouseHandler);
 			App.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, onAppMouseHandler);
 			App.stage.removeEventListener(Event.RESIZE, handleClose);
+			removeEventListener(InputEvent.INPUT, _handleInput);
 
 			redSlider.removeEventListener(SliderEvent.VALUE_CHANGE, handleSliders);
 			greenSlider.removeEventListener(SliderEvent.VALUE_CHANGE, handleSliders);
@@ -234,6 +241,21 @@
 			else
 			{
 				arrowTop.visible = true;
+			}
+		}
+
+		private function _handleInput(event:InputEvent) : void
+		{
+			var details:InputDetails = event.details;
+			if(details.code == Keyboard.ESCAPE)
+			{
+				event.handled = true;
+				event.preventDefault();
+				if (details.value == InputValue.KEY_DOWN)
+				{
+					App.popoverMgr.hide();
+					dispose();
+				}
 			}
 		}
 	}
