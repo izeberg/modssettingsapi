@@ -3,6 +3,7 @@ import BigWorld
 import Keys
 
 from constants import DEFAULT_LANGUAGE
+from helpers import getClientLanguage
 
 VIEW_ALIAS = 'modsSettingsApiWindow'
 VIEW_SWF = 'modsSettingsWindow.swf'
@@ -24,7 +25,7 @@ except:
 del _preferences_path, _config_dir
 
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
-if DEFAULT_LANGUAGE == 'ru':
+if 'en' not in (getClientLanguage(), DEFAULT_LANGUAGE, ):
     MOD_NAME = 'Настройка модификаций'
     MOD_DESCRIPTION = 'Данная модификация позволяет легко и просто изменять настройки установленных модов.'
     STATE_TOOLTIP = '{HEADER}Включить / Отключить мод{/HEADER}{BODY}Красный индикатор - мод отключен<br>Зелёный индикатор - мод включен{/BODY}'
