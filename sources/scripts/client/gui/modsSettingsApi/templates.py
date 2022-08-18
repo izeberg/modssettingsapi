@@ -173,7 +173,7 @@ def createDropdown(text, varName, options, value, tooltip=None, button=None, wid
 		control['width'] = width
 	return control
 
-def createSlider(text, varName, value, min, max, interval, format=None, tooltip=None, button=None, width=None):
+def createSlider(text, varName, value, min, max, interval, format='{{value}}', tooltip=None, button=None, width=None):
 	""" Helper to create Slider component
 
 	:param text: Component text
@@ -186,7 +186,7 @@ def createSlider(text, varName, value, min, max, interval, format=None, tooltip=
 	:type max: int
 	:param interval: Step interval value
 	:type interval: int
-	:param format: Component value format template
+	:param format: Component value format template, defaults to '{{value}}' optional
 	:param tooltip: Component tooltip, optional
 	:param button: Component button, optional
 	:param width: Component width, optional
@@ -194,8 +194,7 @@ def createSlider(text, varName, value, min, max, interval, format=None, tooltip=
 	:return: Slider component
 	"""
 	stepper = createStepper(COMPONENT_TYPE.SLIDER, text, varName, value, min, max, interval, tooltip, button)
-	if format is not None:
-		stepper['format'] = format
+	stepper['format'] = format
 	if width is not None:
 		stepper['width'] = width
 	return stepper
