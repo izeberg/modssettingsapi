@@ -15,9 +15,10 @@ from helpers import dependency
 from gui.modsSettingsApi.skeleton import IModsSettingsApi
 from gui.modsSettingsApi.api import ModsSettingsApi
 from gui.modsSettingsApi._constants import SPECIAL_KEYS
+from gui.modsSettingsApi import templates
 
 
-__all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'SPECIAL_KEYS')
+__all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'SPECIAL_KEYS', 'templates')
 
 
 class _ModsSettingsApi(IModsSettingsApi):

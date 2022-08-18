@@ -38,6 +38,19 @@ else:
 
 COLUMNS = ('column1', 'column2')
 
+class COMPONENT_TYPE:
+	EMPTY = 'Empty'
+	LABEL = 'Label'
+	CHECKBOX = 'CheckBox'
+	RADIO_BUTTON_GROUP = 'RadioButtonGroup'
+	DROPDOWN = 'Dropdown'
+	SLIDER = 'Slider'
+	TEXT_INPUT = 'TextInput'
+	NUMERIC_STEPPER = 'NumericStepper'
+	HOTKEY = 'HotKey'
+	COLOR_CHOICE = 'ColorChoice'
+	RANGE_SLIDER = 'RangeSlider'
+
 class SPECIAL_KEYS:
 	KEY_ALT, KEY_CONTROL, KEY_SHIFT = range(-1, -4, -1)
 	SPECIAL_TO_KEYS = {
