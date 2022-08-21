@@ -72,7 +72,7 @@ def createStepper(type, text, varName, value, min, max, interval, tooltip=None, 
 	:return: Stepper component
 	"""
 	stepper = createControl(type, text, varName, value, tooltip, button)
-	stepper.update({ 'minimum': min, 'maximum': max, 'stepInterval': interval })
+	stepper.update({ 'minimum': min, 'maximum': max, 'snapInterval': interval })
 	return stepper
 
 def createButton(width=None, height=None, text=None, offsetTop=None, offsetLeft=None, icon=None, iconOffsetTop=None, iconOffsetLeft=None):
