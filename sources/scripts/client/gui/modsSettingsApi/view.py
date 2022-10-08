@@ -1,29 +1,18 @@
-import BigWorld
-import Event
-import game
-import Keys
-import collections
 import json
-import GUI
-import os
 
-from debug_utils import LOG_CURRENT_EXCEPTION
-from constants import AUTH_REALM
 from helpers import dependency
 
 from gui.shared.personality import ServicesLocator
 from gui.shared.view_helpers.blur_manager import CachedBlur
 from gui.Scaleform.framework import ScopeTemplates, ViewSettings, g_entitiesFactories
-from gui.Scaleform.framework.entities.abstract.AbstractWindowView import AbstractWindowView
 from gui.Scaleform.framework.entities.View import View
 from gui.Scaleform.framework.managers import context_menu
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
-from gui.Scaleform.locale.SETTINGS import SETTINGS
-from gui.Scaleform.locale.VEH_COMPARE import VEH_COMPARE
 from frameworks.wulf import WindowLayer
 
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
-from gui.modsSettingsApi._constants import MOD_NAME, STATE_TOOLTIP, POPUP_COLOR, VIEW_ALIAS, VIEW_SWF
+from gui.modsSettingsApi._constants import (MOD_NAME, STATE_TOOLTIP, BUTTON_OK, BUTTON_CANCEL, BUTTON_APPLY, BUTTON_CLOSE, BUTTON_CLEANUP, 
+											BUTTON_DEFAULT, POPUP_COLOR, VIEW_ALIAS, VIEW_SWF)
 from gui.modsSettingsApi.utils_common import byteify
 
 
@@ -37,11 +26,11 @@ def genModApiStaticVO(userSettings):
 	return {
 		'windowTitle': userSettings.get('windowTitle') or MOD_NAME,
 		'stateTooltip': userSettings.get('enableButtonTooltip') or STATE_TOOLTIP,
-		'buttonOK': SETTINGS.OK_BUTTON,
-		'buttonCancel': SETTINGS.CANCEL_BUTTON,
-		'buttonApply': SETTINGS.APPLY_BUTTON,
-		'buttonClose': VEH_COMPARE.HEADER_CLOSEBTN_LABEL,
-		'popupColor': POPUP_COLOR
+		'buttonOK': userSettings.get('buttonOK') or BUTTON_OK,
+		'buttonCancel': userSettings.get('buttonCancel') or BUTTON_CANCEL,
+		'buttonApply': userSettings.get('buttonApply') or BUTTON_APPLY,
+		'buttonClose': userSettings.get('buttonClose') or BUTTON_CLOSE,
+		'popupColor': userSettings.get('popupColor') or POPUP_COLOR
 	}
 	
 class ModsSettingsApiWindow(View):
@@ -131,8 +120,8 @@ class HotkeyContextHandler(context_menu.AbstractContextMenuHandler):
 
 	def _generateOptions(self, ctx=None):
 		return [
-			self._makeItem('setValueToEmpty', VEH_COMPARE.VEHCONF_BTNCLEANUP, None),
-			self._makeItem('setValueToDefault', SETTINGS.DEFAULTBTN, None)
+			self._makeItem('setValueToEmpty', self.api.userSettings.get('buttonCleanup') or BUTTON_CLEANUP, None),
+			self._makeItem('setValueToDefault', self.api.userSettings.get('buttonDefault') or BUTTON_DEFAULT, None)
 		]
 
 context_menu.registerHandlers(('modsSettingsHotkeyContextHandler', HotkeyContextHandler))
