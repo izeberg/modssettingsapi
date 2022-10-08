@@ -80,7 +80,7 @@
 			
 			colorLabel.text = STRINGS.POPUP_COLOR;
 			
-			acceptButton.label = SETTINGS.APPLY_BUTTON;
+			acceptButton.label = STRINGS.BUTTON_APPLY;
 			
 			App.stage.addEventListener(MouseEvent.MOUSE_DOWN, onAppMouseHandler);
 			App.stage.addEventListener(MouseEvent.MOUSE_WHEEL, onAppMouseHandler);
