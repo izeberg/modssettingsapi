@@ -45,9 +45,9 @@
 		
 		public function updateStaticData(model:ModsSettingsStaticVO) : void
 		{
-			buttonOK.label = SETTINGS.OK_BUTTON;
-			buttonCancel.label = SETTINGS.CANCEL_BUTTON;
-			buttonApply.label = SETTINGS.APPLY_BUTTON;
+			buttonOK.label = model.buttonOK;
+			buttonCancel.label = model.buttonCancel;
+			buttonApply.label = model.buttonApply;
 		}
 		
 		public function updateStage(appWidth:Number, appHeight:Number) : void
