@@ -60,7 +60,7 @@
 			var labelUI:UIComponent = new UIComponent();
 			var lb:LabelControl = LabelControl(App.utils.classFactory.getComponent("LabelControl", LabelControl));
 			lb.width = 800;
-			lb.text = text;
+			lb.htmlText = text;
 			if (tooltipText)
 			{
 				lb.toolTip = tooltipText;
