@@ -1,15 +1,9 @@
 ﻿package poliroid.gui.lobby.modsSettingsApi.components
 {
-	/*
-	import flash.display.*;
-	import flash.events.*;
-	
-	import scaleform.clik.constants.*;
-	import scaleform.clik.core.*;
-	*/
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
 	import scaleform.clik.constants.InvalidationType;
@@ -113,7 +107,8 @@
 			}
 			
 			var fieldSet:FieldSet = FieldSet(App.utils.classFactory.getObject("FieldSet"));
-			fieldSet.label = this.data.modDisplayName;
+			fieldSet.textField.htmlText = this.data.modDisplayName;
+			fieldSet.textField.autoSize = TextFieldAutoSize.LEFT;
 			fieldSet.width = Constants.MOD_COMPONENT_WIDTH;
 			fieldSet.height = lastPos + Constants.MOD_PADDING_BOTTOM;
 			
