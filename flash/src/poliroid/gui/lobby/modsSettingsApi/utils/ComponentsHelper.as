@@ -80,7 +80,6 @@
 			var checkboxUI:UIComponent = new UIComponent();
 			var cb:CheckBox = CheckBox(App.utils.classFactory.getComponent("CheckBox", CheckBox));
 			cb.label = label;
-			cb.selected = true;
 			cb.invalidateSize();
 			cb.invalidateState();
 			cb.invalidateData();
