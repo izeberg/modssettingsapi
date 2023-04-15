@@ -68,7 +68,14 @@
 			}
 			labelUI.addChild(lb);
 			lb.validateNow();
-			
+
+			// Add pointer cursor to tooltip icon if available
+			var infoIcon:InfoIcon = lb["_infoIco"];
+			if (infoIcon)
+			{
+				infoIcon.buttonMode = true;
+			}
+
 			var result:MovieClip = new MovieClip();
 			result.addChild(labelUI);
 			result["label"] = lb;
@@ -248,7 +255,7 @@
 			
 			function getFormattedString(format:String, value:Number):String
 			{
-				value = Math.round(value * 100) / 100
+				value = Math.round(value * 100) / 100;
 				return format.split(Constants.SLIDER_VALUE_KEY).join(value.toString());
 			}
 			
@@ -427,7 +434,7 @@
 			var rangeSliderUI:UIComponent = new UIComponent();
 			rangeSliderUI.y = rangeSliderUI.y + 7;
 
-			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text,"");
+			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text, componentCFG.tooltip);
 			lb.y = -7;
 			lb.x = 0;
 			rangeSliderUI.addChild(lb);
