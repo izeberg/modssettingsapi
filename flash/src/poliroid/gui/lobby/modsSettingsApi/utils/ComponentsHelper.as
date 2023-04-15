@@ -95,6 +95,15 @@
 			cb.infoIcoType = tooltipText ? InfoIcon.TYPE_INFO : "";
 			cb.width = 800;
 			checkboxUI.addChild(cb);
+			cb.validateNow();
+
+			// Add pointer cursor to tooltip icon if available
+			var infoIcon:InfoIcon = lb["_infoIco"];
+			if (infoIcon)
+			{
+				infoIcon.buttonMode = true;
+			}
+
 			cb.addEventListener(Event.SELECT, handleComponentEvent);
 			
 			if (componentCFG.hasOwnProperty("button"))
