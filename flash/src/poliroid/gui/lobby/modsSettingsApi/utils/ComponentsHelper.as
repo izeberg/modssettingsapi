@@ -87,9 +87,6 @@
 			var checkboxUI:UIComponent = new UIComponent();
 			var cb:CheckBox = CheckBox(App.utils.classFactory.getComponent("CheckBox", CheckBox));
 			cb.label = label;
-			cb.invalidateSize();
-			cb.invalidateState();
-			cb.invalidateData();
 			cb.selected = selected;
 			cb.toolTip = tooltipText;
 			cb.infoIcoType = tooltipText ? InfoIcon.TYPE_INFO : "";
