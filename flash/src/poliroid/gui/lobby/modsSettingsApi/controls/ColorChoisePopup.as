@@ -60,7 +60,7 @@
 			_spectrumData = new BitmapData(colorSpectrum.width, colorSpectrum.height);
 			_spectrumData.draw(colorSpectrum);
 			
-			hitArea = hitAreaA;
+			colorSpectrum.buttonMode = true;
 			
 			arrowBottom.buttonMode = false;
 			arrowBottom.mouseChildren = false;
@@ -110,8 +110,6 @@
 			acceptButton.removeEventListener(ButtonEvent.PRESS, handleAccept);
 			hexTextInput.removeEventListener(InputEvent.INPUT, handleTextInput);
 			colorSpectrum.removeEventListener(MouseEvent.CLICK, handleSpectrumClick);
-			
-			hitArea = null;
 			
 			super.onDispose();
 		}
