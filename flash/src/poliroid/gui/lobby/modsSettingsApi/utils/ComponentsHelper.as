@@ -98,7 +98,7 @@
 			cb.validateNow();
 
 			// Add pointer cursor to tooltip icon if available
-			var infoIcon:InfoIcon = lb["_infoIco"];
+			var infoIcon:InfoIcon = cb["_infoIco"];
 			if (infoIcon)
 			{
 				infoIcon.buttonMode = true;
