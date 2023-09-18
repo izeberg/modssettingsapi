@@ -60,7 +60,7 @@
 			var labelUI:UIComponent = new UIComponent();
 			var lb:LabelControl = LabelControl(App.utils.classFactory.getComponent("LabelControl", LabelControl));
 			lb.width = 800;
-			lb.text = text;
+			lb.htmlText = text;
 			if (tooltipText)
 			{
 				lb.toolTip = tooltipText;
@@ -68,7 +68,14 @@
 			}
 			labelUI.addChild(lb);
 			lb.validateNow();
-			
+
+			// Add pointer cursor to tooltip icon if available
+			var infoIcon:InfoIcon = lb["_infoIco"];
+			if (infoIcon)
+			{
+				infoIcon.buttonMode = true;
+			}
+
 			var result:MovieClip = new MovieClip();
 			result.addChild(labelUI);
 			result["label"] = lb;
@@ -80,15 +87,20 @@
 			var checkboxUI:UIComponent = new UIComponent();
 			var cb:CheckBox = CheckBox(App.utils.classFactory.getComponent("CheckBox", CheckBox));
 			cb.label = label;
-			cb.selected = true;
-			cb.invalidateSize();
-			cb.invalidateState();
-			cb.invalidateData();
 			cb.selected = selected;
 			cb.toolTip = tooltipText;
 			cb.infoIcoType = tooltipText ? InfoIcon.TYPE_INFO : "";
 			cb.width = 800;
 			checkboxUI.addChild(cb);
+			cb.validateNow();
+
+			// Add pointer cursor to tooltip icon if available
+			var infoIcon:InfoIcon = cb["_infoIco"];
+			if (infoIcon)
+			{
+				infoIcon.buttonMode = true;
+			}
+
 			cb.addEventListener(Event.SELECT, handleComponentEvent);
 			
 			if (componentCFG.hasOwnProperty("button"))
@@ -249,7 +261,7 @@
 			
 			function getFormattedString(format:String, value:Number):String
 			{
-				value = Math.round(value * 100) / 100
+				value = Math.round(value * 100) / 100;
 				return format.split(Constants.SLIDER_VALUE_KEY).join(value.toString());
 			}
 			
@@ -428,7 +440,7 @@
 			var rangeSliderUI:UIComponent = new UIComponent();
 			rangeSliderUI.y = rangeSliderUI.y + 7;
 
-			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text,"");
+			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text, componentCFG.tooltip);
 			lb.y = -7;
 			lb.x = 0;
 			rangeSliderUI.addChild(lb);
