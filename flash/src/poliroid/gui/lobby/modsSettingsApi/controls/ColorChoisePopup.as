@@ -5,6 +5,7 @@
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
@@ -59,7 +60,7 @@
 			_spectrumData = new BitmapData(colorSpectrum.width, colorSpectrum.height);
 			_spectrumData.draw(colorSpectrum);
 			
-			hitArea = hitAreaA;
+			colorSpectrum.buttonMode = true;
 			
 			arrowBottom.buttonMode = false;
 			arrowBottom.mouseChildren = false;
@@ -93,8 +94,7 @@
 			hexTextInput.addEventListener(InputEvent.INPUT, handleTextInput);
 			colorSpectrum.addEventListener(MouseEvent.CLICK, handleSpectrumClick);
 			
-			addEventListener(InputEvent.INPUT, _handleInput);
-			App.utils.focusHandler.setFocus(this);
+			App.gameInputMgr.setKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, _handleEscKey, true);
 		}
 		
 		override protected function onDispose() : void
@@ -102,7 +102,7 @@
 			App.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onAppMouseHandler);
 			App.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, onAppMouseHandler);
 			App.stage.removeEventListener(Event.RESIZE, handleClose);
-			removeEventListener(InputEvent.INPUT, _handleInput);
+			App.gameInputMgr.clearKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, _handleEscKey);
 
 			redSlider.removeEventListener(SliderEvent.VALUE_CHANGE, handleSliders);
 			greenSlider.removeEventListener(SliderEvent.VALUE_CHANGE, handleSliders);
@@ -110,8 +110,6 @@
 			acceptButton.removeEventListener(ButtonEvent.PRESS, handleAccept);
 			hexTextInput.removeEventListener(InputEvent.INPUT, handleTextInput);
 			colorSpectrum.removeEventListener(MouseEvent.CLICK, handleSpectrumClick);
-			
-			hitArea = null;
 			
 			super.onDispose();
 		}
@@ -180,7 +178,13 @@
 		{
 			color = _spectrumData.getPixel(event.localX, event.localY).toString(16);
 		}
-		
+
+		private function _handleEscKey() : void
+		{
+			App.popoverMgr.hide();
+			dispose();
+		}
+
 		private function handleClose() : void
 		{
 			dispose();
@@ -241,21 +245,6 @@
 			else
 			{
 				arrowTop.visible = true;
-			}
-		}
-
-		private function _handleInput(event:InputEvent) : void
-		{
-			var details:InputDetails = event.details;
-			if(details.code == Keyboard.ESCAPE)
-			{
-				event.handled = true;
-				event.preventDefault();
-				if (details.value == InputValue.KEY_DOWN)
-				{
-					App.popoverMgr.hide();
-					dispose();
-				}
 			}
 		}
 	}
