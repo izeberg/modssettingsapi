@@ -72,9 +72,9 @@
 		
 		private function getPopupPosition(popup:ColorChoisePopup) : Point
 		{
-			var globalPos:Point = localToGlobal(new Point(0, 0));
-			var globalPosX:int = globalPos.x >> 0;
-			var globalPosY:int = globalPos.y >> 0;
+			var globalPos:Point = localToGlobal(new Point());
+			var globalPosX:int = globalPos.x / App.appScale >> 0;
+			var globalPosY:int = globalPos.y / App.appScale >> 0;
 			
 			globalPosX += width / 2;
 			globalPosX -= popup.hitAreaA.width / 2;
