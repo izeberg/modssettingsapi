@@ -26,6 +26,8 @@
 		public static const BUTTON_MARGIN_LEFT:Number = 10;
 		
 		public static const COMPONENT_RETURN_VALUE_KEY:String = "returnValue";
+
+		public static const MAX_BOTTOM_OFFSET:int = 230;
 		
 		public function Constants()
 		{

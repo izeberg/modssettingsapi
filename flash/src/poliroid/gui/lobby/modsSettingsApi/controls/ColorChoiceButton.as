@@ -11,6 +11,7 @@
 	
 	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoisePopup;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
 	public class ColorChoiceButton extends SoundButtonEx implements ISoundButtonEx
 	{
@@ -26,14 +27,15 @@
 		
 		override protected function configUI() : void
 		{
-			hitArea = hitAreaA;
 			preventAutosizing = true;
+
 			super.configUI();
 		}
 		
 		override protected function draw() : void
 		{
 			super.draw();
+
 			if (isInvalid(InvalidationType.DATA))
 			{
 				colorFill.graphics.clear();
@@ -41,11 +43,6 @@
 				colorFill.graphics.drawRect(0, 0, 10, 10);
 				colorFill.graphics.endFill();
 			}
-		}
-		
-		override protected function onDispose() : void
-		{
-			super.onDispose();
 		}
 		
 		override protected function onMouseDownHandler(event:MouseEvent) : void
@@ -62,25 +59,30 @@
 		
 		private function getPopupArrowDirection() : int
 		{
-			var globalPos:Point = localToGlobal(new Point(0, 0));
-			if ((globalPos.y + 300) < App.appHeight)
+			var globalPos:Point = localToGlobal(new Point());
+			var globalPosY:int = globalPos.y / App.appScale >> 0;
+			var bottomOffset:int = globalPosY + Constants.MAX_BOTTOM_OFFSET;
+
+			if (bottomOffset < App.appHeight)
 			{
 				return PopOverConst.ARROW_TOP;
 			}
+
 			return PopOverConst.ARROW_BOTTOM;
 		}
 		
 		private function getPopupPosition(popup:ColorChoisePopup) : Point
 		{
-			var globalPos:Point = localToGlobal(new Point(0, 0));
-			var globalPosX:int = globalPos.x >> 0;
-			var globalPosY:int = globalPos.y >> 0;
+			var globalPos:Point = localToGlobal(new Point());
+			var globalPosX:int = globalPos.x / App.appScale >> 0;
+			var globalPosY:int = globalPos.y / App.appScale >> 0;
+			var bottomOffset:int = globalPosY + Constants.MAX_BOTTOM_OFFSET;
+
+			globalPosX += width >> 1;
+			globalPosX -= popup.hitAreaA.width >> 1;
+			globalPosX += 1;
 			
-			globalPosX += width / 2;
-			globalPosX -= popup.hitAreaA.width / 2;
-			globalPosX += 5;
-			
-			if ((globalPos.y + 300) < App.appHeight)
+			if (bottomOffset < App.appHeight)
 			{
 				globalPosY += height;
 				globalPosY += 15;
@@ -89,8 +91,9 @@
 			{
 				globalPosY -= popup.hitAreaA.height;
 				globalPosY -= height;
-				globalPosY += 10;
+				globalPosY += 8;
 			}
+
 			return new Point(globalPosX, globalPosY);
 		}
 		
