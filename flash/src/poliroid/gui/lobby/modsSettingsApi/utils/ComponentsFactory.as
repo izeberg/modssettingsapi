@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi.utils
+﻿package poliroid.gui.lobby.modsSettingsApi.utils
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -29,11 +29,11 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 	import poliroid.gui.lobby.modsSettingsApi.controls.HotkeyControl;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
 
-	public class ComponentsHelper
+	public class ComponentsFactory
 	{
 		private static const SCROLL_ITEM_LIMIT:int = 9;
 
-		public function ComponentsHelper()
+		public function ComponentsFactory()
 		{
 			super();
 		}
@@ -136,7 +136,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
 				lb.x = lb.y = 0;
 				radioButtonsUI.addChild(lb);
@@ -197,7 +197,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
 				lb.x = lb.y = 0;
 				dropdownUI.addChild(lb);
@@ -261,7 +261,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 				lb.x = lb.y = 0;
 				sliderUI.addChild(lb);
 			}
@@ -288,7 +288,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 			if (format)
 			{
 				var formattedString:String = getFormattedString(format, slider.value);
-				var valueLabel:DisplayObject = ComponentsHelper.createLabel(formattedString, '');
+				var valueLabel:DisplayObject = ComponentsFactory.createLabel(formattedString, '');
 
 				valueLabel.y = slider.y + 2;
 				valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
@@ -334,7 +334,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 				lb.x = lb.y = 0;
 				textInputUI.addChild(lb);
 			}
@@ -362,7 +362,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 
 			if (text)
 			{
-				var lb = ComponentsHelper.createLabel(text, tooltip);
+				var lb = ComponentsFactory.createLabel(text, tooltip);
 
 				lb.y = 4;
 				numericStepperUI.addChild(lb);
@@ -392,7 +392,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 		public static function createHotKey(componentCFG:Object, modLinkage:String, value:Array, headerText:String = '', tooltipText:String = ''):DisplayObject
 		{
 			var hotKeyUI:UIComponent = new UIComponent();
-			var label:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+			var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
 			label.x = 0;
 			label.y = 4;
@@ -416,7 +416,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 		public static function createColorChoice(componentCFG:Object, modLinkage:String, value:String, headerText:String = '', tooltipText:String = ''):DisplayObject
 		{
 			var colorChoiceUI:UIComponent = new UIComponent();
-			var label:DisplayObject = ComponentsHelper.createLabel(headerText, tooltipText);
+			var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
 			label.x = 0;
 			label.y = 4;
@@ -473,7 +473,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 		public static function createRangeSlider(componentCFG:Object, modLinkage:String):DisplayObject
 		{
 			var rangeSliderUI:UIComponent = new UIComponent();
-			var lb:DisplayObject = ComponentsHelper.createLabel(componentCFG.text, componentCFG.tooltip);
+			var lb:DisplayObject = ComponentsFactory.createLabel(componentCFG.text, componentCFG.tooltip);
 
 			lb.y = -7;
 			lb.x = 0;
@@ -499,7 +499,7 @@ package poliroid.gui.lobby.modsSettingsApi.utils
 			rangeSlider.rangeMode = true;
 			rangeSlider['valueProxyValue'] = [rangeSlider.leftValue, rangeSlider.rightValue];
 
-			var valueLabel:DisplayObject = ComponentsHelper.createLabel('', '');
+			var valueLabel:DisplayObject = ComponentsFactory.createLabel('', '');
 
 			valueLabel.y = rangeSlider.y + 2;
 			valueLabel.x = rangeSlider.x + rangeSlider.width + Constants.SLIDER_VALUE_MARGIN + 5;

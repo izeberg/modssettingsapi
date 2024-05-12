@@ -10,7 +10,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import net.wg.gui.components.advanced.FieldSet;
 	import poliroid.gui.lobby.modsSettingsApi.controls.StatusSwitcher;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.utils.ComponentsHelper;
+	import poliroid.gui.lobby.modsSettingsApi.utils.ComponentsFactory;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
 	public class ModsSettingsComponent extends UIComponent
@@ -181,27 +181,27 @@ package poliroid.gui.lobby.modsSettingsApi.components
 			switch (componentObj.type)
 			{
 				case 'Label':
-					return ComponentsHelper.createLabel(componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createLabel(componentObj.text, componentObj.tooltip);
 				case 'Empty':
-					return ComponentsHelper.createEmpty(400, Constants.EMPTY_COMPONENT_HEIGHT);
+					return ComponentsFactory.createEmpty(400, Constants.EMPTY_COMPONENT_HEIGHT);
 				case 'CheckBox':
-					return ComponentsHelper.createCheckBox(componentObj, modLinkage, componentObj.text, componentObj.value, componentObj.tooltip);
+					return ComponentsFactory.createCheckBox(componentObj, modLinkage, componentObj.text, componentObj.value, componentObj.tooltip);
 				case 'RadioButtonGroup':
-					return ComponentsHelper.createRadioButtonGroup(componentObj, modLinkage, componentObj.varName, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createRadioButtonGroup(componentObj, modLinkage, componentObj.varName, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'Slider':
-					return ComponentsHelper.createSlider(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.format, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createSlider(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.format, componentObj.text, componentObj.tooltip);
 				case 'Dropdown':
-					return ComponentsHelper.createDropdown(componentObj, modLinkage, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createDropdown(componentObj, modLinkage, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'TextInput':
-					return ComponentsHelper.createTextInput(componentObj, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createTextInput(componentObj, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'HotKey':
-					return ComponentsHelper.createHotKey(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createHotKey(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
 				case 'NumericStepper':
-					return ComponentsHelper.createNumericStepper(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createNumericStepper(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.text, componentObj.tooltip);
 				case 'ColorChoice':
-					return ComponentsHelper.createColorChoice(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createColorChoice(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
 				case 'RangeSlider':
-					return ComponentsHelper.createRangeSlider(componentObj, modLinkage);
+					return ComponentsFactory.createRangeSlider(componentObj, modLinkage);
 				default:
 					DebugUtils.LOG_ERROR('[ModsSettings API] Unexpected type of component: ', componentObj.type);
 					return new MovieClip();
