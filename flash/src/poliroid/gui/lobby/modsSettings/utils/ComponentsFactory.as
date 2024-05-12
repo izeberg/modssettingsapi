@@ -1,4 +1,4 @@
-﻿package poliroid.gui.lobby.modsSettingsApi.utils
+﻿package poliroid.gui.lobby.modsSettings.utils
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -26,9 +26,9 @@
 	import net.wg.gui.components.controls.RadioButton;
 	import net.wg.gui.components.controls.RangeSlider;
 	import net.wg.gui.components.advanced.FieldSet;
-	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoiceButton;
-	import poliroid.gui.lobby.modsSettingsApi.controls.HotkeyControl;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.controls.ColorChoiceButton;
+	import poliroid.gui.lobby.modsSettings.controls.HotkeyControl;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
 
 	public class ComponentsFactory
 	{

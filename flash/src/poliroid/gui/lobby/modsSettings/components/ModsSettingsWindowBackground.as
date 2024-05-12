@@ -1,11 +1,11 @@
-package poliroid.gui.lobby.modsSettingsApi.components
+package poliroid.gui.lobby.modsSettings.components
 {
 	import flash.display.MovieClip;
 	import net.wg.infrastructure.base.UIComponentEx;
 	import net.wg.gui.components.controls.BitmapFill;
 	import net.wg.gui.components.controls.UILoaderAlt;
 	import net.wg.gui.events.UILoaderEvent;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindowBackground extends UIComponentEx
 	{

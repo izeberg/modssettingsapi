@@ -1,13 +1,13 @@
-package poliroid.gui.lobby.modsSettingsApi.controls
+package poliroid.gui.lobby.modsSettings.controls
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import net.wg.gui.components.controls.SoundButtonEx;
-	import poliroid.gui.lobby.modsSettingsApi.data.HotkeyControlVO;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.data.HotkeyControlVO;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class HotkeyControl extends SoundButtonEx
 	{

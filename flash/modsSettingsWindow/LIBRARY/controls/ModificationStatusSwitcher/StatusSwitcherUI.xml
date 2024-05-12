@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ModificationStatusSwitcher/StatusSwitcherUI" itemID="5c4a58c4-00000036" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.StatusSwitcher" linkageClassName="StatusSwitcherUI" lastModified="1553626741" lastUniqueIdentifier="1">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ModificationStatusSwitcher/StatusSwitcherUI" itemID="5c4a58c4-00000036" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.controls.StatusSwitcher" linkageClassName="StatusSwitcherUI" lastModified="1553626741" lastUniqueIdentifier="1">
   <timeline>
     <DOMTimeline name="StatusSwitcherUI">
       <layers>

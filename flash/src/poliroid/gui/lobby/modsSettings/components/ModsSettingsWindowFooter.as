@@ -1,11 +1,11 @@
-﻿package poliroid.gui.lobby.modsSettingsApi.components
+﻿package poliroid.gui.lobby.modsSettings.components
 {
 	import scaleform.clik.events.ButtonEvent;
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.infrastructure.base.UIComponentEx;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindowFooter extends UIComponentEx
 	{

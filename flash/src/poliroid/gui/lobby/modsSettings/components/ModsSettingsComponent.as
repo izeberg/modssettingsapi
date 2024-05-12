@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi.components
+package poliroid.gui.lobby.modsSettings.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -8,10 +8,10 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import scaleform.clik.constants.InvalidationType;
 	import scaleform.clik.core.UIComponent;
 	import net.wg.gui.components.advanced.FieldSet;
-	import poliroid.gui.lobby.modsSettingsApi.controls.StatusSwitcher;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.utils.ComponentsFactory;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.controls.StatusSwitcher;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.utils.ComponentsFactory;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsComponent extends UIComponent
 	{

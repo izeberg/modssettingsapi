@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi
+package poliroid.gui.lobby.modsSettings
 {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -7,16 +7,16 @@ package poliroid.gui.lobby.modsSettingsApi
 	import scaleform.clik.events.InputEvent;
 	import net.wg.infrastructure.base.AbstractView;
 
-	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsComponent;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowBackground;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowContent;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowFooter;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowHeader;
-	import poliroid.gui.lobby.modsSettingsApi.data.HotkeyControlVO;
-	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.lang.STRINGS;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsComponent;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowBackground;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowContent;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowFooter;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowHeader;
+	import poliroid.gui.lobby.modsSettings.data.HotkeyControlVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.lang.STRINGS;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindow extends AbstractView
 	{

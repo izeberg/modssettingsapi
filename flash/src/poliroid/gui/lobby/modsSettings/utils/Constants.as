@@ -1,4 +1,4 @@
-﻿package poliroid.gui.lobby.modsSettingsApi.utils
+﻿package poliroid.gui.lobby.modsSettings.utils
 {
 
 	public class Constants extends Object

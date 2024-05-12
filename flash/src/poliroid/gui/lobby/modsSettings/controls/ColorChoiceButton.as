@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi.controls
+package poliroid.gui.lobby.modsSettings.controls
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -7,9 +7,9 @@ package poliroid.gui.lobby.modsSettingsApi.controls
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.gui.components.popovers.PopOverConst;
 	import net.wg.gui.interfaces.ISoundButtonEx;
-	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoicePopup;
-	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.controls.ColorChoicePopup;
+	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ColorChoiceButton extends SoundButtonEx implements ISoundButtonEx
 	{

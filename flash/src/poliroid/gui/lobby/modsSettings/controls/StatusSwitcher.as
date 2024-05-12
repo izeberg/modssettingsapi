@@ -1,8 +1,8 @@
-package poliroid.gui.lobby.modsSettingsApi.controls
+﻿package poliroid.gui.lobby.modsSettings.controls
 {
 	import flash.display.MovieClip;
 	import net.wg.gui.components.controls.SoundButtonEx;
-	import poliroid.gui.lobby.modsSettingsApi.lang.STRINGS;
+	import poliroid.gui.lobby.modsSettings.lang.STRINGS;
 
 	public class StatusSwitcher extends SoundButtonEx
 	{

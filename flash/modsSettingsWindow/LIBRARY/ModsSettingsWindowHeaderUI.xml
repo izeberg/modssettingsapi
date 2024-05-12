@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowHeaderUI" itemID="6640fd7c-0000032a" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowHeader" linkageClassName="ModsSettingsWindowHeaderUI" lastModified="1715535228" lastUniqueIdentifier="1">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowHeaderUI" itemID="6640fd7c-0000032a" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowHeader" linkageClassName="ModsSettingsWindowHeaderUI" lastModified="1715535228" lastUniqueIdentifier="1">
   <timeline>
     <DOMTimeline name="ModsSettingsWindowHeaderUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;/guidelines&gt;'>
       <layers>

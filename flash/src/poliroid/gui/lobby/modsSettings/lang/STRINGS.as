@@ -1,6 +1,6 @@
-package poliroid.gui.lobby.modsSettingsApi.lang
+﻿package poliroid.gui.lobby.modsSettings.lang
 {
-	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
 
 	public class STRINGS extends Object
 	{

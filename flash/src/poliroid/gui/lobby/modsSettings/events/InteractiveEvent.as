@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi.events
+﻿package poliroid.gui.lobby.modsSettings.events
 {
 	import flash.events.Event;
 

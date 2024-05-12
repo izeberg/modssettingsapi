@@ -1,4 +1,4 @@
-package poliroid.gui.lobby.modsSettingsApi.controls
+package poliroid.gui.lobby.modsSettings.controls
 {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -19,7 +19,7 @@ package poliroid.gui.lobby.modsSettingsApi.controls
 	import net.wg.gui.components.controls.SoundButton;
 	import net.wg.gui.components.popovers.PopOverConst;
 	import net.wg.infrastructure.base.UIComponentEx;
-	import poliroid.gui.lobby.modsSettingsApi.lang.STRINGS;
+	import poliroid.gui.lobby.modsSettings.lang.STRINGS;
 
 	public class ColorChoicePopup extends UIComponentEx
 	{

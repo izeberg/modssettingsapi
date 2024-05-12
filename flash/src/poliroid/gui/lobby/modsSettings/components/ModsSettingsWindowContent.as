@@ -1,10 +1,10 @@
-package poliroid.gui.lobby.modsSettingsApi.components
+package poliroid.gui.lobby.modsSettings.components
 {
 	import flash.display.MovieClip;
 	import net.wg.infrastructure.base.UIComponentEx;
 	import net.wg.gui.components.controls.ScrollPane;
 	import net.wg.gui.components.controls.ScrollBar;
-	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindowContent extends UIComponentEx
 	{
