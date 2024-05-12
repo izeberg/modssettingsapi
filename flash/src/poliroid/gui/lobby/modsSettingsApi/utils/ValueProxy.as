@@ -2,23 +2,23 @@
 {
 	public class ValueProxy
 	{
-		public var target:*;
-		public var key:*;
+		private var _target:*;
+		private var _key:*;
 
 		public function ValueProxy(target:*, key:*)
 		{
 			if (!target)
-				throw new Error("[ModsSettings API] Wrong target");
+				throw new Error("[ModsSettings API] Target is missing!");
 			if (!key)
-				throw new Error("[ModsSettings API] Wrong key");
+				throw new Error("[ModsSettings API] Key is missing!");
 
-			this.target = target;
-			this.key = key;
+			_target = target;
+			_key = key;
 		}
 
 		public function get value():*
 		{
-			return target[key];
+			return _target[_key];
 		}
 	}
 }

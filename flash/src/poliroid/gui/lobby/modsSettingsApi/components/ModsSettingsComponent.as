@@ -48,16 +48,11 @@ package poliroid.gui.lobby.modsSettingsApi.components
 				var component:Object = components[i];
 
 				if ('varName' in component.data)
-				{
-					var componentValue:* = component.componentObject[Constants.COMPONENT_RETURN_VALUE_KEY].value;
 					result[component.data.varName] = component.componentObject[Constants.COMPONENT_RETURN_VALUE_KEY].value;
-				}
 			}
 
 			if (data.hasOwnProperty('enabled'))
-			{
 				result['enabled'] = modEnabled;
-			}
 
 			return result;
 		}
