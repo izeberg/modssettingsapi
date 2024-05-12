@@ -18,13 +18,29 @@ import ResMgr
 from constants import ARENA_GUI_TYPE
 
 DEFAULT_EXCLUDED_GUI_TYPES = {
-	ARENA_GUI_TYPE.EPIC_RANDOM,
-	ARENA_GUI_TYPE.EPIC_BATTLE,
-	ARENA_GUI_TYPE.EPIC_RANDOM_TRAINING,
-	ARENA_GUI_TYPE.EPIC_TRAINING,
-	ARENA_GUI_TYPE.EVENT_BATTLES,
 	ARENA_GUI_TYPE.UNKNOWN,
+	ARENA_GUI_TYPE.EVENT_BATTLES,
 }
+
+INJECTABLE_EXCLUDED_GUI_TYPES = (
+	'EPIC_RANDOM',
+	'EPIC_RANDOM_TRAINING',
+	'EPIC_BATTLE',
+	'EPIC_TRAINING',
+)
+
+
+def safeInjectConstants(target, src, clazz):
+	for attr in src:
+		if not hasattr(clazz, attr):
+			continue
+
+		entry = getattr(clazz, attr)
+		target.add(entry)
+
+
+safeInjectConstants(DEFAULT_EXCLUDED_GUI_TYPES, 
+					INJECTABLE_EXCLUDED_GUI_TYPES, ARENA_GUI_TYPE)
 
 
 def isDisabledByBattleType(exclude=None, include=tuple()):
