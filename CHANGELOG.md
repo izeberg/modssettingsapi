@@ -5,6 +5,7 @@
 - all: code format and cleanup
 - python: migrate to logging instead of debug_utils
 - python: move config directory creation from constants to API
+- python/constants: use proper name for view alias
 - python/api: added onWindowOpened event to API (Polyacov_Yury)
 - python/hotkeys (BREAKING): controller naming fix (HotkeysContoller -> HotkeysController)
 - python/hotkeys: hotkey context menu handler refactor

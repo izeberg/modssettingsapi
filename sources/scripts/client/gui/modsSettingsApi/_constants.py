@@ -9,7 +9,7 @@ from constants import DEFAULT_LANGUAGE
 MOD_ID = 'modsSettingsApi'
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 
-VIEW_ALIAS = 'modsSettingsApiWindow'
+VIEW_ALIAS = 'ModsSettingsApiWindow'
 VIEW_SWF = 'modsSettingsWindow.swf'
 
 USER_SETTINGS_PATH = os.path.join('mods', 'configs', 'modsSettingsApi.json')
