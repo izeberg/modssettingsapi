@@ -19,3 +19,4 @@
 - as3/controls: StatusSwitcher refactor
 - as3/controls: fixed component naming (ColorChoise -> ColorChoice)
 - as3/controls: fixed internal variables naming (blueSlider) in ColorChoice
+- as3/utils: allow autosizing for RadioButton component

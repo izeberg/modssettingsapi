@@ -4,6 +4,7 @@
 	import flash.events.MouseEvent;
 	import flash.display.MovieClip;
 	import flash.display.DisplayObject;
+	import flash.text.TextFieldAutoSize;
 	import scaleform.clik.controls.ButtonGroup;
 	import scaleform.clik.core.UIComponent;
 	import scaleform.clik.events.SliderEvent;
@@ -150,7 +151,7 @@
 
 				radioButton.y = i * Constants.RADIO_BUTTONS_MARGIN + headerMargin;
 				radioButton.label = options[i].label;
-				radioButton.width = Constants.MOD_COMPONENT_WIDTH / 2;
+				radioButton.autoSize = TextFieldAutoSize.LEFT;
 				radioButtonsUI.addChild(radioButton);
 				buttonGroup.addButton(radioButton);
 				radioButton.addEventListener(MouseEvent.CLICK, handleComponentEvent);
