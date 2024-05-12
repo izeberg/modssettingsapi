@@ -47,12 +47,16 @@ package poliroid.gui.lobby.modsSettingsApi.controls
 		{
 			super.onMouseDownHandler(event);
 
-			var popup:ColorChoicePopup = App.utils.classFactory.getComponent('ColorChoicePopupUI', ColorChoicePopup);
-			popup.onValueChanged = onValueChanged;
-			popup.color = color;
-			popup.position = getPopupPosition(popup);
-			popup.arrowDirection = getPopupArrowDirection();
-			popup.show();
+			if (App.utils.commons.isLeftButton(event))
+			{
+				var popup:ColorChoicePopup = App.utils.classFactory.getComponent('ColorChoicePopupUI', ColorChoicePopup);
+
+				popup.color = color;
+				popup.arrowDirection = getPopupArrowDirection();
+				popup.position = getPopupPosition(popup);
+				popup.onValueChanged = onValueChanged;
+				popup.show();
+			}
 		}
 
 		private function getPopupArrowDirection():int
