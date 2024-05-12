@@ -91,14 +91,18 @@ package poliroid.gui.lobby.modsSettingsApi.controls
 				if (!_model.isAccepting)
 					dispatchEvent(new InteractiveEvent(InteractiveEvent.HOTKEY_ACTION, _model.linkage, _model.varName, COMMAND_START_ACCEPT));
 			}
-
-			if (App.utils.commons.isRightButton(event))
+			else if (App.utils.commons.isRightButton(event))
 			{
 				if (_model.isAccepting)
 					dispatchEvent(new InteractiveEvent(InteractiveEvent.HOTKEY_ACTION, _model.linkage, _model.varName, COMMAND_STOP_ACCEPT));
 
-				App.contextMenuMgr.show('modsSettingsHotkeyContextHandler', this, {'linkage': _model.linkage, 'varName': _model.varName});
+				App.contextMenuMgr.show(Constants.HOTKEY_CONTEXT_MENU_HANDLER, this, {'linkage': _model.linkage, 'varName': _model.varName, 'value': _keyset});
 			}
+		}
+
+		public function get keyset():Array
+		{
+			return _keyset;
 		}
 	}
 }

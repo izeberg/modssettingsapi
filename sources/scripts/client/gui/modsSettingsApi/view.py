@@ -110,6 +110,7 @@ class HotkeyContextHandler(AbstractContextMenuHandler):
 	def __init__(self, cmProxy, ctx=None):
 		self._linkage = None
 		self._varName = None
+		self._value = None
 		super(HotkeyContextHandler, self).__init__(cmProxy, ctx, handlers={
 			'setValueToEmpty': 'setValueToEmpty',
 			'setValueToDefault': 'setValueToDefault'
@@ -118,10 +119,12 @@ class HotkeyContextHandler(AbstractContextMenuHandler):
 	def _initFlashValues(self, ctx):
 		self._varName = ctx.varName
 		self._linkage = ctx.linkage
+		self._value = ctx.value
 
 	def _clearFlashValues(self):
 		self._linkage = None
 		self._varName = None
+		self._value = None
 
 	def setValueToEmpty(self):
 		if self._linkage and self._varName:
@@ -134,7 +137,7 @@ class HotkeyContextHandler(AbstractContextMenuHandler):
 	def _generateOptions(self, ctx=None):
 		return [
 			self._makeItem('setValueToEmpty', self.api.userSettings.get(
-				'buttonCleanup') or BUTTON_CLEANUP),
+				'buttonCleanup') or BUTTON_CLEANUP, {'enabled': len(self._value)}),
 			self._makeItem('setValueToDefault', self.api.userSettings.get(
 				'buttonDefault') or BUTTON_DEFAULT)
 		]

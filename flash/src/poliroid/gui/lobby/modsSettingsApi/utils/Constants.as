@@ -28,6 +28,8 @@
 
 		public static const MAX_BOTTOM_OFFSET:int = 230;
 
+		public static const HOTKEY_CONTEXT_MENU_HANDLER:String = 'modsSettingsHotkeyContextHandler';
+
 		public function Constants()
 		{
 			super();
