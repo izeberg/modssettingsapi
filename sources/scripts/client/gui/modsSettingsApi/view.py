@@ -48,6 +48,7 @@ class ModsSettingsApiWindow(View):
 
 	def _populate(self):
 		super(ModsSettingsApiWindow, self)._populate()
+		self.api.onWindowOpened()
 		self.api.updateHotKeys += self.as_updateHotKeysS
 		self._blur = CachedBlur(enabled=True, ownLayer=WindowLayer.OVERLAY - 1)
 

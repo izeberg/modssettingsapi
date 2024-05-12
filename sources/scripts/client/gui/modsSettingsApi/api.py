@@ -32,6 +32,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		}
 		self.userSettings = {}
 
+		self.onWindowOpened = Event.Event()
 		self.onWindowClosed = Event.Event()
 		self.updateHotKeys = Event.Event()
 		self.onButtonClicked = Event.Event()
