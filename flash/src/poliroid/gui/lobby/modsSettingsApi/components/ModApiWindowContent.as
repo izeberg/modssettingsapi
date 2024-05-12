@@ -24,10 +24,9 @@ package poliroid.gui.lobby.modsSettingsApi.components
 		{
 			super.configUI();
 
-			scrollPane.scrollStepFactor = 20;
 			scrollPane.scrollBar = scrollBar;
-			scrollPane.isScrollBarHaveToBeShown = true;
 			scrollPane.target = container;
+			scrollPane.scrollStepFactor = 100;
 		}
 
 		override protected function onDispose():void
