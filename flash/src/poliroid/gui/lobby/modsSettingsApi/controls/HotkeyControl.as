@@ -55,12 +55,12 @@ package poliroid.gui.lobby.modsSettingsApi.controls
 			if (_model.isAccepting)
 			{
 				statesMC.gotoAndPlay(STATE_ACCEPTING);
-				valueTF.text = "";
+				valueTF.text = '';
 			}
 			else if (_model.isEmpty)
 			{
 				statesMC.gotoAndPlay(STATE_EMPTY);
-				valueTF.text = "";
+				valueTF.text = '';
 			}
 			else
 			{
