@@ -7,13 +7,13 @@
 	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModApiWindowFooter extends UIComponentEx
+	public class ModsSettingsWindowFooter extends UIComponentEx
 	{
 		public var buttonOK:SoundButtonEx;
 		public var buttonCancel:SoundButtonEx;
 		public var buttonApply:SoundButtonEx;
 
-		public function ModApiWindowFooter()
+		public function ModsSettingsWindowFooter()
 		{
 			super();
 		}

@@ -8,12 +8,12 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModApiWindowHeader extends UIComponentEx
+	public class ModsSettingsWindowHeader extends UIComponentEx
 	{
 		public var titleTF:TextField;
 		public var buttonClose:CloseButtonText;
 
-		public function ModApiWindowHeader()
+		public function ModsSettingsWindowHeader()
 		{
 			super();
 		}

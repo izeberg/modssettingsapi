@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="ModApiWindowContentUI" name="content">
+                <DOMSymbolInstance libraryItemName="ModsSettingsWindowContentUI" name="content">
                   <matrix>
                     <Matrix ty="100"/>
                   </matrix>
@@ -22,7 +22,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="ModApiWindowHeaderUI" name="header">
+                <DOMSymbolInstance libraryItemName="ModsSettingsWindowHeaderUI" name="header">
                   <transformationPoint>
                     <Point x="442" y="120.75"/>
                   </transformationPoint>
@@ -35,7 +35,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="ModApiWindowFooterUI" name="footer" selected="true">
+                <DOMSymbolInstance libraryItemName="ModsSettingsWindowFooterUI" name="footer" selected="true">
                   <matrix>
                     <Matrix ty="505"/>
                   </matrix>
@@ -51,7 +51,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="ModApiWindowBackgroundUI" name="background">
+                <DOMSymbolInstance libraryItemName="ModsSettingsWindowBackgroundUI" name="background">
                   <transformationPoint>
                     <Point x="245" y="185"/>
                   </transformationPoint>

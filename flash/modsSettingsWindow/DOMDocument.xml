@@ -17,8 +17,8 @@
           <DOMFolderItem name="resources" itemID="5c4e4acc-00001cf5"/>
      </folders>
      <fonts>
-          <DOMFontItem name="imports/$FieldFont" itemID="5881fc6e-0000068b" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageBaseClass="flash.text.Font" linkageClassName="$FieldFont" linkageURL="gfxfontlib.swf" font="ZurichCond" size="0" id="8" sourceLastImported="1364979294"/>
           <DOMFontItem name="imports/$TitleFont" itemID="5881fc6e-0000068d" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageBaseClass="flash.text.Font" linkageClassName="$TitleFont" linkageURL="gfxfontlib.swf" font="ZurichCondBold" size="0" id="9" sourceLastImported="1361352889"/>
+          <DOMFontItem name="imports/$FieldFont" itemID="5881fc6e-0000068b" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageBaseClass="flash.text.Font" linkageClassName="$FieldFont" linkageURL="gfxfontlib.swf" font="ZurichCond" size="0" id="8" sourceLastImported="1364979294"/>
      </fonts>
      <media>
           <DOMBitmapItem name="resources/background_content.png" itemID="61dc2d90-000001ae" sourceExternalFilepath="./LIBRARY/resources/background_content.png" sourceLastImported="1641819506" externalFileSize="319" useImportedJPEGData="false" compressionType="lossless" originalCompressionType="lossless" quality="50" href="resources/background_content.png" bitmapDataHRef="M 16 1548639452.dat" frameRight="20480" frameBottom="320"/>
@@ -80,10 +80,10 @@
           <Include href="imports/Slider.xml" itemID="5c9a213d-00000189" lastModified="1553604973"/>
           <Include href="imports/TextInput.xml" itemID="5c9a2219-0000018d" lastModified="1553605145"/>
           <Include href="imports/UILoaderAlt.xml" itemID="5c4dface-000002d8" lastModified="1548614350"/>
-          <Include href="ModApiWindowBackgroundUI.xml" itemID="5c4ecd1c-0000017a" lastModified="1548674048"/>
-          <Include href="ModApiWindowContentUI.xml" itemID="5c4ecd3c-0000017b" lastModified="1548674006"/>
-          <Include href="ModApiWindowFooterUI.xml" itemID="5c4ecd53-0000017c" lastModified="1548674016"/>
-          <Include href="ModApiWindowHeaderUI.xml" itemID="5c4ecd07-00000179" lastModified="1548668167"/>
+          <Include href="ModsSettingsWindowBackgroundUI.xml" itemID="6640fd45-00000327" lastModified="1715535173"/>
+          <Include href="ModsSettingsWindowContentUI.xml" itemID="6640fd59-00000328" lastModified="1715535193"/>
+          <Include href="ModsSettingsWindowFooterUI.xml" itemID="6640fd6f-00000329" lastModified="1715535215"/>
+          <Include href="ModsSettingsWindowHeaderUI.xml" itemID="6640fd7c-0000032a" lastModified="1715535228"/>
           <Include href="ModsSettingsWindowUI.xml" itemID="5c4add53-0000009d" lastModified="1553778578"/>
           <Include href="resources/background_content.xml" loadImmediate="false" itemID="5c4e5f27-00000376" lastModified="1548640039"/>
           <Include href="resources/background_panels.xml" loadImmediate="false" itemID="5c4e4ad7-00001cf8" lastModified="1548635257"/>

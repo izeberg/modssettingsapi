@@ -6,14 +6,14 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import net.wg.gui.components.controls.ScrollBar;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModApiWindowContent extends UIComponentEx
+	public class ModsSettingsWindowContent extends UIComponentEx
 	{
 		public var scrollPane:ScrollPane;
 		public var scrollBar:ScrollBar;
 		public var container:MovieClip;
 		public var background:MovieClip;
 
-		public function ModApiWindowContent()
+		public function ModsSettingsWindowContent()
 		{
 			super();
 

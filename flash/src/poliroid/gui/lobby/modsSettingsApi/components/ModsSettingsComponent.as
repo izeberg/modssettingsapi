@@ -13,7 +13,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import poliroid.gui.lobby.modsSettingsApi.utils.ComponentsHelper;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModApiComponent extends UIComponent
+	public class ModsSettingsComponent extends UIComponent
 	{
 		public var modLinkage:String;
 		public var modEnabled:Boolean = true;
@@ -22,7 +22,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 
 		private var _modEnabledButton:StatusSwitcher;
 
-		public function ModApiComponent(linkage:String)
+		public function ModsSettingsComponent(linkage:String)
 		{
 			super();
 
@@ -95,13 +95,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 			}
 
 			if (data.hasOwnProperty('enabled')) {
-				modEnabled = data.enabled;
-				_modEnabledButton = App.utils.classFactory.getComponent('StatusSwitcherUI', StatusSwitcher);
-				_modEnabledButton.isEnabled = modEnabled;
-				_modEnabledButton.y = 16;
-				_modEnabledButton.x = Constants.MOD_COMPONENT_WIDTH - 41;
-				addChild(_modEnabledButton);
-				_modEnabledButton.addEventListener(MouseEvent.CLICK, handleButtonEnableClick);
+				createStatusSwitcherButton();
 			}
 
 			var fieldSet:FieldSet = FieldSet(App.utils.classFactory.getObject('FieldSet'));
@@ -145,6 +139,17 @@ package poliroid.gui.lobby.modsSettingsApi.components
 			}
 
 			return lastPos;
+		}
+
+		private function createStatusSwitcherButton():void
+		{
+			modEnabled = data.enabled;
+			_modEnabledButton = App.utils.classFactory.getComponent('StatusSwitcherUI', StatusSwitcher);
+			_modEnabledButton.isEnabled = modEnabled;
+			_modEnabledButton.y = 16;
+			_modEnabledButton.x = Constants.MOD_COMPONENT_WIDTH - 41;
+			addChild(_modEnabledButton);
+			_modEnabledButton.addEventListener(MouseEvent.CLICK, handleButtonEnableClick);
 		}
 
 		private function handleButtonEnableClick(event:MouseEvent):void

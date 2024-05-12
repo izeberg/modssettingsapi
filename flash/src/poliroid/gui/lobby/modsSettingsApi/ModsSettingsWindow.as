@@ -7,11 +7,11 @@ package poliroid.gui.lobby.modsSettingsApi
 	import scaleform.clik.events.InputEvent;
 	import net.wg.infrastructure.base.AbstractView;
 
-	import poliroid.gui.lobby.modsSettingsApi.components.ModApiComponent;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowBackground;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowContent;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowFooter;
-	import poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowHeader;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsComponent;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowBackground;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowContent;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowFooter;
+	import poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowHeader;
 	import poliroid.gui.lobby.modsSettingsApi.data.HotkeyControlVO;
 	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
@@ -20,10 +20,10 @@ package poliroid.gui.lobby.modsSettingsApi
 
 	public class ModsSettingsWindow extends AbstractView
 	{
-		public var header:ModApiWindowHeader;
-		public var content:ModApiWindowContent;
-		public var footer:ModApiWindowFooter;
-		public var background:ModApiWindowBackground;
+		public var header:ModsSettingsWindowHeader;
+		public var content:ModsSettingsWindowContent;
+		public var footer:ModsSettingsWindowFooter;
+		public var background:ModsSettingsWindowBackground;
 
 		public var requestModsData:Function;
 		public var sendModsData:Function;
@@ -117,7 +117,7 @@ package poliroid.gui.lobby.modsSettingsApi
 
 			for (var linkage:String in modsData)
 			{
-				var mod:ModApiComponent = new ModApiComponent(linkage);
+				var mod:ModsSettingsComponent = new ModsSettingsComponent(linkage);
 
 				mod.setData(modsData[linkage]);
 				mod.validateNow();
@@ -132,7 +132,7 @@ package poliroid.gui.lobby.modsSettingsApi
 
 		public function as_updateHotKeys(data:Object):void
 		{
-			for each (var mod:ModApiComponent in modsArray)
+			for each (var mod:ModsSettingsComponent in modsArray)
 			{
 				if (data.hasOwnProperty(mod.modLinkage))
 				{
@@ -154,7 +154,7 @@ package poliroid.gui.lobby.modsSettingsApi
 		{
 			var result:Object = new Object();
 
-			for each (var mod:ModApiComponent in modsArray)
+			for each (var mod:ModsSettingsComponent in modsArray)
 			{
 				if (configChangedLinkages.indexOf(mod.modLinkage) != -1)
 				{

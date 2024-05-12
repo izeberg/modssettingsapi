@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModApiWindowHeaderUI" itemID="5c4ecd07-00000179" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowHeader" linkageClassName="ModApiWindowHeaderUI" lastModified="1548668167" lastUniqueIdentifier="1">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowHeaderUI" itemID="6640fd7c-0000032a" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowHeader" linkageClassName="ModsSettingsWindowHeaderUI" lastModified="1715535228" lastUniqueIdentifier="1">
   <timeline>
-    <DOMTimeline name="ModApiWindowHeaderUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;/guidelines&gt;'>
+    <DOMTimeline name="ModsSettingsWindowHeaderUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;/guidelines&gt;'>
       <layers>
         <DOMLayer name="Слой_1" color="#00FFFF" current="true" isSelected="true">
           <frames>

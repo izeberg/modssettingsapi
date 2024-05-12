@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModApiWindowBackgroundUI" itemID="5c4ecd1c-0000017a" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModApiWindowBackground" linkageClassName="ModApiWindowBackgroundUI" lastModified="1548674048">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowBackgroundUI" itemID="6640fd45-00000327" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.components.ModsSettingsWindowBackground" linkageClassName="ModsSettingsWindowBackgroundUI" lastModified="1715535173">
   <timeline>
-    <DOMTimeline name="ModApiWindowBackgroundUI">
+    <DOMTimeline name="ModsSettingsWindowBackgroundUI">
       <layers>
         <DOMLayer name="bgImage" color="#FF800A" current="true" isSelected="true" autoNamed="false">
           <frames>

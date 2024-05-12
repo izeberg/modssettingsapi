@@ -7,7 +7,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 	import net.wg.gui.events.UILoaderEvent;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
-	public class ModApiWindowBackground extends UIComponentEx
+	public class ModsSettingsWindowBackground extends UIComponentEx
 	{
 		public var bgLoader:UILoaderAlt;
 		public var bgFill:BitmapFill;
@@ -16,7 +16,7 @@ package poliroid.gui.lobby.modsSettingsApi.components
 		private var _originalBgWidth:Number = 0;
 		private var _originalBgHeight:Number = 0;
 
-		public function ModApiWindowBackground()
+		public function ModsSettingsWindowBackground()
 		{
 			super();
 		}
