@@ -17,6 +17,7 @@
 - as3: unify components naming
 - as3: rename ComponentsHelper to ComponentsFactory
 - as3/components: increase scroll factor and don't enforce scrollbar even when content is smaller than container height
+- as3/components: prevent scrollPane content blurriness
 - as3/controls: StatusSwitcher refactor
 - as3/controls: fixed component naming (ColorChoise -> ColorChoice)
 - as3/controls: fixed internal variables naming (blueSlider) in ColorChoice
