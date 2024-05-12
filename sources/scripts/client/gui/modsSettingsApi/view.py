@@ -7,6 +7,7 @@ from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
 from gui.shared.personality import ServicesLocator
 from gui.shared.view_helpers.blur_manager import CachedBlur
 from frameworks.wulf import WindowLayer
+from skeletons.gui.impl import IGuiLoader
 from helpers import dependency
 
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
@@ -16,9 +17,18 @@ from gui.modsSettingsApi.utils_common import byteify
 __all__ = ('loadView', )
 
 
+@dependency.replace_none_kwargs(guiLoader=IGuiLoader)
+def getParentWindow(guiLoader=None):
+	parentWindow = None
+	if guiLoader and guiLoader.windowsManager:
+		parentWindow = guiLoader.windowsManager.getMainWindow()
+	return parentWindow
+
+
 def loadView(api):
+	parent = getParentWindow()
 	app = ServicesLocator.appLoader.getDefLobbyApp()
-	app.loadView(SFViewLoadParams(VIEW_ALIAS), ctx=api)
+	app.loadView(SFViewLoadParams(VIEW_ALIAS, parent=parent), ctx=api)
 
 
 def generateStaticDataVO(userSettings):
