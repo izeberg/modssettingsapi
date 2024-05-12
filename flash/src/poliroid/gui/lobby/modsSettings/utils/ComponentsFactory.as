@@ -57,22 +57,22 @@
 		public static function createLabel(text:String, tooltipText:String = ''):DisplayObject
 		{
 			var labelUI:UIComponent = new UIComponent();
-			var lb:LabelControl = LabelControl(App.utils.classFactory.getComponent('LabelControl', LabelControl));
+			var label:LabelControl = LabelControl(App.utils.classFactory.getComponent('LabelControl', LabelControl));
 
-			lb.width = 800;
-			lb.htmlText = text;
+			label.width = 800;
+			label.htmlText = text;
 
 			if (tooltipText)
 			{
-				lb.toolTip = tooltipText;
-				lb.infoIcoType = InfoIcon.TYPE_INFO;
+				label.toolTip = tooltipText;
+				label.infoIcoType = InfoIcon.TYPE_INFO;
 			}
 
-			labelUI.addChild(lb);
-			lb.validateNow();
+			labelUI.addChild(label);
+			label.validateNow();
 
 			// Add pointer cursor to tooltip icon if available
-			var infoIcon:InfoIcon = lb['_infoIco'];
+			var infoIcon:InfoIcon = label['_infoIco'];
 
 			if (infoIcon)
 				infoIcon.buttonMode = true;
@@ -80,7 +80,7 @@
 			var result:MovieClip = new MovieClip();
 
 			result.addChild(labelUI);
-			result['label'] = lb;
+			result['label'] = label;
 
 			return result;
 		}
@@ -137,10 +137,10 @@
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
-				lb.x = lb.y = 0;
-				radioButtonsUI.addChild(lb);
+				label.x = label.y = 0;
+				radioButtonsUI.addChild(label);
 			}
 
 			var buttonGroup:ButtonGroup = ButtonGroup.getGroup(groupName, radioButtonsUI);
@@ -163,17 +163,17 @@
 			{
 				var positionX:Number = 0;
 				var positionY:Number = 0;
-				var rb:* = buttonGroup.getButtonAt(0);
+				var radioButton:RadioButton = RadioButton(buttonGroup.getButtonAt(0));
 
 				if (headerText)
 				{
-					positionX = lb.x + lb['label'].textField.textWidth + Constants.BUTTON_MARGIN_LEFT;
+					positionX = label.x + label['label'].textField.textWidth + Constants.BUTTON_MARGIN_LEFT;
 
 					if (tooltipText)
 						positionX += 25;
 				}
 				else
-					positionX = rb.x + rb.width + Constants.BUTTON_MARGIN_LEFT;
+					positionX = radioButton.x + radioButton.width + Constants.BUTTON_MARGIN_LEFT;
 
 				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
 
@@ -198,10 +198,10 @@
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
 
-				lb.x = lb.y = 0;
-				dropdownUI.addChild(lb);
+				label.x = label.y = 0;
+				dropdownUI.addChild(label);
 			}
 
 			var dropdown:DropdownMenu = DropdownMenu(App.utils.classFactory.getObject('DropdownMenuUI'));
@@ -262,9 +262,9 @@
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
-				lb.x = lb.y = 0;
-				sliderUI.addChild(lb);
+				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				label.x = label.y = 0;
+				sliderUI.addChild(label);
 			}
 
 			var slider:Slider = Slider(App.utils.classFactory.getComponent('Slider', Slider));
@@ -335,9 +335,9 @@
 
 			if (headerText)
 			{
-				var lb:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
-				lb.x = lb.y = 0;
-				textInputUI.addChild(lb);
+				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				label.x = label.y = 0;
+				textInputUI.addChild(label);
 			}
 
 			var textInput:TextInput = TextInput(App.utils.classFactory.getComponent('TextInput', TextInput));
@@ -363,10 +363,10 @@
 
 			if (text)
 			{
-				var lb = ComponentsFactory.createLabel(text, tooltip);
+				var label = ComponentsFactory.createLabel(text, tooltip);
 
-				lb.y = 4;
-				numericStepperUI.addChild(lb);
+				label.y = 4;
+				numericStepperUI.addChild(label);
 			}
 
 			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent('NumericStepper', NumericStepper));
@@ -474,12 +474,12 @@
 		public static function createRangeSlider(componentCFG:Object, modLinkage:String):DisplayObject
 		{
 			var rangeSliderUI:UIComponent = new UIComponent();
-			var lb:DisplayObject = ComponentsFactory.createLabel(componentCFG.text, componentCFG.tooltip);
+			var label:DisplayObject = ComponentsFactory.createLabel(componentCFG.text, componentCFG.tooltip);
 
-			lb.y = -7;
-			lb.x = 0;
+			label.y = -7;
+			label.x = 0;
 			rangeSliderUI.y += 7;
-			rangeSliderUI.addChild(lb);
+			rangeSliderUI.addChild(label);
 
 			var rangeSlider:RangeSlider = RangeSlider(App.utils.classFactory.getComponent('RangeSliderUI', RangeSlider));
 
