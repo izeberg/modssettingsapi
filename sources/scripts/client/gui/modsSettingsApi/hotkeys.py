@@ -12,7 +12,7 @@ from gui.modsSettingsApi.utils_common import override
 _logger = logging.getLogger(__name__)
 
 
-class HotkeysContoller(object):
+class HotkeysController(object):
 
 	def __init__(self, api):
 		self.api = api
@@ -129,3 +129,10 @@ class HotkeysContoller(object):
 						result[linkage][component['varName']] = self.getHotkeyData(
 							linkage, component.get('varName'))
 		return dict(result)
+
+# Backwards compatibility with mods that still use wrongly named class in imports
+class HotkeysContoller(HotkeysController):
+
+	def __init__(self, api):
+		super(HotkeysContoller, self).__init__(api)
+		_logger.warning('You are using deprecated controller class. Please use HotkeysController instead. The backwards compatibility support will be removed in future updates.')

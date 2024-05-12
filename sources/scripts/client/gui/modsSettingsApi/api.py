@@ -10,7 +10,7 @@ from helpers import dependency
 
 from gui.modsListApi import g_modsListApi
 
-from gui.modsSettingsApi.hotkeys import HotkeysContoller
+from gui.modsSettingsApi.hotkeys import HotkeysController
 from gui.modsSettingsApi.view import loadView
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
 from gui.modsSettingsApi._constants import *
@@ -37,7 +37,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.onButtonClicked = Event.Event()
 		self.onSettingsChanged = Event.Event()
 
-		self.hotkeys = HotkeysContoller(self)
+		self.hotkeys = HotkeysController(self)
 		self.hotkeys.onUpdated += self.updateHotKeys
 
 		self.settingsLoad()
