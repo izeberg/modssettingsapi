@@ -14,22 +14,22 @@
                     <Point x="6.5" y="55"/>
                   </transformationPoint>
                   <parametersAsXML><![CDATA[   <property id="offsetBottom">
-      <Inspectable name="offsetBottom" variable="offsetBottom" category="" verbose="0" defaultValue="0" type="Number"/>
+      <Inspectable name="offsetBottom" unlocalizedName="offsetBottom" variable="offsetBottom" category="" verbose="0" defaultValue="0" type="Number"/>
    </property>
    <property id="offsetTop">
-      <Inspectable name="offsetTop" variable="offsetTop" category="" verbose="0" defaultValue="0" type="Number"/>
+      <Inspectable name="offsetTop" unlocalizedName="offsetTop" variable="offsetTop" category="" verbose="0" defaultValue="0" type="Number"/>
    </property>
    <property id="scrollTarget">
-      <Inspectable name="scrollTarget" variable="scrollTarget" category="" verbose="0" defaultValue="" type="String"/>
+      <Inspectable name="scrollTarget" unlocalizedName="scrollTarget" variable="scrollTarget" category="" verbose="0" defaultValue="" type="String"/>
    </property>
    <property id="trackMode">
-      <Inspectable name="trackMode" variable="trackMode" category="" verbose="0" defaultValue="scrollPage" enumeration="scrollPage,scrollToCursor" type="List"/>
+      <Inspectable name="trackMode" unlocalizedName="trackMode" variable="trackMode" category="" verbose="0" defaultValue="scrollPage" enumeration="scrollPage,scrollToCursor" type="List"/>
    </property>
    <property id="visible">
-      <Inspectable name="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
+      <Inspectable name="visible" unlocalizedName="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
    </property>
    <property id="height">
-      <Inspectable name="height" variable="height" category="" verbose="0" defaultValue="563" type="Number"/>
+      <Inspectable name="height" unlocalizedName="height" variable="height" category="" verbose="0" defaultValue="563" type="Number"/>
    </property>
 ]]></parametersAsXML>
                 </DOMComponentInstance>

@@ -1,81 +1,79 @@
-import Event
 import os
 import functools
 import copy
-import cPickle
+import logging
+
 import BigWorld
-
+import cPickle
+import Event
 from helpers import dependency
-
-from debug_utils import LOG_CURRENT_EXCEPTION
 
 from gui.modsListApi import g_modsListApi
 
-from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
-from gui.modsSettingsApi.view import loadView
 from gui.modsSettingsApi.hotkeys import HotkeysContoller
-from gui.modsSettingsApi._constants import USER_SETTINGS_PATH, CONFIG_PATH, COLUMNS
-from gui.modsSettingsApi._constants import MOD_ICON, MOD_NAME, MOD_DESCRIPTION
+from gui.modsSettingsApi.view import loadView
+from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
+from gui.modsSettingsApi._constants import *
 from gui.modsSettingsApi.utils_common import jsonLoad, jsonDump
+
+_logger = logging.getLogger(__name__)
 
 
 class ModsSettingsApi(IModsSettingsApiInternal):
+
 	def __init__(self):
 		super(ModsSettingsApi, self).__init__()
-
 		self.__saveCallbackID = None
-
 		self.activeMods = set()
 		self.config = {
 			'templates': {},
 			'settings': {},
 			'data': {},
 		}
+		self.userSettings = {}
 
-		self.onSettingsChanged = Event.Event()
-		self.onButtonClicked = Event.Event()
 		self.onWindowClosed = Event.Event()
 		self.updateHotKeys = Event.Event()
+		self.onButtonClicked = Event.Event()
+		self.onSettingsChanged = Event.Event()
 
 		self.hotkeys = HotkeysContoller(self)
 		self.hotkeys.onUpdated += self.updateHotKeys
-		
-		self.userSettings = {}
-	
+
 		self.settingsLoad()
 		self.configLoad()
-		
+
 		g_modsListApi.addModification(
-			id='modsSettingsApi',
-			name=self.userSettings.get('modsListApiName') or MOD_NAME, 
-			description=self.userSettings.get('modsListApiDescription') or MOD_DESCRIPTION, 
-			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON, 
-			enabled=True, 
-			login=True, 
-			lobby=True,
+			id=MOD_ID,
+			name=self.userSettings.get('modsListApiName') or MOD_NAME,
+			description=self.userSettings.get(
+				'modsListApiDescription') or MOD_DESCRIPTION,
+			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON,
+			enabled=True, login=True, lobby=True,
 			callback=functools.partial(loadView, self)
 		)
 
 		dependency._g_manager.addInstance(IModsSettingsApiInternal, self)
-	
+
 	def settingsLoad(self):
-		if os.path.exists(USER_SETTINGS_PATH):
-			try:
-				with open(USER_SETTINGS_PATH, 'rb') as config:
-					self.userSettings = jsonLoad(config)
-			except:
-				LOG_CURRENT_EXCEPTION()
-	
+		if not os.path.exists(USER_SETTINGS_PATH):
+			return
+		try:
+			with open(USER_SETTINGS_PATH, 'rb') as settingsFile:
+				self.userSettings = jsonLoad(settingsFile)
+		except Exception:
+			_logger.exception('Error occured when trying to load user settings!')
+
 	def configLoad(self):
-		if os.path.exists(CONFIG_PATH):
-			try:
-				with open(CONFIG_PATH, 'rb') as config:
-					self.config = jsonLoad(config)
-					self.config.setdefault('data', {})
-			except:
-				LOG_CURRENT_EXCEPTION()
-		else:
+		if not os.path.exists(CONFIG_PATH):
 			self.configSave()
+			return
+		try:
+			with open(CONFIG_PATH, 'rb') as configFile:
+				self.config = jsonLoad(configFile)
+				self.config.setdefault('data', {})
+		except Exception:
+			_logger.exception('Error occured when trying to load config!')
 
 	def configSave(self):
 		if self.__saveCallbackID is None:
@@ -84,10 +82,16 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 	def __save(self):
 		self.__saveCallbackID = None
 		try:
-			with open(CONFIG_PATH, 'wb') as config:
-				config.write(jsonDump(self.config, True))
-		except:
-			LOG_CURRENT_EXCEPTION()
+			configDir = os.path.dirname(CONFIG_PATH)
+			if not os.path.isdir(configDir):
+				os.makedirs(configDir)
+		except Exception:
+			_logger.exception('Error occured when trying to recrate folder structure for config file!')
+		try:
+			with open(CONFIG_PATH, 'wb') as configFile:
+				configFile.write(jsonDump(self.config, True))
+		except Exception:
+			_logger.exception('Error occured when trying to save config!')
 
 	def getSettingsFromTemplate(self, template):
 		result = dict()
@@ -97,7 +101,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		if 'enabled' in template:
 			result['enabled'] = template['enabled']
 		return result
-		
+
 	def getSettingsFromColumn(self, column):
 		result = dict()
 		for elem in column:
@@ -110,7 +114,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
 		return jsonDump(newTemplate, True) != jsonDump(oldTemplate, True)
 
-	def setModTemplate(self, linkage, template, callback, buttonHandler = None):
+	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
 		try:
 			self.activeMods.add(linkage)
 			currentTemplate = self.config['templates'].get(linkage)
@@ -118,21 +122,19 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 				self.config['templates'][linkage] = template
 				self.config['settings'][linkage] = self.getSettingsFromTemplate(template)
 				self.configSave()
-			
 			self.onSettingsChanged += callback
 			if buttonHandler is not None:
 				self.onButtonClicked += buttonHandler
-			
 			return self.getModSettings(linkage, self.config['templates'][linkage])
-		except:
-			LOG_CURRENT_EXCEPTION()			
+		except Exception:
+			_logger.exception('Error occured when trying to register mod template!')
 
-	def registerCallback(self, linkage, callback, buttonHandler = None):
+	def registerCallback(self, linkage, callback, buttonHandler=None):
 		self.activeMods.add(linkage)
 		self.onSettingsChanged += callback
 		if buttonHandler is not None:
 			self.onButtonClicked += buttonHandler
-			
+
 	def getModSettings(self, linkage, template=None):
 		result = None
 		if template:
@@ -140,20 +142,19 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			if currentTemplate:
 				if not self.compareTemplates(template, currentTemplate):
 					result = self.config['settings'].get(linkage)
-			
 				self.activeMods.add(linkage)
 		return result
-		
+
 	def updateModSettings(self, linkage, newSettings):
 		self.config['settings'][linkage] = newSettings
 		self.onSettingsChanged(linkage, newSettings)
-		
+
 	def cleanConfig(self):
 		for linkage in self.config['templates'].keys():
 			if linkage not in self.activeMods:
 				del self.config['templates'][linkage]
 				del self.config['settings'][linkage]
-			
+
 	def getTemplatesForUI(self):
 		# Make copy of current templates and updates component's values from actual settings
 		templates = copy.deepcopy(self.config['templates'])
@@ -166,22 +167,22 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 						if 'varName' in component:
 							component['value'] = settings[component['varName']]
 		return templates
-	
+
 	def onHotkeyStartAccept(self, linkage, varName):
 		return self.hotkeys.startAccept(linkage, varName)
-	
+
 	def onHotkeyStopAccept(self, linkage, varName):
 		return self.hotkeys.stopAccept()
-	
+
 	def onHotkeyDefault(self, linkage, varName):
 		return self.hotkeys.reset(linkage, varName)
-		
+
 	def onHotkeyClear(self, linkage, varName):
 		return self.hotkeys.clear(linkage, varName)
-	
+
 	def getAllHotKeys(self):
 		return self.hotkeys.getAllHotKeys()
-	
+
 	def checkKeySet(self, keys):
 		return self.hotkeys.checkKeySet(keys)
 
@@ -194,7 +195,6 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def getModData(self, linkage, version, default):
 		data = self.config['data']
-
 		if linkage not in data or data[linkage]['version'] != version:
 			self.saveModData(linkage, version, default)
 		return cPickle.loads(data[linkage]['data'])

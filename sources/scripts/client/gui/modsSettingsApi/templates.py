@@ -1,5 +1,6 @@
 from gui.modsSettingsApi._constants import COMPONENT_TYPE
 
+
 def createBase(type, text, tooltip=None):
 	""" Helper to create base component
 
@@ -9,13 +10,11 @@ def createBase(type, text, tooltip=None):
 	
 	:return: Base component
 	"""
-	base = {
-		'type': type,
-		'text': text
-	}
+	base = {'type': type, 'text': text}
 	if tooltip is not None:
 		base['tooltip'] = tooltip
 	return base
+
 
 def createControl(type, text, varName, value, tooltip=None, button=None):
 	""" Helper to create control component
@@ -30,10 +29,11 @@ def createControl(type, text, varName, value, tooltip=None, button=None):
 	:return: Control component
 	"""
 	control = createBase(type, text, tooltip)
-	control.update({ 'varName': varName, 'value': value })
+	control.update({'varName': varName, 'value': value})
 	if button is not None:
 		control['button'] = button
 	return control
+
 
 def createOptionsControl(type, text, varName, options, value, tooltip=None, button=None):
 	""" Helper to create control with options component
@@ -52,6 +52,7 @@ def createOptionsControl(type, text, varName, options, value, tooltip=None, butt
 	control = createControl(type, text, varName, value, tooltip, button)
 	control['options'] = [{'label': option} for option in options]
 	return control
+
 
 def createStepper(type, text, varName, value, min, max, interval, tooltip=None, button=None):
 	""" Helper to create stepper component (Slider, NumericStepper and RangeSlider)
@@ -72,10 +73,12 @@ def createStepper(type, text, varName, value, min, max, interval, tooltip=None, 
 	:return: Stepper component
 	"""
 	stepper = createControl(type, text, varName, value, tooltip, button)
-	stepper.update({ 'minimum': min, 'maximum': max, 'snapInterval': interval })
+	stepper.update({'minimum': min, 'maximum': max, 'snapInterval': interval})
 	return stepper
 
-def createButton(width=None, height=None, text=None, offsetTop=None, offsetLeft=None, icon=None, iconOffsetTop=None, iconOffsetLeft=None):
+
+def createButton(width=None, height=None, text=None, offsetTop=None, offsetLeft=None,
+				 icon=None, iconOffsetTop=None, iconOffsetLeft=None):
 	""" Helper to create button for component
 	
 	:param width: Button width, optional
@@ -108,14 +111,14 @@ def createButton(width=None, height=None, text=None, offsetTop=None, offsetLeft=
 		button['iconOffsetLeft'] = iconOffsetLeft
 	return button
 
+
 def createEmpty():
 	""" Helper to create empty component
 	
 	:return: Empty component
 	"""
-	return { 
-		'type': 'Empty' 
-	}
+	return {'type': 'Empty'}
+
 
 def createLabel(text, tooltip=None):
 	""" Helper to create Label component
@@ -126,6 +129,7 @@ def createLabel(text, tooltip=None):
 	:return: Label component
 	"""
 	return createBase(COMPONENT_TYPE.LABEL, text, tooltip)
+
 
 def createCheckbox(text, varName, value, tooltip=None, button=None):
 	""" Helper to create Checkbox component
@@ -141,6 +145,7 @@ def createCheckbox(text, varName, value, tooltip=None, button=None):
 	"""
 	return createControl(COMPONENT_TYPE.CHECKBOX, text, varName, value, tooltip, button)
 
+
 def createRadioButtonGroup(text, varName, options, value, tooltip=None, button=None):
 	""" Helper to create RadioButtonGroup component
 
@@ -155,6 +160,7 @@ def createRadioButtonGroup(text, varName, options, value, tooltip=None, button=N
 	"""
 	return createOptionsControl(COMPONENT_TYPE.RADIO_BUTTON_GROUP, text, varName, options, value, tooltip, button)
 
+
 def createDropdown(text, varName, options, value, tooltip=None, button=None, width=None):
 	""" Helper to create Dropdown component
 
@@ -168,10 +174,12 @@ def createDropdown(text, varName, options, value, tooltip=None, button=None, wid
 
 	:return: Dropdown component
 	"""
-	control = createOptionsControl(COMPONENT_TYPE.DROPDOWN, text, varName, options, value, tooltip, button)
+	control = createOptionsControl(
+		COMPONENT_TYPE.DROPDOWN, text, varName, options, value, tooltip, button)
 	if width is not None:
 		control['width'] = width
 	return control
+
 
 def createSlider(text, varName, value, min, max, interval, format='{{value}}', tooltip=None, button=None, width=None):
 	""" Helper to create Slider component
@@ -193,11 +201,13 @@ def createSlider(text, varName, value, min, max, interval, format='{{value}}', t
 
 	:return: Slider component
 	"""
-	stepper = createStepper(COMPONENT_TYPE.SLIDER, text, varName, value, min, max, interval, tooltip, button)
+	stepper = createStepper(COMPONENT_TYPE.SLIDER, text,
+							varName, value, min, max, interval, tooltip, button)
 	stepper['format'] = format
 	if width is not None:
 		stepper['width'] = width
 	return stepper
+
 
 def createInput(text, varName, value, tooltip=None, button=None, width=None):
 	""" Helper to create Input component
@@ -212,10 +222,12 @@ def createInput(text, varName, value, tooltip=None, button=None, width=None):
 
 	:return: Input component
 	"""
-	control = createControl(COMPONENT_TYPE.TEXT_INPUT, text, varName, value, tooltip, button)
+	control = createControl(COMPONENT_TYPE.TEXT_INPUT, text,
+							varName, value, tooltip, button)
 	if width is not None:
 		control['width'] = width
 	return control
+
 
 def createNumericStepper(text, varName, value, min, max, interval, tooltip=None, button=None, manual=False):
 	""" Helper to create NumericStepper component
@@ -236,9 +248,11 @@ def createNumericStepper(text, varName, value, min, max, interval, tooltip=None,
 
 	:return: NumericStepper component
 	"""
-	stepper = createStepper(COMPONENT_TYPE.NUMERIC_STEPPER, text, varName, value, min, max, interval, tooltip, button)
+	stepper = createStepper(COMPONENT_TYPE.NUMERIC_STEPPER,
+							text, varName, value, min, max, interval, tooltip, button)
 	stepper['canManualInput'] = manual
 	return stepper
+
 
 def createHotkey(text, varName, value, tooltip=None, button=None):
 	""" Helper to create Hotkey component
@@ -253,6 +267,7 @@ def createHotkey(text, varName, value, tooltip=None, button=None):
 	:return: Hotkey component
 	"""
 	return createControl(COMPONENT_TYPE.HOTKEY, text, varName, value, tooltip, button)
+
 
 def createColorChoice(text, varName, value, tooltip=None, button=None):
 	""" Helper to create Hotkey component
@@ -269,6 +284,7 @@ def createColorChoice(text, varName, value, tooltip=None, button=None):
 	if value.startswith('#'):
 		value = value.lstrip('#')
 	return createControl(COMPONENT_TYPE.COLOR_CHOICE, text, varName, value, tooltip, button)
+
 
 def createRangeSlider(text, varName, value, min, max, interval, step, minRange, labelStep, labelPostfix, tooltip=None, button=None):
 	""" Helper to create RangeSlider component
@@ -295,7 +311,8 @@ def createRangeSlider(text, varName, value, min, max, interval, step, minRange, 
 
 	:return: RangeSlider component
 	"""
-	stepper = createStepper(COMPONENT_TYPE.RANGE_SLIDER, text, varName, value, min, max, interval, tooltip, button)
+	stepper = createStepper(COMPONENT_TYPE.RANGE_SLIDER, text,
+							varName, value, min, max, interval, tooltip, button)
 	stepper.update({
 		'divisionStep': step,
 		'minRangeDistance': minRange,

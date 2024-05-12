@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoiseButton/ColorChoiceButtonUI" itemID="5c9a75b7-000001e5" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.ColorChoiceButton" linkageClassName="ColorChoiceButtonUI" lastModified="1553633391" lastUniqueIdentifier="1">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoiceButton/ColorChoiceButtonUI" itemID="5c9a75b7-000001e5" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.ColorChoiceButton" linkageClassName="ColorChoiceButtonUI" lastModified="1553633391" lastUniqueIdentifier="1">
   <timeline>
-    <DOMTimeline name="ColorChoiceButtonUI" currentFrame="49">
+    <DOMTimeline name="ColorChoiceButtonUI">
       <layers>
         <DOMLayer name="as" color="#FF4FFF" autoNamed="false">
           <frames>
@@ -67,7 +67,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/emptyMC" name="hitAreaA">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/emptyMC" name="hitAreaA">
                   <matrix>
                     <Matrix a="5.39996337890625" d="1.90248107910156" tx="3" ty="2.95"/>
                   </matrix>
@@ -83,7 +83,7 @@
           <frames>
             <DOMFrame index="0" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" selected="true">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" selected="true">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -92,7 +92,7 @@
             </DOMFrame>
             <DOMFrame index="9" duration="10" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -101,7 +101,7 @@
             </DOMFrame>
             <DOMFrame index="19" duration="10" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -113,7 +113,7 @@
             </DOMFrame>
             <DOMFrame index="29" duration="10" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -125,7 +125,7 @@
             </DOMFrame>
             <DOMFrame index="39" duration="10" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -137,7 +137,7 @@
             </DOMFrame>
             <DOMFrame index="49" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonFill" centerPoint3DX="21" centerPoint3DY="12.5">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -150,7 +150,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/buttonBorder">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/buttonBorder">
                   <transformationPoint>
                     <Point x="21" y="12.5"/>
                   </transformationPoint>
@@ -163,7 +163,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ColorChoiseButton/symbols/emptyMC" name="colorFill">
+                <DOMSymbolInstance libraryItemName="controls/ColorChoiceButton/symbols/emptyMC" name="colorFill">
                   <matrix>
                     <Matrix a="5.20001220703125" d="1.69789123535156" tx="4" ty="4"/>
                   </matrix>

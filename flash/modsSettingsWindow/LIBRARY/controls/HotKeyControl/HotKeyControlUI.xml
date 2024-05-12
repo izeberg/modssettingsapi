@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotKeyControl/HotKeyControlUI" itemID="5c4a53fb-00000035" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.HotKeyControl" linkageClassName="HotKeyControlUI" lastModified="1553622302">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotkeyControl/HotkeyControlUI" itemID="6640df14-00000191" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettingsApi.controls.HotkeyControl" linkageClassName="HotkeyControlUI" lastModified="1715527566">
   <timeline>
-    <DOMTimeline name="HotKeyControlUI">
+    <DOMTimeline name="HotkeyControlUI">
       <layers>
         <DOMLayer name="as" color="#FF4FFF" locked="true" autoNamed="false">
           <frames>
@@ -67,7 +67,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/hitAreaA" name="hitAreaA">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/hitAreaA" name="hitAreaA">
                   <matrix>
                     <Matrix a="12.3999938964844" d="5.39994812011719" tx="-1" ty="-0.9"/>
                   </matrix>
@@ -83,7 +83,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMDynamicText name="valueTF" width="50.45" height="16.9" isSelectable="false">
+                <DOMDynamicText name="valueTF" width="50.45" height="16.95" isSelectable="false">
                   <matrix>
                     <Matrix tx="5" ty="4"/>
                   </matrix>
@@ -91,7 +91,7 @@
                     <DOMTextRun>
                       <characters>F1</characters>
                       <textAttrs>
-                        <DOMTextAttrs alignment="center" aliasText="false" lineHeight="16.9" size="14" bitmapSize="280" face="$FieldFont*" fillColor="#666666"/>
+                        <DOMTextAttrs alignment="center" aliasText="false" lineHeight="16.95" size="14" bitmapSize="280" face="$FieldFont*" fillColor="#666666"/>
                       </textAttrs>
                     </DOMTextRun>
                   </textRuns>
@@ -104,7 +104,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/states" name="statesMC">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/states" name="statesMC">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -117,7 +117,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/modifiers" name="modifiersMC">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/modifiers" name="modifiersMC">
                   <matrix>
                     <Matrix tx="-5"/>
                   </matrix>
@@ -136,7 +136,7 @@
             </DOMFrame>
             <DOMFrame index="20" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -148,7 +148,7 @@
             </DOMFrame>
             <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -157,7 +157,7 @@
             </DOMFrame>
             <DOMFrame index="30" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -166,7 +166,7 @@
             </DOMFrame>
             <DOMFrame index="39" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -188,7 +188,7 @@
             </DOMFrame>
             <DOMFrame index="10" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -200,7 +200,7 @@
             </DOMFrame>
             <DOMFrame index="19" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -209,7 +209,7 @@
             </DOMFrame>
             <DOMFrame index="20" duration="19" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -218,7 +218,7 @@
             </DOMFrame>
             <DOMFrame index="39" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -227,7 +227,7 @@
             </DOMFrame>
             <DOMFrame index="40" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -236,7 +236,7 @@
             </DOMFrame>
             <DOMFrame index="49" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonHovered" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -252,7 +252,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/buttonNormal" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/buttonNormal" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>

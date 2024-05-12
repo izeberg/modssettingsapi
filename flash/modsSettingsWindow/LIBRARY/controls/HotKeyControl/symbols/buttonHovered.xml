@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotKeyControl/symbols/buttonHovered" itemID="5c4a3ab1-00000140" lastModified="1548368561">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotkeyControl/symbols/buttonHovered" itemID="5c4a3ab1-00000140" lastModified="1548368561">
   <timeline>
     <DOMTimeline name="buttonHovered">
       <layers>
@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="controls/HotKeyControl/resources/buttonHovered.png"/>
+                <DOMBitmapInstance libraryItemName="controls/HotkeyControl/resources/buttonHovered.png"/>
               </elements>
             </DOMFrame>
           </frames>

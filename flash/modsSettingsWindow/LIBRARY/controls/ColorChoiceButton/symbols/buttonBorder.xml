@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoiseButton/symbols/buttonBorder" itemID="5c9a7a71-0000021d" lastModified="1553628439">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoiceButton/symbols/buttonBorder" itemID="5c9a7a71-0000021d" lastModified="1553628439">
   <timeline>
     <DOMTimeline name="buttonBorder">
       <layers>
@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance selected="true" libraryItemName="controls/ColorChoiseButton/resources/buttonBorder.png"/>
+                <DOMBitmapInstance selected="true" libraryItemName="controls/ColorChoiceButton/resources/buttonBorder.png"/>
               </elements>
             </DOMFrame>
           </frames>

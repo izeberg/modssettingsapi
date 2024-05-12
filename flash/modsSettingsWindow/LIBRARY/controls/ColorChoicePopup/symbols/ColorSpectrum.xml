@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoisePopup/symbols/ColorSpectrum" itemID="5c9a2ab0-000001ae" lastModified="1553617103">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ColorChoicePopup/symbols/ColorSpectrum" itemID="5c9a2ab0-000001ae" lastModified="1553617103">
   <timeline>
     <DOMTimeline name="ColorSpectrum">
       <layers>
@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance selected="true" libraryItemName="controls/ColorChoisePopup/resources/ColorSpectrum.png"/>
+                <DOMBitmapInstance selected="true" libraryItemName="controls/ColorChoicePopup/resources/ColorSpectrum.png"/>
               </elements>
             </DOMFrame>
           </frames>

@@ -1,4 +1,4 @@
-﻿package poliroid.gui.lobby.modsSettingsApi.lang
+package poliroid.gui.lobby.modsSettingsApi.lang
 {
 	import poliroid.gui.lobby.modsSettingsApi.data.ModsSettingsStaticVO;
 
@@ -11,12 +11,12 @@
 		public static var BUTTON_CLOSE:String = "BUTTON_CLOSE";
 		public static var BUTTON_ENABLED_TOOLTIP:String = "BUTTON_ENABLED_TOOLTIP";
 		public static var POPUP_COLOR:String = "POPUP_COLOR";
-		
+
 		public function STRINGS():void
 		{
 			super();
 		}
-		
+
 		public static function updateStaticData(data:ModsSettingsStaticVO):void
 		{
 			WINDOW_TITLE = data.windowTitle;

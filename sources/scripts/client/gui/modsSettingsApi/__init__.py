@@ -1,4 +1,4 @@
-﻿# coding: utf-8
+# coding: utf-8
 
 __author__ = 'Renat Iliev'
 __copyright__ = 'Copyright 2022, Wargaming'
@@ -8,18 +8,14 @@ __maintainer__ = 'Renat Iliev'
 __email__ = 'mods@izeberg.me'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
-import Event
-
 from helpers import dependency
 
-from gui.modsSettingsApi.skeleton import IModsSettingsApi
-from gui.modsSettingsApi.api import ModsSettingsApi
-from gui.modsSettingsApi._constants import SPECIAL_KEYS
 from gui.modsSettingsApi import templates
+from gui.modsSettingsApi.api import ModsSettingsApi
+from gui.modsSettingsApi.skeleton import IModsSettingsApi
+from gui.modsSettingsApi._constants import SPECIAL_KEYS
 
-
-__all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'SPECIAL_KEYS', 'templates')
-
+__all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'templates', 'SPECIAL_KEYS', )
 
 class _ModsSettingsApi(IModsSettingsApi):
 	"""

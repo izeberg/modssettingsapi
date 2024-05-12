@@ -15,13 +15,15 @@ import time
 
 import BigWorld
 import ResMgr
-
 from constants import ARENA_GUI_TYPE
 
-
 DEFAULT_EXCLUDED_GUI_TYPES = {
-	ARENA_GUI_TYPE.EPIC_RANDOM, ARENA_GUI_TYPE.EPIC_BATTLE, ARENA_GUI_TYPE.EPIC_RANDOM_TRAINING, 
-	ARENA_GUI_TYPE.EPIC_TRAINING, ARENA_GUI_TYPE.EVENT_BATTLES, ARENA_GUI_TYPE.UNKNOWN,
+	ARENA_GUI_TYPE.EPIC_RANDOM,
+	ARENA_GUI_TYPE.EPIC_BATTLE,
+	ARENA_GUI_TYPE.EPIC_RANDOM_TRAINING,
+	ARENA_GUI_TYPE.EPIC_TRAINING,
+	ARENA_GUI_TYPE.EVENT_BATTLES,
+	ARENA_GUI_TYPE.UNKNOWN,
 }
 
 
@@ -241,7 +243,6 @@ def override(obj, prop, getter=None, setter=None, deleter=None):
 
 		if inspect.isclass(obj) and inspect.ismethod(src) \
 			or isinstance(src, type(BigWorld.Entity.__getattribute__)):
-			
 			getter_new = lambda *args, **kwargs: getter(src, *args, **kwargs)
 		else:
 			getter_new = functools.partial(getter, src)

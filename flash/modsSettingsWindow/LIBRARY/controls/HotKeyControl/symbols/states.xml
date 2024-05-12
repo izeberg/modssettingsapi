@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotKeyControl/symbols/states" itemID="5c4a47b7-000001dd" lastModified="1548414040" lastUniqueIdentifier="2">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotkeyControl/symbols/states" itemID="5c4a47b7-000001dd" lastModified="1548414040" lastUniqueIdentifier="2">
   <timeline>
     <DOMTimeline name="states" currentFrame="29">
       <layers>
@@ -40,7 +40,7 @@
           <frames>
             <DOMFrame index="0" duration="14" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateAcceptingValue" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateAcceptingValue" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -49,7 +49,7 @@
             </DOMFrame>
             <DOMFrame index="14" duration="15" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateAcceptingValue" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateAcceptingValue" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -61,7 +61,7 @@
             </DOMFrame>
             <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateAcceptingValue" symbolType="graphic" centerPoint3DX="30" centerPoint3DY="12.5" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateAcceptingValue" symbolType="graphic" centerPoint3DX="30" centerPoint3DY="12.5" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -70,7 +70,7 @@
             </DOMFrame>
             <DOMFrame index="30" duration="23" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -79,7 +79,7 @@
             </DOMFrame>
             <DOMFrame index="53" duration="26" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>
@@ -91,7 +91,7 @@
             </DOMFrame>
             <DOMFrame index="79" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/HotKeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/HotkeyControl/symbols/stateNoValue" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="30" y="12.5"/>
                   </transformationPoint>

@@ -33,58 +33,58 @@
     </DOMTimeline>
   </timeline>
   <parametersAsXML><![CDATA[   <property id="UIID">
-      <Inspectable name="UIID" variable="UIID" category="" verbose="0" defaultValue="4294967295" type="Number"/>
+      <Inspectable name="UIID" unlocalizedName="UIID" variable="UIID" category="" verbose="0" defaultValue="4294967295" type="Number"/>
    </property>
    <property id="autoRepeat">
-      <Inspectable name="autoRepeat" variable="autoRepeat" category="" verbose="0" defaultValue="false" type="Boolean"/>
+      <Inspectable name="autoRepeat" unlocalizedName="autoRepeat" variable="autoRepeat" category="" verbose="0" defaultValue="false" type="Boolean"/>
    </property>
    <property id="autoSize">
-      <Inspectable name="autoSize" variable="autoSize" category="" verbose="0" defaultValue="none" enumeration="none,left,right,center" type="List"/>
+      <Inspectable name="autoSize" unlocalizedName="autoSize" variable="autoSize" category="" verbose="0" defaultValue="none" enumeration="none,left,right,center" type="List"/>
    </property>
    <property id="data">
-      <Inspectable name="data" variable="data" category="" verbose="0" defaultValue="" type="Default"/>
+      <Inspectable name="data" unlocalizedName="data" variable="data" category="" verbose="0" defaultValue="" type="Default"/>
    </property>
    <property id="inspectableDisabledFillPadding">
-      <Inspectable name="disabledFillPadding" variable="inspectableDisabledFillPadding" category="" verbose="0" defaultValue="top:0,right:0,bottom:0,left:0" type="Object"/>
+      <Inspectable name="disabledFillPadding" unlocalizedName="disabledFillPadding" variable="inspectableDisabledFillPadding" category="" verbose="0" defaultValue="top:0,right:0,bottom:0,left:0" type="Object"/>
    </property>
    <property id="enabled">
-      <Inspectable name="enabled" variable="enabled" category="" verbose="0" defaultValue="true" type="Boolean"/>
+      <Inspectable name="enabled" unlocalizedName="enabled" variable="enabled" category="" verbose="0" defaultValue="true" type="Boolean"/>
    </property>
    <property id="enableInitCallback">
-      <Inspectable name="enableInitCallback" variable="enableInitCallback" category="" verbose="0" defaultValue="false" type="Boolean"/>
+      <Inspectable name="enableInitCallback" unlocalizedName="enableInitCallback" variable="enableInitCallback" category="" verbose="0" defaultValue="false" type="Boolean"/>
    </property>
    <property id="focusable">
-      <Inspectable name="focusable" variable="focusable" category="" verbose="0" defaultValue="true" type="Boolean"/>
+      <Inspectable name="focusable" unlocalizedName="focusable" variable="focusable" category="" verbose="0" defaultValue="true" type="Boolean"/>
    </property>
    <property id="helpDirection">
-      <Inspectable name="helpDirection" variable="helpDirection" category="" verbose="1" defaultValue="T" enumeration="T,L,B,R" type="List"/>
+      <Inspectable name="helpDirection" unlocalizedName="helpDirection" variable="helpDirection" category="" verbose="1" defaultValue="T" enumeration="T,L,B,R" type="List"/>
    </property>
    <property id="helpText">
-      <Inspectable name="helpText" variable="helpText" category="" verbose="1" defaultValue="" type="String"/>
+      <Inspectable name="helpText" unlocalizedName="helpText" variable="helpText" category="" verbose="1" defaultValue="" type="String"/>
    </property>
    <property id="label">
-      <Inspectable name="label" variable="label" category="" verbose="0" defaultValue="" type="String"/>
+      <Inspectable name="label" unlocalizedName="label" variable="label" category="" verbose="0" defaultValue="" type="String"/>
    </property>
    <property id="paddingHorizontal">
-      <Inspectable name="paddingHorizontal" variable="paddingHorizontal" category="" verbose="0" defaultValue="5" type="Number"/>
+      <Inspectable name="paddingHorizontal" unlocalizedName="paddingHorizontal" variable="paddingHorizontal" category="" verbose="0" defaultValue="5" type="Number"/>
    </property>
    <property id="selected">
-      <Inspectable name="selected" variable="selected" category="" verbose="0" defaultValue="false" type="Boolean"/>
+      <Inspectable name="selected" unlocalizedName="selected" variable="selected" category="" verbose="0" defaultValue="false" type="Boolean"/>
    </property>
    <property id="soundId">
-      <Inspectable name="soundId" variable="soundId" category="" verbose="0" defaultValue="" type="String"/>
+      <Inspectable name="soundId" unlocalizedName="soundId" variable="soundId" category="" verbose="0" defaultValue="" type="String"/>
    </property>
    <property id="soundType">
-      <Inspectable name="soundType" variable="soundType" category="" verbose="0" defaultValue="normal" type="String"/>
+      <Inspectable name="soundType" unlocalizedName="soundType" variable="soundType" category="" verbose="0" defaultValue="normal" type="String"/>
    </property>
    <property id="toggle">
-      <Inspectable name="toggle" variable="toggle" category="" verbose="0" defaultValue="false" type="Boolean"/>
+      <Inspectable name="toggle" unlocalizedName="toggle" variable="toggle" category="" verbose="0" defaultValue="false" type="Boolean"/>
    </property>
    <property id="tooltip">
-      <Inspectable name="tooltip" variable="tooltip" category="" verbose="0" defaultValue="" type="String"/>
+      <Inspectable name="tooltip" unlocalizedName="tooltip" variable="tooltip" category="" verbose="0" defaultValue="" type="String"/>
    </property>
    <property id="visible">
-      <Inspectable name="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
+      <Inspectable name="visible" unlocalizedName="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
    </property>
 ]]></parametersAsXML>
 </DOMComponentItem>

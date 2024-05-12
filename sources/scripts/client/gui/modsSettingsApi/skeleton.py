@@ -4,6 +4,7 @@ class IModsSettingsApiInternal(object):
 
 
 class IModsSettingsApi(object):
+
 	"""Public, can be shared with other mods"""
 	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
 		""" Инициализация настроек

@@ -33,16 +33,16 @@
     </DOMTimeline>
   </timeline>
   <parametersAsXML><![CDATA[   <property id="minimum">
-      <Inspectable name="minimum" variable="minimum" category="" verbose="0" defaultValue="0" type="Number"/>
+      <Inspectable name="minimum" unlocalizedName="minimum" variable="minimum" category="" verbose="0" defaultValue="0" type="Number"/>
    </property>
    <property id="maximum">
-      <Inspectable name="maximum" variable="maximum" category="" verbose="0" defaultValue="100" type="Number"/>
+      <Inspectable name="maximum" unlocalizedName="maximum" variable="maximum" category="" verbose="0" defaultValue="100" type="Number"/>
    </property>
    <property id="snapInterval">
-      <Inspectable name="snapInterval" variable="snapInterval" category="" verbose="0" defaultValue="1" type="Number"/>
+      <Inspectable name="snapInterval" unlocalizedName="snapInterval" variable="snapInterval" category="" verbose="0" defaultValue="1" type="Number"/>
    </property>
    <property id="snapping">
-      <Inspectable name="snapping" variable="snapping" category="" verbose="0" defaultValue="false" type="Boolean"/>
+      <Inspectable name="snapping" unlocalizedName="snapping" variable="snapping" category="" verbose="0" defaultValue="false" type="Boolean"/>
    </property>
 ]]></parametersAsXML>
 </DOMComponentItem>

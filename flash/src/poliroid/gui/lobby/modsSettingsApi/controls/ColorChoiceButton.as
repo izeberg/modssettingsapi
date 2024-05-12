@@ -1,15 +1,13 @@
-﻿package poliroid.gui.lobby.modsSettingsApi.controls
+package poliroid.gui.lobby.modsSettingsApi.controls
 {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	
 	import scaleform.clik.constants.InvalidationType;
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.gui.components.popovers.PopOverConst;
 	import net.wg.gui.interfaces.ISoundButtonEx;
-	
-	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoisePopup;
+	import poliroid.gui.lobby.modsSettingsApi.controls.ColorChoicePopup;
 	import poliroid.gui.lobby.modsSettingsApi.events.InteractiveEvent;
 	import poliroid.gui.lobby.modsSettingsApi.utils.Constants;
 
@@ -19,20 +17,20 @@
 		public var colorFill:MovieClip;
 
 		private var _color:String;
-		
+
 		public function ColorChoiceButton()
 		{
 			super();
 		}
-		
-		override protected function configUI() : void
+
+		override protected function configUI():void
 		{
 			preventAutosizing = true;
 
 			super.configUI();
 		}
-		
-		override protected function draw() : void
+
+		override protected function draw():void
 		{
 			super.draw();
 
@@ -44,20 +42,20 @@
 				colorFill.graphics.endFill();
 			}
 		}
-		
-		override protected function onMouseDownHandler(event:MouseEvent) : void
+
+		override protected function onMouseDownHandler(event:MouseEvent):void
 		{
 			super.onMouseDownHandler(event);
-			
-			var popup:ColorChoisePopup = App.utils.classFactory.getComponent('ColorChoisePopupUI', ColorChoisePopup);
+
+			var popup:ColorChoicePopup = App.utils.classFactory.getComponent('ColorChoicePopupUI', ColorChoicePopup);
 			popup.onValueChanged = onValueChanged;
 			popup.color = color;
 			popup.position = getPopupPosition(popup);
 			popup.arrowDirection = getPopupArrowDirection();
-			popup.showPopup();
+			popup.show();
 		}
-		
-		private function getPopupArrowDirection() : int
+
+		private function getPopupArrowDirection():int
 		{
 			var globalPos:Point = localToGlobal(new Point());
 			var globalPosY:int = globalPos.y / App.appScale >> 0;
@@ -70,8 +68,8 @@
 
 			return PopOverConst.ARROW_BOTTOM;
 		}
-		
-		private function getPopupPosition(popup:ColorChoisePopup) : Point
+
+		private function getPopupPosition(popup:ColorChoicePopup):Point
 		{
 			var globalPos:Point = localToGlobal(new Point());
 			var globalPosX:int = globalPos.x / App.appScale >> 0;
@@ -81,7 +79,7 @@
 			globalPosX += width >> 1;
 			globalPosX -= popup.hitAreaA.width >> 1;
 			globalPosX += 1;
-			
+
 			if (bottomOffset < App.appHeight)
 			{
 				globalPosY += height;
@@ -96,20 +94,20 @@
 
 			return new Point(globalPosX, globalPosY);
 		}
-		
-		public function onValueChanged(newColor:String) : void
+
+		public function onValueChanged(newColor:String):void
 		{
 			color = newColor;
 			dispatchEvent(new InteractiveEvent(InteractiveEvent.VALUE_CHANGED));
 		}
-		
-		public function set color(newColor:String) : void
+
+		public function set color(newColor:String):void
 		{
 			_color = newColor;
 			invalidateData();
 		}
-		
-		public function get color() : String
+
+		public function get color():String
 		{
 			return _color;
 		}

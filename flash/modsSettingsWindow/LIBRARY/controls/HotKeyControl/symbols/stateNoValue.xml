@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotKeyControl/symbols/stateNoValue" itemID="5c4a3abf-00000146" lastModified="1548368595">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/HotkeyControl/symbols/stateNoValue" itemID="5c4a3abf-00000146" lastModified="1548368595">
   <timeline>
     <DOMTimeline name="stateNoValue">
       <layers>
@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="controls/HotKeyControl/resources/stateNoValue.png"/>
+                <DOMBitmapInstance libraryItemName="controls/HotkeyControl/resources/stateNoValue.png"/>
               </elements>
             </DOMFrame>
           </frames>

@@ -1,28 +1,27 @@
 import json
 
-from helpers import dependency
-
-from gui.shared.personality import ServicesLocator
-from gui.shared.view_helpers.blur_manager import CachedBlur
 from gui.Scaleform.framework import ScopeTemplates, ViewSettings, g_entitiesFactories
 from gui.Scaleform.framework.entities.View import View
-from gui.Scaleform.framework.managers import context_menu
+from gui.Scaleform.framework.managers.context_menu import AbstractContextMenuHandler, registerHandlers as registerContextMenuHandlers
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
+from gui.shared.personality import ServicesLocator
+from gui.shared.view_helpers.blur_manager import CachedBlur
 from frameworks.wulf import WindowLayer
+from helpers import dependency
 
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
-from gui.modsSettingsApi._constants import (MOD_NAME, STATE_TOOLTIP, BUTTON_OK, BUTTON_CANCEL, BUTTON_APPLY, BUTTON_CLOSE, BUTTON_CLEANUP, 
-											BUTTON_DEFAULT, POPUP_COLOR, VIEW_ALIAS, VIEW_SWF)
+from gui.modsSettingsApi._constants import *
 from gui.modsSettingsApi.utils_common import byteify
 
-
-__all__ = ('loadView')
+__all__ = ('loadView', )
 
 
 def loadView(api):
-	ServicesLocator.appLoader.getDefLobbyApp().loadView(SFViewLoadParams(VIEW_ALIAS, VIEW_ALIAS), ctx=api)
+	app = ServicesLocator.appLoader.getDefLobbyApp()
+	app.loadView(SFViewLoadParams(VIEW_ALIAS), ctx=api)
 
-def genModApiStaticVO(userSettings):
+
+def generateStaticDataVO(userSettings):
 	return {
 		'windowTitle': userSettings.get('windowTitle') or MOD_NAME,
 		'stateTooltip': userSettings.get('enableButtonTooltip') or STATE_TOOLTIP,
@@ -32,17 +31,19 @@ def genModApiStaticVO(userSettings):
 		'buttonClose': userSettings.get('buttonClose') or BUTTON_CLOSE,
 		'popupColor': userSettings.get('popupColor') or POPUP_COLOR
 	}
-	
+
+
 class ModsSettingsApiWindow(View):
 	api = dependency.descriptor(IModsSettingsApiInternal)
 
 	def _populate(self):
 		super(ModsSettingsApiWindow, self)._populate()
 		self.api.updateHotKeys += self.as_updateHotKeysS
-		self._blur = CachedBlur(enabled=True, ownLayer=WindowLayer.OVERLAY-1)
+		self._blur = CachedBlur(enabled=True, ownLayer=WindowLayer.OVERLAY - 1)
 
 	def _dispose(self):
 		self._blur.fini()
+		self._blur = None
 		self.api.updateHotKeys -= self.as_updateHotKeysS
 		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
@@ -66,7 +67,7 @@ class ModsSettingsApiWindow(View):
 
 	def requestModsData(self):
 		self.api.cleanConfig()
-		self.as_setStaticDataS(genModApiStaticVO(self.api.userSettings))
+		self.as_setStaticDataS(generateStaticDataVO(self.api.userSettings))
 		self.as_setDataS(self.api.getTemplatesForUI())
 		self.as_updateHotKeysS()
 
@@ -82,16 +83,17 @@ class ModsSettingsApiWindow(View):
 		if self._isDAAPIInited():
 			data = self.api.getAllHotKeys()
 			self.flashObject.as_updateHotKeys(data)
-	
+
 	def closeView(self):
 		self.api.configSave()
 		self.destroy()
-	
+
 	def onFocusIn(self, *args):
 		if self._isDAAPIInited():
 			return False
 
-class HotkeyContextHandler(context_menu.AbstractContextMenuHandler):
+
+class HotkeyContextHandler(AbstractContextMenuHandler):
 	api = dependency.descriptor(IModsSettingsApiInternal)
 
 	def __init__(self, cmProxy, ctx=None):
@@ -120,11 +122,15 @@ class HotkeyContextHandler(context_menu.AbstractContextMenuHandler):
 
 	def _generateOptions(self, ctx=None):
 		return [
-			self._makeItem('setValueToEmpty', self.api.userSettings.get('buttonCleanup') or BUTTON_CLEANUP, None),
-			self._makeItem('setValueToDefault', self.api.userSettings.get('buttonDefault') or BUTTON_DEFAULT, None)
+			self._makeItem('setValueToEmpty', self.api.userSettings.get(
+				'buttonCleanup') or BUTTON_CLEANUP),
+			self._makeItem('setValueToDefault', self.api.userSettings.get(
+				'buttonDefault') or BUTTON_DEFAULT)
 		]
 
-context_menu.registerHandlers(('modsSettingsHotkeyContextHandler', HotkeyContextHandler))
+
+registerContextMenuHandlers(
+	('modsSettingsHotkeyContextHandler', HotkeyContextHandler))
 
 g_entitiesFactories.addSettings(
 	ViewSettings(
