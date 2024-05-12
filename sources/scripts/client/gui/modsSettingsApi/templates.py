@@ -35,6 +35,36 @@ def createControl(type, text, varName, value, tooltip=None, button=None):
 	return control
 
 
+def generateOptions(entries):
+	""" Options generator for supported controls with tooltip generation support 
+	
+	:param entries: Option entries
+	:type list-like of str, dict or list-like, i.e. (('label', 'tooltip', ), ('label', ), 'label', { 'label': 'label5' }, { 'label': 'label6', 'tooltip': 'tooltip' })
+
+	:return: Options dictionary for supported AS3 components (dropdown and radio button group)
+	"""
+	options = []
+	for entry in entries:
+		label = ''
+		tooltip = None
+		if isinstance(entry, (list, tuple, set)):
+			try:
+				label, tooltip = entry
+			except:
+				label = entry[0]
+		elif isinstance(entry, dict):
+			label = entry.get('label', '')
+			tooltip = entry.get('tooltip', None)
+		else:
+			label = entry
+		option = {}
+		option['label'] = label
+		if tooltip is not None:
+			option['tooltip'] = tooltip
+		options.append(option)
+	return options
+
+
 def createOptionsControl(type, text, varName, options, value, tooltip=None, button=None):
 	""" Helper to create control with options component
 
@@ -50,7 +80,7 @@ def createOptionsControl(type, text, varName, options, value, tooltip=None, butt
 	:return: Control component with options
 	"""
 	control = createControl(type, text, varName, value, tooltip, button)
-	control['options'] = [{'label': option} for option in options]
+	control['options'] = generateOptions(options)
 	return control
 
 
@@ -166,6 +196,8 @@ def createDropdown(text, varName, options, value, tooltip=None, button=None, wid
 
 	:param text: Component text
 	:param varName: Variable name bound to this component that will store component's value in onModSettingsChanged callback
+	:param options: List of string value for component options
+	:type options: list or tuple of str
 	:param value: Component value, index of options
 	:type value: int
 	:param tooltip: Component tooltip, optional

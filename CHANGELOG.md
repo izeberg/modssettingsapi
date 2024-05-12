@@ -9,6 +9,7 @@
 - python/api: added onWindowOpened event to API (Polyacov_Yury)
 - python/hotkeys (BREAKING): controller naming fix (HotkeysContoller -> HotkeysController)
 - python/hotkeys: hotkey context menu handler refactor
+- python/templates: add tooltip support to option controls
 - python/utils: added survival logic for isDisabledByBattleType in cases when WG changes gui types definitions
 - python/view: silence warning about missing parent view in view loading logic
 - python/view: expose HotkeyControl value to context menu to make empty value option unactive
