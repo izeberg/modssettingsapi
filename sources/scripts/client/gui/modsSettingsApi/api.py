@@ -96,11 +96,11 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def getSettingsFromTemplate(self, template):
 		result = dict()
+		if 'enabled' in template:
+			result['enabled'] = template['enabled']
 		for column in COLUMNS:
 			if column in template:
 				result.update(self.getSettingsFromColumn(template[column]))
-		if 'enabled' in template:
-			result['enabled'] = template['enabled']
 		return result
 
 	def getSettingsFromColumn(self, column):
@@ -161,7 +161,6 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		templates = copy.deepcopy(self.config['templates'])
 		for linkage, template in templates.items():
 			settings = self.getModSettings(linkage, template)
-			template['enabled'] = settings.get('enabled', True)
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:

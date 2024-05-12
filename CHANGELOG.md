@@ -7,6 +7,7 @@
 - python: move config directory creation from constants to API
 - python/constants: use proper name for view alias
 - python/api: added onWindowOpened event to API (Polyacov_Yury)
+- python/api: don't enforce enabled in template to make it optional
 - python/hotkeys (BREAKING): controller naming fix (HotkeysContoller -> HotkeysController)
 - python/hotkeys: hotkey context menu handler refactor
 - python/templates: add tooltip support to option controls
