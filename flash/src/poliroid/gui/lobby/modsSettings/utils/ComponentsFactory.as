@@ -163,7 +163,7 @@
 			{
 				var positionX:Number = 0;
 				var positionY:Number = 0;
-				var radioButton:RadioButton = RadioButton(buttonGroup.getButtonAt(0));
+				radioButton = RadioButton(buttonGroup.getButtonAt(0));
 
 				if (headerText)
 				{
