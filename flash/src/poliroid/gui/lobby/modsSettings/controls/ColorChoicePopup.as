@@ -141,7 +141,7 @@ package poliroid.gui.lobby.modsSettings.controls
 
 		private function handleSlider(event:SliderEvent):void
 		{
-			var hexVal = (redSlider.value << 16 | greenSlider.value << 8 | blueSlider.value).toString(16);
+			var hexVal:String = (redSlider.value << 16 | greenSlider.value << 8 | blueSlider.value).toString(16);
 
 			while (hexVal.length < 6)
 				hexVal = "0" + hexVal;

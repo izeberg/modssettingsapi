@@ -8,7 +8,7 @@ package poliroid.gui.lobby.modsSettings.components
 	import scaleform.clik.constants.InvalidationType;
 	import scaleform.clik.core.UIComponent;
 	import net.wg.gui.components.advanced.FieldSet;
-	import poliroid.gui.lobby.modsSettings.controls.StatusSwitcher;
+	import poliroid.gui.lobby.modsSettings.controls.StateSwitcher;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
 	import poliroid.gui.lobby.modsSettings.utils.ComponentsFactory;
 	import poliroid.gui.lobby.modsSettings.utils.Constants;
@@ -20,7 +20,7 @@ package poliroid.gui.lobby.modsSettings.components
 		public var data:Object;
 		public var components:Array;
 
-		private var _modEnabledButton:StatusSwitcher;
+		private var _stateSwitcher:StateSwitcher;
 
 		public function ModsSettingsComponent(linkage:String)
 		{
@@ -89,8 +89,10 @@ package poliroid.gui.lobby.modsSettings.components
 					lastPos = lastPosTemp;
 			}
 
-			if (data.hasOwnProperty('enabled')) {
-				createStatusSwitcherButton();
+			if (data.hasOwnProperty('enabled'))
+			{
+				modEnabled = data.enabled;
+				createStateSwitcher();
 			}
 
 			var fieldSet:FieldSet = FieldSet(App.utils.classFactory.getObject('FieldSet'));
@@ -136,24 +138,22 @@ package poliroid.gui.lobby.modsSettings.components
 			return lastPos;
 		}
 
-		private function createStatusSwitcherButton():void
+		private function createStateSwitcher():void
 		{
-			modEnabled = data.enabled;
-			_modEnabledButton = App.utils.classFactory.getComponent('StatusSwitcherUI', StatusSwitcher);
-			_modEnabledButton.isEnabled = modEnabled;
-			_modEnabledButton.y = 16;
-			_modEnabledButton.x = Constants.MOD_COMPONENT_WIDTH - 41;
-			addChild(_modEnabledButton);
-			_modEnabledButton.addEventListener(MouseEvent.CLICK, handleButtonEnableClick);
+			_stateSwitcher = App.utils.classFactory.getComponent('StateSwitcherUI', StateSwitcher);
+			_stateSwitcher.selected = modEnabled;
+			_stateSwitcher.x = Constants.MOD_COMPONENT_WIDTH - 41;
+			_stateSwitcher.y = 16;
+			addChild(_stateSwitcher);
+			_stateSwitcher.addEventListener(MouseEvent.CLICK, handleStateSwitcherClick);
 		}
 
-		private function handleButtonEnableClick(event:MouseEvent):void
+		private function handleStateSwitcherClick(event:MouseEvent):void
 		{
 			App.utils.focusHandler.setFocus(this);
-			var button:StatusSwitcher = StatusSwitcher(event.target);
+			var button:StateSwitcher = StateSwitcher(event.target);
 
-			button.isEnabled = !button.isEnabled;
-			modEnabled = button.isEnabled;
+			modEnabled = button.selected;
 			handleComponentEvent();
 			updateComponentsState();
 		}

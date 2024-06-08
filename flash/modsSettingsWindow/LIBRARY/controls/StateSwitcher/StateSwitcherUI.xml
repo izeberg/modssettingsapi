@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ModificationStatusSwitcher/StatusSwitcherUI" itemID="5c4a58c4-00000036" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.controls.StatusSwitcher" linkageClassName="StatusSwitcherUI" lastModified="1553626741" lastUniqueIdentifier="1">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/StateSwitcher/StateSwitcherUI" itemID="6663ab64-00000382" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.controls.StateSwitcher" linkageClassName="StateSwitcherUI" lastModified="1717807972" lastUniqueIdentifier="1">
   <timeline>
-    <DOMTimeline name="StatusSwitcherUI">
+    <DOMTimeline name="StateSwitcherUI">
       <layers>
         <DOMLayer name="as" color="#FF4FFF" autoNamed="false">
           <frames>
@@ -67,7 +67,7 @@
           <frames>
             <DOMFrame index="0" duration="20" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -76,7 +76,7 @@
             </DOMFrame>
             <DOMFrame index="20" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -85,7 +85,7 @@
             </DOMFrame>
             <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
                   <matrix>
                     <Matrix ty="1"/>
                   </matrix>
@@ -97,7 +97,7 @@
             </DOMFrame>
             <DOMFrame index="30" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="14">
                   <matrix>
                     <Matrix ty="1"/>
                   </matrix>
@@ -109,7 +109,7 @@
             </DOMFrame>
             <DOMFrame index="39" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -118,7 +118,7 @@
             </DOMFrame>
             <DOMFrame index="40" duration="10" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonIcon" name="icon" centerPoint3DX="13" centerPoint3DY="13">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -134,7 +134,7 @@
             </DOMFrame>
             <DOMFrame index="20" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -146,7 +146,7 @@
             </DOMFrame>
             <DOMFrame index="29" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -155,7 +155,7 @@
             </DOMFrame>
             <DOMFrame index="30" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -164,7 +164,7 @@
             </DOMFrame>
             <DOMFrame index="39" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonPressed" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -186,7 +186,7 @@
             </DOMFrame>
             <DOMFrame index="10" duration="8" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -198,7 +198,7 @@
             </DOMFrame>
             <DOMFrame index="18" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -210,7 +210,7 @@
             </DOMFrame>
             <DOMFrame index="19" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -219,7 +219,7 @@
             </DOMFrame>
             <DOMFrame index="20" duration="19" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -228,7 +228,7 @@
             </DOMFrame>
             <DOMFrame index="39" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" selected="true" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" selected="true" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -237,7 +237,7 @@
             </DOMFrame>
             <DOMFrame index="40" duration="9" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -246,7 +246,7 @@
             </DOMFrame>
             <DOMFrame index="49" tweenType="motion" motionTweenSnap="true" keyMode="22017">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonHover" symbolType="graphic" centerPoint3DX="13" centerPoint3DY="13" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>
@@ -262,7 +262,7 @@
           <frames>
             <DOMFrame index="0" duration="50" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/ModificationStatusSwitcher/symbols/buttonNormal" symbolType="graphic" loop="loop">
+                <DOMSymbolInstance libraryItemName="controls/StateSwitcher/symbols/buttonNormal" symbolType="graphic" loop="loop">
                   <transformationPoint>
                     <Point x="13" y="13"/>
                   </transformationPoint>

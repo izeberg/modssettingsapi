@@ -1,6 +1,6 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/ModificationStatusSwitcher/symbols/buttonIcon" itemID="5c4a1de4-0000014c" lastModified="1548361902">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="controls/StateSwitcher/symbols/buttonIcon" itemID="5c4a1de4-0000014c" lastModified="1717808237">
   <timeline>
-    <DOMTimeline name="buttonIcon" currentFrame="9">
+    <DOMTimeline name="buttonIcon">
       <layers>
         <DOMLayer name="names" color="#FF800A" autoNamed="false">
           <frames>
@@ -34,12 +34,12 @@
           <frames>
             <DOMFrame index="0" duration="9" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="controls/ModificationStatusSwitcher/resources/buttonIconOff.png"/>
+                <DOMBitmapInstance libraryItemName="controls/StateSwitcher/resources/buttonIconOff.png"/>
               </elements>
             </DOMFrame>
             <DOMFrame index="9" duration="10" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="controls/ModificationStatusSwitcher/resources/buttonIconOn.png"/>
+                <DOMBitmapInstance libraryItemName="controls/StateSwitcher/resources/buttonIconOn.png"/>
               </elements>
             </DOMFrame>
           </frames>

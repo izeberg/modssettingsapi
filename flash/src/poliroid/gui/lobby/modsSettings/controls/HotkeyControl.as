@@ -1,7 +1,6 @@
 package poliroid.gui.lobby.modsSettings.controls
 {
 	import flash.display.MovieClip;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import net.wg.gui.components.controls.SoundButtonEx;

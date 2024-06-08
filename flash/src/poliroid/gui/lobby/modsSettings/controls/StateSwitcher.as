@@ -1,37 +1,34 @@
 ﻿package poliroid.gui.lobby.modsSettings.controls
 {
+
 	import flash.display.MovieClip;
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import poliroid.gui.lobby.modsSettings.lang.STRINGS;
 
-	public class StatusSwitcher extends SoundButtonEx
+	public class StateSwitcher extends SoundButtonEx
 	{
+
 		private static const ICON_ENABLED:String = 'enabled';
 		private static const ICON_DISABLED:String = 'disabled';
 
 		public var icon:MovieClip;
 
-		private var _enabled:Boolean = false;
-
-		public function StatusSwitcher()
+		public function StateSwitcher()
 		{
 			super();
-
+			preventAutosizing = true;
+			constraintsDisabled = true;
+			toggle = true;
 			tooltip = STRINGS.BUTTON_ENABLED_TOOLTIP;
 		}
 
-		public function set isEnabled(value:Boolean):void
+		override public function set selected(value:Boolean):void
 		{
-			if (value == _enabled)
-				return;
-
-			_enabled = value;
-			icon.gotoAndStop(_enabled ? ICON_ENABLED : ICON_DISABLED);
-		}
-
-		public function get isEnabled():Boolean
-		{
-			return _enabled;
+			if (selected != value)
+			{
+				super.selected = value;
+				icon.gotoAndStop(selected ? ICON_ENABLED : ICON_DISABLED);
+			}
 		}
 	}
 }
