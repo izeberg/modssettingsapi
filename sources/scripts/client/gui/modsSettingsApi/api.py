@@ -10,6 +10,7 @@ from helpers import dependency
 
 from gui.modsListApi import g_modsListApi
 
+from gui.modsSettingsApi.l10n import l10n
 from gui.modsSettingsApi.hotkeys import HotkeysController
 from gui.modsSettingsApi.view import loadView
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
@@ -46,9 +47,9 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 		g_modsListApi.addModification(
 			id=MOD_ID,
-			name=self.userSettings.get('modsListApiName') or MOD_NAME,
+			name=self.userSettings.get('modsListApiName') or l10n('name'),
 			description=self.userSettings.get(
-				'modsListApiDescription') or MOD_DESCRIPTION,
+				'modsListApiDescription') or l10n('description'),
 			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON,
 			enabled=True, login=True, lobby=True,
 			callback=functools.partial(loadView, self)

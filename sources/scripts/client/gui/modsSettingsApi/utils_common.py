@@ -34,7 +34,6 @@ def safeInjectConstants(target, src, clazz):
 	for attr in src:
 		if not hasattr(clazz, attr):
 			continue
-
 		entry = getattr(clazz, attr)
 		target.add(entry)
 
@@ -43,15 +42,15 @@ safeInjectConstants(DEFAULT_EXCLUDED_GUI_TYPES,
 					INJECTABLE_EXCLUDED_GUI_TYPES, ARENA_GUI_TYPE)
 
 
-def isDisabledByBattleType(exclude=None, include=tuple()):
-	if not exclude:
-		exclude = DEFAULT_EXCLUDED_GUI_TYPES
-	player = BigWorld.player()
-	if not hasattr(player, 'arena') or player.arena is None:
-		return False
-	if player.arena.guiType in exclude and player.arena.guiType not in include:
-		return True
-	return False
+def doLog(project, *args, **kwargs):
+	""" Prints arguments to stdout with tag
+	:param project: Tag for log string
+	:param args: Arguments, it reduces to string by join with space
+	:param kwargs: Key-value arguments, it reduces to string by repr"""
+
+	kwargs = repr(kwargs) if kwargs else ''
+	args = ' '.join([unicode(s) for s in args])
+	print '[%s] %s %s' % (project, args, kwargs)
 
 
 def byteify(data):
@@ -77,6 +76,71 @@ def jsonify(obj):
 	if isinstance(obj, collections.Iterable) and not isinstance(obj, (str, unicode)):
 		return list(map(jsonify, obj))
 	return obj
+
+
+def memoize(function):
+	memo = {}
+
+	@functools.wraps(function)
+	def wrapper(*args):
+		key = args[1]
+		if key not in memo:
+			memo[key] = function(*args)
+		return memo[key]
+
+	return wrapper
+
+
+def listVFSDir(path):
+	result = []
+	folder = ResMgr.openSection(path)
+	if folder and ResMgr.isDir(path):
+		for name in folder.keys():
+			result.append(name)
+	return sorted(result)
+
+
+def unpackVFS(prefix, *paths):
+	""" Unpacks files from VFS with ResMgr into temporary folder
+	:param postfix: Postfix for temporary folder name
+	:param prefix: Prefix for temporary folder name
+	:param paths: Path to files in VFS
+	:return: List of absolute paths to unpacked files"""
+
+	result = []
+
+	folder = os.path.join(tempfile.gettempdir(), '_'.join(
+		[str(prefix), str(int(time.time()))]))
+
+	if os.path.exists(folder):
+		shutil.rmtree(folder, ignore_errors=True)
+	os.makedirs(folder)
+
+	for path in paths:
+		filepath = os.path.join(folder, os.path.basename(path))
+		result.append(filepath)
+		with open(filepath, 'wb') as f:
+			f.write(str(ResMgr.openSection(path).asBinary))
+	return result
+
+
+def readFromVFS(path):
+	file = ResMgr.openSection(path)
+	if file is not None and ResMgr.isFile(path):
+		return str(file.asBinary)
+	return None
+
+
+def readLocalization(path):
+	result = {}
+	l10nData = readFromVFS(path)
+	if l10nData:
+		for line in l10nData.splitlines():
+			if ': ' not in line:
+				continue
+			key, value = line.split(': ', 1)
+			result[key] = value.replace('\\n', '\n')
+	return result
 
 
 def jsonDump(obj, needFmt=False):
@@ -182,6 +246,17 @@ def deepUpdate(obj, new):
 	return obj
 
 
+def isDisabledByBattleType(exclude=None, include=tuple()):
+	if not exclude:
+		exclude = DEFAULT_EXCLUDED_GUI_TYPES
+	player = BigWorld.player()
+	if not hasattr(player, 'arena') or player.arena is None:
+		return False
+	if player.arena.guiType in exclude and player.arena.guiType not in include:
+		return True
+	return False
+
+
 def isAlly(vehicle):
 	""" Checks is vehicle in player's team
 	:param vehicle: Entity ID or object
@@ -190,40 +265,6 @@ def isAlly(vehicle):
 	vehicles = player.arena.vehicles
 	vehicleID = vehicle.id if isinstance(vehicle, BigWorld.Entity) else vehicle
 	return vehicleID in vehicles and vehicles[player.playerVehicleID]['team'] == vehicles[vehicleID]['team']
-
-
-def doLog(project, *args, **kwargs):
-	""" Prints arguments to stdout with tag
-	:param project: Tag for log string
-	:param args: Arguments, it reduces to string by join with space
-	:param kwargs: Key-value arguments, it reduces to string by repr"""
-
-	kwargs = repr(kwargs) if kwargs else ''
-	args = ' '.join([unicode(s) for s in args])
-	print '[%s] %s %s' % (project, args, kwargs)
-
-
-def unpackVFS(prefix, *paths):
-	""" Unpacks files from VFS with ResMgr into temporary folder
-	:param postfix: Postfix for temporary folder name
-	:param prefix: Prefix for temporary folder name
-	:param paths: Path to files in VFS
-	:return: List of absolute paths to unpacked files"""
-
-	folder = os.path.join(tempfile.gettempdir(), '_'.join(
-		[str(prefix), str(int(time.time()))]))
-
-	if os.path.exists(folder):
-		shutil.rmtree(folder, ignore_errors=True)
-	os.makedirs(folder)
-
-	result = []
-	for path in paths:
-		filepath = os.path.join(folder, os.path.basename(path))
-		result.append(filepath)
-		with open(filepath, 'wb') as f:
-			f.write(str(ResMgr.openSection(path).asBinary))
-	return result
 
 
 def override(obj, prop, getter=None, setter=None, deleter=None):

@@ -6,10 +6,12 @@ from gui.Scaleform.framework.managers.context_menu import AbstractContextMenuHan
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
 from gui.shared.personality import ServicesLocator
 from gui.shared.view_helpers.blur_manager import CachedBlur
+from gui.shared.utils.functions import makeTooltip
 from frameworks.wulf import WindowLayer
 from skeletons.gui.impl import IGuiLoader
 from helpers import dependency
 
+from gui.modsSettingsApi.l10n import l10n
 from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
 from gui.modsSettingsApi._constants import *
 from gui.modsSettingsApi.utils_common import byteify
@@ -33,13 +35,13 @@ def loadView(api):
 
 def generateStaticDataVO(userSettings):
 	return {
-		'windowTitle': userSettings.get('windowTitle') or MOD_NAME,
-		'stateTooltip': userSettings.get('enableButtonTooltip') or STATE_TOOLTIP,
-		'buttonOK': userSettings.get('buttonOK') or BUTTON_OK,
-		'buttonCancel': userSettings.get('buttonCancel') or BUTTON_CANCEL,
-		'buttonApply': userSettings.get('buttonApply') or BUTTON_APPLY,
-		'buttonClose': userSettings.get('buttonClose') or BUTTON_CLOSE,
-		'popupColor': userSettings.get('popupColor') or POPUP_COLOR
+		'windowTitle': userSettings.get('windowTitle') or l10n('name'),
+		'stateTooltip': userSettings.get('enableButtonTooltip') or makeTooltip(l10n('stateswitcher/tooltip/header'), l10n('stateswitcher/tooltip/body')),
+		'buttonOK': userSettings.get('buttonOK') or l10n('buttons/ok'),
+		'buttonCancel': userSettings.get('buttonCancel') or l10n('buttons/cancel'),
+		'buttonApply': userSettings.get('buttonApply') or l10n('buttons/apply'),
+		'buttonClose': userSettings.get('buttonClose') or l10n('buttons/close'),
+		'popupColor': userSettings.get('popupColor') or l10n('colorchoice/header')
 	}
 
 

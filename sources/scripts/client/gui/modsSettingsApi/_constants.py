@@ -9,6 +9,13 @@ from constants import DEFAULT_LANGUAGE
 MOD_ID = 'modsSettingsApi'
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 
+L10N_VFS_ROOT = 'mods/izeberg.modssettingsapi/text/'
+L10N_FILE_MASK = L10N_VFS_ROOT + '%s.yml'
+
+CIS_LANGUAGES = ('ru', 'be', 'kk', )
+DEFAULT_UI_LANGUAGE = 'en'
+DEFAULT_CIS_UI_LANGUAGE = 'ru'
+
 VIEW_ALIAS = 'ModsSettingsApiWindow'
 VIEW_SWF = 'modsSettingsWindow.swf'
 
@@ -18,29 +25,6 @@ _preferences_path = unicode_from_utf8(BigWorld.wg_getPreferencesFilePath())[1]
 CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(_preferences_path), 'mods', 'modsettings.dat'))
 
 del _preferences_path
-
-if 'en' not in (getClientLanguage(), DEFAULT_LANGUAGE, ):
-	MOD_NAME = 'Настройка модификаций'
-	MOD_DESCRIPTION = 'Данная модификация позволяет легко и просто изменять настройки установленных модов.'
-	STATE_TOOLTIP = '{HEADER}Включить / Отключить мод{/HEADER}{BODY}Красный индикатор - мод отключен<br>Зелёный индикатор - мод включен{/BODY}'
-	BUTTON_OK = 'OK'
-	BUTTON_CANCEL = 'Отменить'
-	BUTTON_APPLY = 'Применить'
-	BUTTON_CLOSE = 'ЗАКРЫТЬ'
-	BUTTON_CLEANUP = 'Очистить'
-	BUTTON_DEFAULT = 'По умолчанию'
-	POPUP_COLOR = 'ЦВЕТ'
-else:
-	MOD_NAME = 'Mod configurator'
-	MOD_DESCRIPTION = 'This mod allows you to easily configure installed mods.'
-	STATE_TOOLTIP = '{HEADER}Enable / Disable mod{/HEADER}{BODY}Red indicator - mod disabled <br> Green indicator - mod enabled{/BODY}'
-	BUTTON_OK = 'OK'
-	BUTTON_CANCEL = 'Cancel'
-	BUTTON_APPLY = 'Apply'
-	BUTTON_CLOSE = 'CLOSE'
-	BUTTON_CLEANUP = 'Clear'
-	BUTTON_DEFAULT = 'Default'
-	POPUP_COLOR = 'COLOR'
 
 COLUMNS = ('column1', 'column2')
 

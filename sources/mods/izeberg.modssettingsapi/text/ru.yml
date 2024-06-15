@@ -1,0 +1,11 @@
+name: Настройка модификаций
+description: Данная модификация позволяет легко и просто изменять настройки установленных модов.
+buttons/ok: OK
+buttons/cancel: Отменить
+buttons/apply: Применить
+buttons/close: ЗАКРЫТЬ
+buttons/cleanup: Очистить
+buttons/default: По умолчанию
+stateswitcher/tooltip/header: Включить / Отключить мод
+stateswitcher/tooltip/body: Зелёный индикатор - мод включен\nКрасный индикатор - мод отключен
+colorchoice/header: ЦВЕТ
