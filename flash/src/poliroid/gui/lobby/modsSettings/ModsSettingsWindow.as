@@ -32,7 +32,7 @@ package poliroid.gui.lobby.modsSettings
 		public var closeView:Function;
 
 		private var modsArray:Array;
-		private var modsData:Object;
+		private var templates:Object;
 		private var configChanged:Boolean = false;
 		private var configChangedLinkages:Array;
 
@@ -110,22 +110,14 @@ package poliroid.gui.lobby.modsSettings
 			STRINGS.updateStaticData(model);
 		}
 
-		public function as_setData(data:Object):void
+		public function as_setData(data:Array):void
 		{
-			modsData = data;
-			var lastPos:int = 0;
+			templates = data;
 
-			for (var linkage:String in modsData)
+			for each (var template:Object in templates)
 			{
-				var mod:ModsSettingsComponent = new ModsSettingsComponent(linkage);
+				var mod:ModsSettingsComponent = content.addMod(template);
 
-				mod.setData(modsData[linkage]);
-				mod.validateNow();
-
-				mod.y = lastPos;
-				lastPos = mod.y + mod.height + Constants.MOD_MARGIN_BOTTOM;
-
-				content.container.addChild(mod);
 				modsArray.push(mod);
 			}
 		}

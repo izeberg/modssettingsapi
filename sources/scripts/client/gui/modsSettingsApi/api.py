@@ -137,7 +137,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		if buttonHandler is not None:
 			self.onButtonClicked += buttonHandler
 
-	def getModSettings(self, linkage, template=None):
+	def getModSettings(self, linkage, template):
 		result = None
 		if template:
 			currentTemplate = self.config['templates'].get(linkage)
@@ -159,14 +159,18 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def getTemplatesForUI(self):
 		# Make copy of current templates and updates component's values from actual settings
-		templates = copy.deepcopy(self.config['templates'])
-		for linkage, template in templates.items():
+		templates = []
+		linkages = sorted(self.config['templates'], key=str.lower)
+		for linkage in linkages:
+			template = copy.deepcopy(self.config['templates'][linkage])
+			template['linkage'] = linkage
 			settings = self.getModSettings(linkage, template)
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
 						if 'varName' in component:
 							component['value'] = settings[component['varName']]
+			templates.append(template)
 		return templates
 
 	def onHotkeyStartAccept(self, linkage, varName):

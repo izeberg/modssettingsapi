@@ -57,6 +57,29 @@ package poliroid.gui.lobby.modsSettings.components
 			background.height = int(appHeight - 200);
 		}
 
+		public function addMod(template:Object):ModsSettingsComponent
+		{
+			var linkage:String = template.linkage;
+			var renderer:ModsSettingsComponent = new ModsSettingsComponent(linkage);
+			var targetPosition:int = 0;
+
+			renderer.setData(template);
+			renderer.validateNow();
+
+			for (var i:int = 0; i < container.numChildren; i++)
+			{
+				var child:ModsSettingsComponent = container.getChildAt(i) as ModsSettingsComponent;
+				var nextRendererPosition:int = child.y + child.height + Constants.MOD_MARGIN_BOTTOM;
+
+				targetPosition = Math.max(targetPosition, nextRendererPosition);
+			}
+
+			renderer.y = targetPosition;
+			container.addChild(renderer);
+
+			return renderer;
+		}
+
 		private function handleScrollPanePositionChange(event:ScrollPaneEvent):void
 		{
 			App.utils.scheduler.scheduleOnNextFrame(function():void {
