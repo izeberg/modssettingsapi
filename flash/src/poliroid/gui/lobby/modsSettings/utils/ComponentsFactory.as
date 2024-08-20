@@ -25,7 +25,6 @@
 	import net.wg.gui.components.controls.Slider;
 	import net.wg.gui.components.controls.RadioButton;
 	import net.wg.gui.components.controls.RangeSlider;
-	import net.wg.gui.components.advanced.FieldSet;
 	import poliroid.gui.lobby.modsSettings.controls.ColorChoiceButton;
 	import poliroid.gui.lobby.modsSettings.controls.HotkeyControl;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
