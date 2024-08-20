@@ -1,11 +1,12 @@
 # coding: utf-8
 
 __author__ = 'Renat Iliev'
-__copyright__ = 'Copyright 2022, Wargaming'
-__credits__ = ['Andrii Andrushchyshyn', 'Renat Iliev']
+__copyright__ = 'Copyright 2024, Wargaming'
+__credits__ = ['Andrii Andrushchyshyn', 'Renat Iliev', 'Paul Ekshmidt']
 __license__ = 'CC BY-NC-SA 4.0'
-__maintainer__ = 'Renat Iliev'
-__email__ = 'mods@izeberg.me'
+__version__ = '1.5.8'
+__maintainer__ = 'Paul Ekshmidt'
+__email__ = 'hello@kurzdor.me'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
 from helpers import dependency
