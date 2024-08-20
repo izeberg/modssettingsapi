@@ -48,8 +48,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		g_modsListApi.addModification(
 			id=MOD_ID,
 			name=self.userSettings.get('modsListApiName') or l10n('name'),
-			description=self.userSettings.get(
-				'modsListApiDescription') or l10n('description'),
+			description=self.userSettings.get('modsListApiDescription') or l10n('description'),
 			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON,
 			enabled=True, login=True, lobby=True,
 			callback=functools.partial(loadView, self)
