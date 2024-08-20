@@ -15,20 +15,20 @@ class Localization(object):
 
 	def __getLanguages(self):
 		clientLanguage = getClientLanguage()
-		supportedLanguages = self.__getSupportedLanguages()
+		availableLanguages = self.__getAvailableLanguages()
 		language = DEFAULT_UI_LANGUAGE
 		fallbackLanguage = DEFAULT_UI_LANGUAGE
 		if clientLanguage in CIS_LANGUAGES:
 			fallbackLanguage = DEFAULT_CIS_UI_LANGUAGE
-		if clientLanguage in supportedLanguages:
+		if clientLanguage in availableLanguages:
 			language = clientLanguage
-		elif fallbackLanguage in supportedLanguages:
+		elif fallbackLanguage in availableLanguages:
 			language = fallbackLanguage
 		for language in (language, fallbackLanguage, DEFAULT_UI_LANGUAGE):
 			if language not in self.__languages:
 				self.__languages.append(language)
 
-	def __getSupportedLanguages(self):
+	def __getAvailableLanguages(self):
 		result = []
 		listing = listVFSDir(L10N_VFS_ROOT)
 		for entry in listing:
