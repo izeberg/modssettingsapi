@@ -1,0 +1,11 @@
+name: Konfigurator modów
+description: Mod ten umożliwia łatwą konfigurację zainstalowanych modów.
+buttons/ok: OK
+buttons/cancel: Anuluj
+buttons/apply: Zastosuj
+buttons/close: ZAMKNIJ
+buttons/cleanup: Wyczyść
+buttons/default: Domyślnie
+stateswitcher/tooltip/header: Włącz / Wyłącz moda
+stateswitcher/tooltip/body: Zielony wskaźnik - mod włączony\nCzerwony wskaźnik - mod wyłączony
+colorchoice/header: KOLOR
