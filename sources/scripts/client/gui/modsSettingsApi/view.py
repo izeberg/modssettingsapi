@@ -139,9 +139,9 @@ class HotkeyContextHandler(AbstractContextMenuHandler):
 	def _generateOptions(self, ctx=None):
 		return [
 			self._makeItem('setValueToEmpty', self.api.userSettings.get(
-				'buttonCleanup') or BUTTON_CLEANUP, {'enabled': len(self._value)}),
+				'buttonCleanup') or l10n('button/cleanup'), {'enabled': len(self._value)}),
 			self._makeItem('setValueToDefault', self.api.userSettings.get(
-				'buttonDefault') or BUTTON_DEFAULT)
+				'buttonDefault') or l10n('button/default'))
 		]
 
 

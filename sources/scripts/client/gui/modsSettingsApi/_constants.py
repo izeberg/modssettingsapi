@@ -3,8 +3,6 @@ import os
 import BigWorld
 import Keys
 from external_strings_utils import unicode_from_utf8
-from helpers import getClientLanguage
-from constants import DEFAULT_LANGUAGE
 
 MOD_ID = 'modsSettingsApi'
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
