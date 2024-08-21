@@ -1,0 +1,11 @@
+name: Mod konfigurátor
+description: Ez a mod lehetővé teszi a telepített modok egyszerű konfigurálását.
+buttons/ok: OK
+buttons/cancel: Mégsem
+buttons/apply: Folytatás
+buttons/close: BEZÁRÁS
+buttons/cleanup: Törlés
+buttons/default: Alapértelmezett
+stateswitcher/tooltip/header: Mod engedélyezése / letiltása
+stateswitcher/tooltip/body: Zöld jelzés - mod engedélyezve\nPiros jelzés - mod letiltva
+colorchoice/header: Szín
