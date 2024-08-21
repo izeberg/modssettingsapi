@@ -3,7 +3,7 @@
 ## WIP
 
 - Added localization support
-- Added Belarusian, Hungarian, Polish and Ukranian languages support
+- Added Belarusian, German, Hungarian, Polish and Ukranian languages support
 - Added `onWindowOpened` event to API (Polyacov_Yury)
 - Added tooltip support when using Templates API for options controls creation
 - Added survival logic for `isDisabledByBattleType` in case when WG changes guiType definitions

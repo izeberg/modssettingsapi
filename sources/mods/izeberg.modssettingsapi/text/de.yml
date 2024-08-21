@@ -1,0 +1,11 @@
+name: Mod Konfigurator
+description: Dieser Mod erlaubt es dir die Einstellungen vorzunehmen.
+buttons/ok: OK
+buttons/cancel: Abbrechen
+buttons/apply: Übernehmen
+buttons/close: Schliessen
+buttons/cleanup: Säubern
+buttons/default: Standard
+stateswitcher/tooltip/header: Mod de/aktivieren
+stateswitcher/tooltip/body: Grüner Indicator - Mod ist aktiviert\nRoter Indicator - Mod ist deaktiviert
+colorchoice/header: Farbe
