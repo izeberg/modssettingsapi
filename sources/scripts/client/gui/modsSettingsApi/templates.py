@@ -1,4 +1,4 @@
-from gui.modsSettingsApi._constants import COMPONENT_TYPE
+from ._constants import COMPONENT_TYPE
 
 
 def createBase(type, text, tooltip=None):

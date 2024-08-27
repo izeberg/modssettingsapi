@@ -11,10 +11,10 @@ from frameworks.wulf import WindowLayer
 from skeletons.gui.impl import IGuiLoader
 from helpers import dependency
 
-from gui.modsSettingsApi.l10n import l10n
-from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
-from gui.modsSettingsApi._constants import *
-from gui.modsSettingsApi.utils_common import byteify
+from ._constants import *
+from .l10n import l10n
+from .skeleton import IModsSettingsApiInternal
+from .utils import byteify
 
 __all__ = ('loadView', )
 

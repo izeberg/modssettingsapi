@@ -10,12 +10,12 @@ from helpers import dependency
 
 from gui.modsListApi import g_modsListApi
 
-from gui.modsSettingsApi.l10n import l10n
-from gui.modsSettingsApi.hotkeys import HotkeysController
-from gui.modsSettingsApi.view import loadView
-from gui.modsSettingsApi.skeleton import IModsSettingsApiInternal
-from gui.modsSettingsApi._constants import *
-from gui.modsSettingsApi.utils_common import jsonLoad, jsonDump
+from ._constants import *
+from .l10n import l10n
+from .hotkeys import HotkeysController
+from .view import loadView
+from .skeleton import IModsSettingsApiInternal
+from .utils import jsonLoad, jsonDump
 
 _logger = logging.getLogger(__name__)
 

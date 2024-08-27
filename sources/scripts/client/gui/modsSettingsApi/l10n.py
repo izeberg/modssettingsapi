@@ -1,7 +1,7 @@
 from helpers import getClientLanguage
 
-from gui.modsSettingsApi._constants import *
-from gui.modsSettingsApi.utils_common import memoize, listVFSDir, readLocalization
+from ._constants import *
+from .utils import memoize, listVFSDir, readLocalization
 
 
 class Localization(object):

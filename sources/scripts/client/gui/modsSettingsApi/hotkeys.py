@@ -6,8 +6,8 @@ import game
 import Keys
 import Event
 
-from gui.modsSettingsApi._constants import *
-from gui.modsSettingsApi.utils_common import override
+from ._constants import *
+from .utils import override
 
 _logger = logging.getLogger(__name__)
 
