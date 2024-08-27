@@ -11,7 +11,6 @@ from .utils import override
 
 _logger = logging.getLogger(__name__)
 
-
 class HotkeysController(object):
 
 	def __init__(self, api):

@@ -70,13 +70,13 @@ class ModsSettingsApiWindow(View):
 	def buttonAction(self, linkage, varName, value):
 		self.api.onButtonClicked(linkage, varName, value)
 
-	def hotKeyAction(self, linkage, varName, command):
-		if command == 'startAccept':
+	def hotKeyAction(self, linkage, varName, action):
+		if action == HOTKEY_ACTIONS.START_ACCEPT:
 			self.api.onHotkeyStartAccept(linkage, varName)
-		elif command == 'stopAccept':
+		elif action == HOTKEY_ACTIONS.STOP_ACCEPT:
 			self.api.onHotkeyStopAccept(linkage, varName)
 		else:
-			raise NotImplementedError(command)
+			raise NotImplementedError(action)
 
 	def requestModsData(self):
 		self.api.cleanConfig()
@@ -106,16 +106,16 @@ class ModsSettingsApiWindow(View):
 			return False
 
 
-class HotkeyContextHandler(AbstractContextMenuHandler):
+class HotkeyContextMenuHandler(AbstractContextMenuHandler):
 	api = dependency.descriptor(IModsSettingsApiInternal)
 
 	def __init__(self, cmProxy, ctx=None):
 		self._linkage = None
 		self._varName = None
 		self._value = None
-		super(HotkeyContextHandler, self).__init__(cmProxy, ctx, handlers={
-			'setValueToEmpty': 'setValueToEmpty',
-			'setValueToDefault': 'setValueToDefault'
+		super(HotkeyContextMenuHandler, self).__init__(cmProxy, ctx, {
+			HOTKEY_OPTIONS.CLEAR_VALUE: 'clearValue',
+			HOTKEY_OPTIONS.RESET_TO_DEFAULT_VALUE: 'resetToDefaultValue'
 		})
 
 	def _initFlashValues(self, ctx):
@@ -128,25 +128,22 @@ class HotkeyContextHandler(AbstractContextMenuHandler):
 		self._varName = None
 		self._value = None
 
-	def setValueToEmpty(self):
+	def clearValue(self):
 		if self._linkage and self._varName:
 			self.api.onHotkeyClear(self._linkage, self._varName)
 
-	def setValueToDefault(self):
+	def resetToDefaultValue(self):
 		if self._linkage and self._varName:
 			self.api.onHotkeyDefault(self._linkage, self._varName)
 
 	def _generateOptions(self, ctx=None):
 		return [
-			self._makeItem('setValueToEmpty', self.api.userSettings.get(
-				'buttonCleanup') or l10n('button/cleanup'), {'enabled': len(self._value)}),
-			self._makeItem('setValueToDefault', self.api.userSettings.get(
-				'buttonDefault') or l10n('button/default'))
+			self._makeItem(HOTKEY_OPTIONS.CLEAR_VALUE, self.api.userSettings.get('buttonCleanup') or l10n('button/cleanup'), {'enabled': len(self._value)}),
+			self._makeItem(HOTKEY_OPTIONS.RESET_TO_DEFAULT_VALUE, self.api.userSettings.get('buttonDefault') or l10n('button/default'))
 		]
 
 
-registerContextMenuHandlers(
-	('modsSettingsHotkeyContextHandler', HotkeyContextHandler))
+registerContextMenuHandlers((HOTKEY_CONTEXT_MENU_HANDLER_ALIAS, HotkeyContextMenuHandler))
 
 g_entitiesFactories.addSettings(
 	ViewSettings(

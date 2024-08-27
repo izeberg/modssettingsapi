@@ -19,7 +19,6 @@ from .utils import jsonLoad, jsonDump
 
 _logger = logging.getLogger(__name__)
 
-
 class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def __init__(self):

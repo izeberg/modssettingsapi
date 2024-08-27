@@ -17,6 +17,7 @@ import BigWorld
 import ResMgr
 from constants import ARENA_GUI_TYPE
 
+
 DEFAULT_EXCLUDED_GUI_TYPES = {
 	ARENA_GUI_TYPE.UNKNOWN,
 	ARENA_GUI_TYPE.EVENT_BATTLES,
