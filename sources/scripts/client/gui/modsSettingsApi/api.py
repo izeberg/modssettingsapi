@@ -12,6 +12,7 @@ from gui.modsListApi import g_modsListApi
 
 from ._constants import *
 from .l10n import l10n
+from .context_menu import *
 from .hotkeys import HotkeysController
 from .view import loadView
 from .skeleton import IModsSettingsApiInternal

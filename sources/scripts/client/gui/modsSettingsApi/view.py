@@ -2,7 +2,6 @@ import json
 
 from gui.Scaleform.framework import ScopeTemplates, ViewSettings, g_entitiesFactories
 from gui.Scaleform.framework.entities.View import View
-from gui.Scaleform.framework.managers.context_menu import AbstractContextMenuHandler, registerHandlers as registerContextMenuHandlers
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
 from gui.shared.personality import ServicesLocator
 from gui.shared.view_helpers.blur_manager import CachedBlur
@@ -45,7 +44,42 @@ def generateStaticDataVO(userSettings):
 	}
 
 
-class ModsSettingsApiWindow(View):
+class ModsSettingsApiWindowMeta(View):
+
+	def requestModsData(self):
+		self._printOverrideError('requestModsData')
+
+	def sendModsData(self, data):
+		self._printOverrideError('sendModsData')
+
+	def hotKeyAction(self, linkage, varName, action):
+		self._printOverrideError('hotKeyAction')
+
+	def buttonAction(self, linkage, varName, value):
+		self._printOverrideError('buttonAction')
+
+	def closeView(self):
+		self._printOverrideError('closeView')
+
+	def as_setStaticDataS(self, data):
+		if self._isDAAPIInited():
+			self.flashObject.as_setStaticData(data)
+
+	def as_setDataS(self, data):
+		if self._isDAAPIInited():
+			self.flashObject.as_setData(data)
+
+	def as_updateHotKeysS(self):
+		if self._isDAAPIInited():
+			data = self.api.getAllHotKeys()
+			self.flashObject.as_updateHotKeys(data)
+
+	def onFocusIn(self, *args):
+		if self._isDAAPIInited():
+			return False
+
+
+class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	api = dependency.descriptor(IModsSettingsApiInternal)
 
 	def _populate(self):
@@ -61,14 +95,18 @@ class ModsSettingsApiWindow(View):
 		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
 
+	def requestModsData(self):
+		self.api.clearConfig()
+		self.as_setStaticDataS(generateStaticDataVO(self.api.userSettings))
+		self.as_setDataS(self.api.getTemplatesForUI())
+		self.as_updateHotKeysS()
+
 	def sendModsData(self, data):
 		data = byteify(json.loads(data))
 		for linkage in data:
-			self.api.updateModSettings(linkage, data[linkage])
+			settings = data[linkage]
+			self.api.updateModSettings(linkage, settings)
 		self.api.configSave()
-
-	def buttonAction(self, linkage, varName, value):
-		self.api.onButtonClicked(linkage, varName, value)
 
 	def hotKeyAction(self, linkage, varName, action):
 		if action == HOTKEY_ACTIONS.START_ACCEPT:
@@ -78,80 +116,15 @@ class ModsSettingsApiWindow(View):
 		else:
 			raise NotImplementedError(action)
 
-	def requestModsData(self):
-		self.api.clearConfig()
-		self.as_setStaticDataS(generateStaticDataVO(self.api.userSettings))
-		self.as_setDataS(self.api.getTemplatesForUI())
-		self.as_updateHotKeysS()
-
-	def as_setStaticDataS(self, data):
-		if self._isDAAPIInited():
-			self.flashObject.as_setStaticData(data)
-
-	def as_setDataS(self, data):
-		if self._isDAAPIInited():
-			self.flashObject.as_setData(data)
-
-	def as_updateHotKeysS(self):
-		if self._isDAAPIInited():
-			data = self.api.getAllHotKeys()
-			self.flashObject.as_updateHotKeys(data)
+	def buttonAction(self, linkage, varName, value):
+		self.api.onButtonClicked(linkage, varName, value)
 
 	def closeView(self):
 		self.api.configSave()
 		self.destroy()
 
-	def onFocusIn(self, *args):
-		if self._isDAAPIInited():
-			return False
+def getViewSettings():
+	return (ViewSettings(VIEW_ALIAS, ModsSettingsApiWindow, VIEW_SWF, WindowLayer.OVERLAY, None, ScopeTemplates.GLOBAL_SCOPE), )
 
-
-class HotkeyContextMenuHandler(AbstractContextMenuHandler):
-	api = dependency.descriptor(IModsSettingsApiInternal)
-
-	def __init__(self, cmProxy, ctx=None):
-		self._linkage = None
-		self._varName = None
-		self._value = None
-		super(HotkeyContextMenuHandler, self).__init__(cmProxy, ctx, {
-			HOTKEY_OPTIONS.CLEAR_VALUE: 'clearValue',
-			HOTKEY_OPTIONS.RESET_TO_DEFAULT_VALUE: 'resetToDefaultValue'
-		})
-
-	def _initFlashValues(self, ctx):
-		self._varName = ctx.varName
-		self._linkage = ctx.linkage
-		self._value = ctx.value
-
-	def _clearFlashValues(self):
-		self._linkage = None
-		self._varName = None
-		self._value = None
-
-	def clearValue(self):
-		if self._linkage and self._varName:
-			self.api.onHotkeyClear(self._linkage, self._varName)
-
-	def resetToDefaultValue(self):
-		if self._linkage and self._varName:
-			self.api.onHotkeyDefault(self._linkage, self._varName)
-
-	def _generateOptions(self, ctx=None):
-		return [
-			self._makeItem(HOTKEY_OPTIONS.CLEAR_VALUE, self.api.userSettings.get('buttonCleanup') or l10n('button/cleanup'), {'enabled': len(self._value)}),
-			self._makeItem(HOTKEY_OPTIONS.RESET_TO_DEFAULT_VALUE, self.api.userSettings.get('buttonDefault') or l10n('button/default'))
-		]
-
-
-registerContextMenuHandlers((HOTKEY_CONTEXT_MENU_HANDLER_ALIAS, HotkeyContextMenuHandler))
-
-g_entitiesFactories.addSettings(
-	ViewSettings(
-		VIEW_ALIAS,
-		ModsSettingsApiWindow,
-		VIEW_SWF,
-		WindowLayer.OVERLAY,
-		None,
-		ScopeTemplates.GLOBAL_SCOPE
-	)
-)
+for entry in getViewSettings():
+	g_entitiesFactories.addSettings(entry)
