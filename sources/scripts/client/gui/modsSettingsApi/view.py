@@ -79,7 +79,7 @@ class ModsSettingsApiWindow(View):
 			raise NotImplementedError(action)
 
 	def requestModsData(self):
-		self.api.cleanConfig()
+		self.api.clearConfig()
 		self.as_setStaticDataS(generateStaticDataVO(self.api.userSettings))
 		self.as_setDataS(self.api.getTemplatesForUI())
 		self.as_updateHotKeysS()

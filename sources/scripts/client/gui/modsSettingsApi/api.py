@@ -28,7 +28,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.config = {
 			'templates': {},
 			'settings': {},
-			'data': {},
+			'storage': {},
 		}
 		self.userSettings = {}
 
@@ -71,9 +71,15 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		try:
 			with open(CONFIG_PATH, 'rb') as configFile:
 				self.config = jsonLoad(configFile)
-				self.config.setdefault('data', {})
+				self.config.setdefault('storage', {})
+				self.__migrateConfig()
 		except Exception:
 			_logger.exception('Error occured when trying to load config!')
+
+	def __migrateConfig(self):
+		if 'data' in self.config:
+			data = self.config.pop('data')
+			self.config['storage'] = data
 
 	def configSave(self):
 		if self.__saveCallbackID is None:
@@ -92,6 +98,70 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 				configFile.write(jsonDump(self.config, True))
 		except Exception:
 			_logger.exception('Error occured when trying to save config!')
+
+	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
+		try:
+			self.activeMods.add(linkage)
+			currentTemplate = self.config['templates'].get(linkage)
+			if not currentTemplate or self.compareTemplates(template, currentTemplate):
+				self.config['templates'][linkage] = template
+				self.config['settings'][linkage] = self.getSettingsFromTemplate(template)
+				self.configSave()
+			self.onSettingsChanged += callback
+			if buttonHandler is not None:
+				self.onButtonClicked += buttonHandler
+			return self.getModSettings(linkage, self.config['templates'][linkage])
+		except Exception:
+			_logger.exception('Error occured when trying to register mod template!')
+
+	def getModSettings(self, linkage, template):
+		result = None
+		if template:
+			currentTemplate = self.config['templates'].get(linkage)
+			if currentTemplate:
+				if not self.compareTemplates(template, currentTemplate):
+					result = self.config['settings'].get(linkage)
+				self.activeMods.add(linkage)
+		return result
+
+	def updateModSettings(self, linkage, newSettings):
+		self.config['settings'][linkage] = newSettings
+		self.onSettingsChanged(linkage, newSettings)
+
+	def registerCallback(self, linkage, callback, buttonHandler=None):
+		self.activeMods.add(linkage)
+		self.onSettingsChanged += callback
+		if buttonHandler is not None:
+			self.onButtonClicked += buttonHandler
+
+	def getModData(self, linkage, version, default):
+		storage = self.config['storage']
+		if linkage not in storage or storage[linkage]['version'] != version:
+			self.saveModData(linkage, version, default)
+		return cPickle.loads(storage[linkage]['data'])
+
+	def saveModData(self, linkage, version, data):
+		self.config['storage'][linkage] = {
+			'version': version,
+			'data': cPickle.dumps(data, -1),
+		}
+		self.configSave()
+
+	def getTemplatesForUI(self):
+		# Make copy of current templates and updates component's values from actual settings
+		templates = []
+		linkages = sorted(self.config['templates'], key=str.lower)
+		for linkage in linkages:
+			template = copy.deepcopy(self.config['templates'][linkage])
+			settings = self.getModSettings(linkage, template)
+			template['linkage'] = linkage
+			for column in COLUMNS:
+				if column in template:
+					for component in template[column]:
+						if 'varName' in component:
+							component['value'] = settings[component['varName']]
+			templates.append(template)
+		return templates
 
 	def getSettingsFromTemplate(self, template):
 		result = dict()
@@ -114,62 +184,11 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
 		return jsonDump(newTemplate, True) != jsonDump(oldTemplate, True)
 
-	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
-		try:
-			self.activeMods.add(linkage)
-			currentTemplate = self.config['templates'].get(linkage)
-			if not currentTemplate or self.compareTemplates(template, currentTemplate):
-				self.config['templates'][linkage] = template
-				self.config['settings'][linkage] = self.getSettingsFromTemplate(template)
-				self.configSave()
-			self.onSettingsChanged += callback
-			if buttonHandler is not None:
-				self.onButtonClicked += buttonHandler
-			return self.getModSettings(linkage, self.config['templates'][linkage])
-		except Exception:
-			_logger.exception('Error occured when trying to register mod template!')
-
-	def registerCallback(self, linkage, callback, buttonHandler=None):
-		self.activeMods.add(linkage)
-		self.onSettingsChanged += callback
-		if buttonHandler is not None:
-			self.onButtonClicked += buttonHandler
-
-	def getModSettings(self, linkage, template):
-		result = None
-		if template:
-			currentTemplate = self.config['templates'].get(linkage)
-			if currentTemplate:
-				if not self.compareTemplates(template, currentTemplate):
-					result = self.config['settings'].get(linkage)
-				self.activeMods.add(linkage)
-		return result
-
-	def updateModSettings(self, linkage, newSettings):
-		self.config['settings'][linkage] = newSettings
-		self.onSettingsChanged(linkage, newSettings)
-
-	def cleanConfig(self):
+	def clearConfig(self):
 		for linkage in self.config['templates'].keys():
 			if linkage not in self.activeMods:
 				del self.config['templates'][linkage]
 				del self.config['settings'][linkage]
-
-	def getTemplatesForUI(self):
-		# Make copy of current templates and updates component's values from actual settings
-		templates = []
-		linkages = sorted(self.config['templates'], key=str.lower)
-		for linkage in linkages:
-			template = copy.deepcopy(self.config['templates'][linkage])
-			settings = self.getModSettings(linkage, template)
-			template['linkage'] = linkage
-			for column in COLUMNS:
-				if column in template:
-					for component in template[column]:
-						if 'varName' in component:
-							component['value'] = settings[component['varName']]
-			templates.append(template)
-		return templates
 
 	def onHotkeyStartAccept(self, linkage, varName):
 		return self.hotkeys.startAccept(linkage, varName)
@@ -188,16 +207,3 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def checkKeySet(self, keys):
 		return self.hotkeys.checkKeySet(keys)
-
-	def saveModData(self, linkage, version, data):
-		self.config['data'][linkage] = {
-			'version': version,
-			'data': cPickle.dumps(data, -1),
-		}
-		self.configSave()
-
-	def getModData(self, linkage, version, default):
-		data = self.config['data']
-		if linkage not in data or data[linkage]['version'] != version:
-			self.saveModData(linkage, version, default)
-		return cPickle.loads(data[linkage]['data'])
