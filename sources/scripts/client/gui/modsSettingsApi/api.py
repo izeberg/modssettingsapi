@@ -161,8 +161,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		linkages = sorted(self.config['templates'], key=str.lower)
 		for linkage in linkages:
 			template = copy.deepcopy(self.config['templates'][linkage])
-			template['linkage'] = linkage
 			settings = self.getModSettings(linkage, template)
+			template['linkage'] = linkage
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
