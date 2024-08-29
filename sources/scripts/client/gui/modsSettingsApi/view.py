@@ -32,15 +32,15 @@ def loadView(api):
 	app.loadView(SFViewLoadParams(VIEW_ALIAS, parent=parent), ctx=api)
 
 
-def generateStaticDataVO(userSettings):
+def generateLocalizationVO(userSettings):
 	return {
 		'windowTitle': userSettings.get('windowTitle') or l10n('name'),
 		'stateTooltip': userSettings.get('enableButtonTooltip') or makeTooltip(l10n('stateswitcher/tooltip/header'), l10n('stateswitcher/tooltip/body')),
+		'popupColor': userSettings.get('popupColor') or l10n('colorchoice/header'),
 		'buttonOK': userSettings.get('buttonOK') or l10n('buttons/ok'),
 		'buttonCancel': userSettings.get('buttonCancel') or l10n('buttons/cancel'),
 		'buttonApply': userSettings.get('buttonApply') or l10n('buttons/apply'),
 		'buttonClose': userSettings.get('buttonClose') or l10n('buttons/close'),
-		'popupColor': userSettings.get('popupColor') or l10n('colorchoice/header')
 	}
 
 
@@ -61,9 +61,9 @@ class ModsSettingsApiWindowMeta(View):
 	def closeView(self):
 		self._printOverrideError('closeView')
 
-	def as_setStaticDataS(self, data):
+	def as_setLocalizationS(self, l10n):
 		if self._isDAAPIInited():
-			self.flashObject.as_setStaticData(data)
+			self.flashObject.as_setLocalization(l10n)
 
 	def as_setDataS(self, data):
 		if self._isDAAPIInited():
@@ -97,7 +97,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 
 	def requestModsData(self):
 		self.api.clearConfig()
-		self.as_setStaticDataS(generateStaticDataVO(self.api.userSettings))
+		self.as_setLocalizationS(generateLocalizationVO(self.api.userSettings))
 		self.as_setDataS(self.api.getTemplatesForUI())
 		self.as_updateHotKeysS()
 

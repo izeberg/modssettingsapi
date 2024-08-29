@@ -13,7 +13,7 @@ package poliroid.gui.lobby.modsSettings
 	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowFooter;
 	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowHeader;
 	import poliroid.gui.lobby.modsSettings.data.HotkeyControlVO;
-	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsLocalizationVO;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
 	import poliroid.gui.lobby.modsSettings.lang.STRINGS;
 	import poliroid.gui.lobby.modsSettings.utils.Constants;
@@ -101,13 +101,13 @@ package poliroid.gui.lobby.modsSettings
 			footer.updateStage(appWidth, appHeight);
 		}
 
-		public function as_setStaticData(data:Object):void
+		public function as_setLocalization(l10n:Object):void
 		{
-			var model:ModsSettingsStaticVO = new ModsSettingsStaticVO(data);
+			var vo:ModsSettingsLocalizationVO = new ModsSettingsLocalizationVO(l10n);
 
-			header.updateStaticData(model);
-			footer.updateStaticData(model);
-			STRINGS.updateStaticData(model);
+			header.setLocalization(vo);
+			footer.setLocalization(vo);
+			STRINGS.setLocalization(vo);
 		}
 
 		public function as_setData(data:Array):void

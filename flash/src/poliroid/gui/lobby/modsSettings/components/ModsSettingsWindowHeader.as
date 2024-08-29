@@ -5,7 +5,7 @@ package poliroid.gui.lobby.modsSettings.components
 	import net.wg.gui.components.controls.CloseButtonText;
 	import net.wg.infrastructure.base.UIComponentEx;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsLocalizationVO;
 	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindowHeader extends UIComponentEx
@@ -35,16 +35,16 @@ package poliroid.gui.lobby.modsSettings.components
 			super.onDispose();
 		}
 
-		public function updateStaticData(model:ModsSettingsStaticVO):void
-		{
-			titleTF.text = model.windowTitle;
-			buttonClose.label = model.buttonClose;
-		}
-
 		public function updateStage(appWidth:Number, appHeight:Number):void
 		{
 			x = int((appWidth - Constants.MOD_COMPONENT_WIDTH) / 2);
 			buttonClose.x = Constants.MOD_COMPONENT_WIDTH - 56;
+		}
+
+		public function setLocalization(vo:ModsSettingsLocalizationVO):void
+		{
+			titleTF.text = vo.windowTitle;
+			buttonClose.label = vo.buttonClose;
 		}
 
 		private function handlebuttonCloseClick(event:ButtonEvent):void

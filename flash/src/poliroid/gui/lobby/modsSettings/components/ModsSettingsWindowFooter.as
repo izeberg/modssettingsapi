@@ -4,7 +4,7 @@
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import net.wg.infrastructure.base.UIComponentEx;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsLocalizationVO;
 	import poliroid.gui.lobby.modsSettings.utils.Constants;
 
 	public class ModsSettingsWindowFooter extends UIComponentEx
@@ -43,13 +43,6 @@
 			super.onDispose();
 		}
 
-		public function updateStaticData(model:ModsSettingsStaticVO):void
-		{
-			buttonOK.label = model.buttonOK;
-			buttonCancel.label = model.buttonCancel;
-			buttonApply.label = model.buttonApply;
-		}
-
 		public function updateStage(appWidth:Number, appHeight:Number):void
 		{
 			x = int((appWidth - Constants.MOD_COMPONENT_WIDTH) / 2);
@@ -58,6 +51,13 @@
 			buttonOK.x = Constants.MOD_COMPONENT_WIDTH - 483;
 			buttonCancel.x = buttonOK.x + 170;
 			buttonApply.x = buttonCancel.x + 170;
+		}
+
+		public function setLocalization(vo:ModsSettingsLocalizationVO):void
+		{
+			buttonOK.label = vo.buttonOK;
+			buttonCancel.label = vo.buttonCancel;
+			buttonApply.label = vo.buttonApply;
 		}
 
 		private function handleButtonOKClick(event:ButtonEvent):void

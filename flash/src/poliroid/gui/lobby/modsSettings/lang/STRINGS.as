@@ -1,6 +1,6 @@
 ﻿package poliroid.gui.lobby.modsSettings.lang
 {
-	import poliroid.gui.lobby.modsSettings.data.ModsSettingsStaticVO;
+	import poliroid.gui.lobby.modsSettings.data.ModsSettingsLocalizationVO;
 
 	public class STRINGS extends Object
 	{
@@ -17,15 +17,15 @@
 			super();
 		}
 
-		public static function updateStaticData(data:ModsSettingsStaticVO):void
+		public static function setLocalization(vo:ModsSettingsLocalizationVO):void
 		{
-			WINDOW_TITLE = data.windowTitle;
-			BUTTON_APPLY = data.buttonApply;
-			BUTTON_OK = data.buttonOK;
-			BUTTON_CANCEL = data.buttonCancel;
-			BUTTON_CLOSE = data.buttonClose;
-			BUTTON_ENABLED_TOOLTIP = data.stateTooltip;
-			POPUP_COLOR = data.popupColor;
+			WINDOW_TITLE = vo.windowTitle;
+			BUTTON_APPLY = vo.buttonApply;
+			BUTTON_OK = vo.buttonOK;
+			BUTTON_CANCEL = vo.buttonCancel;
+			BUTTON_CLOSE = vo.buttonClose;
+			BUTTON_ENABLED_TOOLTIP = vo.stateTooltip;
+			POPUP_COLOR = vo.popupColor;
 		}
 	}
 }
