@@ -52,7 +52,7 @@ class ModsSettingsApiWindowMeta(View):
 	def sendModsData(self, data):
 		self._printOverrideError('sendModsData')
 
-	def hotKeyAction(self, linkage, varName, action):
+	def hotkeyAction(self, linkage, varName, action):
 		self._printOverrideError('hotKeyAction')
 
 	def buttonAction(self, linkage, varName, value):
@@ -69,10 +69,9 @@ class ModsSettingsApiWindowMeta(View):
 		if self._isDAAPIInited():
 			self.flashObject.as_setData(data)
 
-	def as_updateHotKeysS(self):
+	def as_setHotkeysS(self, data):
 		if self._isDAAPIInited():
-			data = self.api.getAllHotKeys()
-			self.flashObject.as_updateHotKeys(data)
+			self.flashObject.as_setHotkeys(data)
 
 	def onFocusIn(self, *args):
 		if self._isDAAPIInited():
@@ -85,13 +84,13 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	def _populate(self):
 		super(ModsSettingsApiWindow, self)._populate()
 		self.api.onWindowOpened()
-		self.api.updateHotKeys += self.as_updateHotKeysS
-		self._blur = CachedBlur(enabled=True, ownLayer=WindowLayer.OVERLAY - 1)
+		self.api.onHotkeysUpdated += self.__onHotkeysUpdated
+		self._blur = CachedBlur(enabled=True, ownLayer=self.layer - 1)
 
 	def _dispose(self):
 		self._blur.fini()
 		self._blur = None
-		self.api.updateHotKeys -= self.as_updateHotKeysS
+		self.api.onHotkeysUpdated -= self.__onHotkeysUpdated
 		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
 
@@ -99,7 +98,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 		self.api.clearConfig()
 		self.as_setLocalizationS(generateLocalizationVO(self.api.userSettings))
 		self.as_setDataS(self.api.getTemplatesForUI())
-		self.as_updateHotKeysS()
+		self.as_setHotkeysS(self.api.getAllHotkeys())
 
 	def sendModsData(self, data):
 		data = byteify(json.loads(data))
@@ -108,7 +107,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 			self.api.updateModSettings(linkage, settings)
 		self.api.configSave()
 
-	def hotKeyAction(self, linkage, varName, action):
+	def hotkeyAction(self, linkage, varName, action):
 		if action == HOTKEY_ACTIONS.START_ACCEPT:
 			self.api.onHotkeyStartAccept(linkage, varName)
 		elif action == HOTKEY_ACTIONS.STOP_ACCEPT:
@@ -122,6 +121,11 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	def closeView(self):
 		self.api.configSave()
 		self.destroy()
+
+	def __onHotkeysUpdated(self):
+		data = self.api.getAllHotkeys()
+		self.as_updateHotkeysS(data)
+
 
 def getViewSettings():
 	return (ViewSettings(VIEW_ALIAS, ModsSettingsApiWindow, VIEW_SWF, WindowLayer.OVERLAY, None, ScopeTemplates.GLOBAL_SCOPE), )

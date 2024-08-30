@@ -32,15 +32,14 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			'storage': {},
 		}
 		self.userSettings = {}
+		self.hotkeys = HotkeysController(self)
 
 		self.onWindowOpened = Event.Event()
 		self.onWindowClosed = Event.Event()
-		self.updateHotKeys = Event.Event()
+		# TODO: remove from public API
+		self.onHotkeysUpdated = Event.Event()
 		self.onButtonClicked = Event.Event()
 		self.onSettingsChanged = Event.Event()
-
-		self.hotkeys = HotkeysController(self)
-		self.hotkeys.onUpdated += self.updateHotKeys
 
 		self.settingsLoad()
 		self.configLoad()
@@ -203,8 +202,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 	def onHotkeyClear(self, linkage, varName):
 		return self.hotkeys.clear(linkage, varName)
 
-	def getAllHotKeys(self):
-		return self.hotkeys.getAllHotKeys()
+	def getAllHotkeys(self):
+		return self.hotkeys.getAllHotkeys()
 
 	def checkKeySet(self, keys):
 		return self.hotkeys.checkKeySet(keys)

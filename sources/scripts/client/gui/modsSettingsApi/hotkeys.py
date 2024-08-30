@@ -16,16 +16,15 @@ class HotkeysController(object):
 	def __init__(self, api):
 		self.api = api
 		self.acceptingKey = None
-		self.onUpdated = Event.Event()
 		override(game, 'handleKeyEvent', self._game_handleKeyEvent)
 
 	def startAccept(self, linkage, varName):
 		self.acceptingKey = (linkage, varName, )
-		self.onUpdated()
+		self.api.onHotkeysUpdated()
 
 	def stopAccept(self):
 		self.acceptingKey = None
-		self.onUpdated()
+		self.api.onHotkeysUpdated()
 
 	def clear(self, linkage, varName):
 		self.api.config['settings'][linkage][varName] = []
@@ -73,7 +72,7 @@ class HotkeysController(object):
 							currentKeys.add(special)
 					linkage, varName = self.acceptingKey
 					self.api.config['settings'][linkage][varName] = list(currentKeys)
-					self.onUpdated()
+					self.api.onHotkeysUpdated()
 					return True
 				if event.isKeyUp():
 					self.stopAccept()
@@ -115,9 +114,10 @@ class HotkeysController(object):
 					data['modiferShift'] = False
 		return data
 
-	def getAllHotKeys(self):
+	def getAllHotkeys(self):
 		result = collections.defaultdict(dict)
-		for linkage, template in self.api.config['templates'].items():
+		templates = self.api.config['templates']
+		for linkage, template in templates.items():
 			if linkage not in self.api.activeMods:
 				continue
 			for column in COLUMNS:
@@ -125,8 +125,8 @@ class HotkeysController(object):
 					continue
 				for component in template[column]:
 					if component.get('type') == COMPONENT_TYPE.HOTKEY and 'varName' in component:
-						result[linkage][component['varName']] = self.getHotkeyData(
-							linkage, component.get('varName'))
+						hotkeyData = self.getHotkeyData(linkage, component.get('varName'))
+						result[linkage][component['varName']] = hotkeyData
 		return dict(result)
 
 # Backwards compatibility with mods that still use wrongly named class in imports

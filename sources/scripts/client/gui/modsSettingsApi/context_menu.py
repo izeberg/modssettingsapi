@@ -41,4 +41,8 @@ class HotkeyContextMenuHandler(AbstractContextMenuHandler):
 			self._makeItem(HOTKEY_OPTIONS.RESET_TO_DEFAULT_VALUE, self.api.userSettings.get('buttonDefault') or l10n('button/default'))
 		]
 
-registerContextMenuHandlers((HOTKEY_CONTEXT_MENU_HANDLER_ALIAS, HotkeyContextMenuHandler))
+
+def getContextMenuHandlers():
+	return ((HOTKEY_CONTEXT_MENU_HANDLER_ALIAS, HotkeyContextMenuHandler), )
+
+registerContextMenuHandlers(*getContextMenuHandlers())

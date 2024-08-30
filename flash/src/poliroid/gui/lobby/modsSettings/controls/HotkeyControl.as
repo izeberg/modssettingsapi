@@ -42,7 +42,7 @@ package poliroid.gui.lobby.modsSettings.controls
 			valueTF.selectable = false;
 		}
 
-		public function updateData(data:HotkeyControlVO):void
+		public function setData(data:HotkeyControlVO):void
 		{
 			_model = data;
 

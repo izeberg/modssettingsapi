@@ -28,7 +28,7 @@ package poliroid.gui.lobby.modsSettings
 		public var requestModsData:Function;
 		public var sendModsData:Function;
 		public var buttonAction:Function;
-		public var hotKeyAction:Function;
+		public var hotkeyAction:Function;
 		public var closeView:Function;
 
 		private var modsArray:Array;
@@ -122,20 +122,22 @@ package poliroid.gui.lobby.modsSettings
 			}
 		}
 
-		public function as_updateHotKeys(data:Object):void
+		public function as_setHotkeys(data:Object):void
 		{
 			for each (var mod:ModsSettingsComponent in modsArray)
 			{
-				if (data.hasOwnProperty(mod.modLinkage))
+				var linkage:String = mod.modLinkage;
+
+				if (data.hasOwnProperty(linkage))
 				{
 					for each (var component:Object in mod.components)
 					{
-						if (component.data.hasOwnProperty('varName') && component.data.varName in data[mod.modLinkage])
+						if (component.data.hasOwnProperty('varName') && component.data.varName in data[linkage])
 						{
-							var hotkeyData:Object = data[mod.modLinkage][component.data.varName];
+							var hotkeyData:Object = data[linkage][component.data.varName];
 							var hotkeyControlVO:Object = new HotkeyControlVO(hotkeyData);
 
-							component.componentObject['control'].updateData(hotkeyControlVO);
+							component.componentObject['control'].setData(hotkeyControlVO);
 						}
 					}
 				}
@@ -148,9 +150,11 @@ package poliroid.gui.lobby.modsSettings
 
 			for each (var mod:ModsSettingsComponent in modsArray)
 			{
-				if (configChangedLinkages.indexOf(mod.modLinkage) != -1)
+				var linkage:String = mod.modLinkage;
+
+				if (configChangedLinkages.indexOf(linkage) != -1)
 				{
-					result[mod.modLinkage] = mod.getConfigData();
+					result[linkage] = mod.getConfigData();
 				}
 			}
 
@@ -180,7 +184,7 @@ package poliroid.gui.lobby.modsSettings
 
 		private function handleModSettingsHotkeyAction(event:InteractiveEvent):void
 		{
-			hotKeyAction(event.linkage, event.varName, event.value);
+			hotkeyAction(event.linkage, event.varName, event.value);
 		}
 
 		private function handleButtonOK(event:InteractiveEvent):void
