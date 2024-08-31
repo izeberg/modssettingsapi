@@ -75,6 +75,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		except Exception:
 			_logger.exception('Error occured when trying to load state!')
 
+	# TODO: delete in next release
 	def __migrateState(self):
 		if 'data' in self.state:
 			data = self.state.pop('data')
@@ -155,6 +156,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 	def checkKeyset(self, keys):
 		return self.hotkeys.checkKeyset(keys)
 
+	# TODO: delete in next release
 	def checkKeySet(self, keys):
 		_logger.info('Method checkKeySet is deprecated! Please use checkKeyset method instead.')
 		return self.checkKeyset(keys)

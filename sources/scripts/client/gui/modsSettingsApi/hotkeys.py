@@ -130,6 +130,7 @@ class HotkeysController(object):
 		return dict(result)
 
 # Backwards compatibility with mods that still use wrongly named class in imports
+# TODO: delete in next release
 class HotkeysContoller(HotkeysController):
 
 	def __init__(self, api):
