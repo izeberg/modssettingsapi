@@ -10,8 +10,7 @@ MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 USER_SETTINGS_PATH = os.path.join('mods', 'configs', 'modsSettingsApi.json')
 
 _preferences_path = unicode_from_utf8(BigWorld.wg_getPreferencesFilePath())[1]
-CONFIG_PATH = os.path.normpath(os.path.join(os.path.dirname(_preferences_path), 'mods', 'modsettings.dat'))
-
+STATE_FILE_PATH = os.path.normpath(os.path.join(os.path.dirname(_preferences_path), 'mods', 'modsettings.dat'))
 del _preferences_path
 
 L10N_VFS_ROOT = 'mods/izeberg.modssettingsapi/text/'

@@ -4,7 +4,6 @@ import logging
 import BigWorld
 import game
 import Keys
-import Event
 
 from ._constants import *
 from .utils import override
@@ -27,12 +26,12 @@ class HotkeysController(object):
 		self.api.onHotkeysUpdated()
 
 	def clear(self, linkage, varName):
-		self.api.config['settings'][linkage][varName] = []
+		self.api.state['settings'][linkage][varName] = []
 		self.stopAccept()
 
 	def reset(self, linkage, varName):
-		defaultSettings = self.api.getSettingsFromTemplate(self.api.config['templates'][linkage])
-		self.api.config['settings'][linkage][varName] = self._migrateKeys(defaultSettings[varName])
+		defaultSettings = self.api.getSettingsFromTemplate(self.api.state['templates'][linkage])
+		self.api.state['settings'][linkage][varName] = self._migrateKeys(defaultSettings[varName])
 		self.stopAccept()
 
 	def isKeyDown(self, key):
@@ -71,7 +70,7 @@ class HotkeysController(object):
 						if key not in currentKeys and BigWorld.isKeyDown(key):
 							currentKeys.add(special)
 					linkage, varName = self.acceptingKey
-					self.api.config['settings'][linkage][varName] = list(currentKeys)
+					self.api.state['settings'][linkage][varName] = list(currentKeys)
 					self.api.onHotkeysUpdated()
 					return True
 				if event.isKeyUp():
@@ -80,7 +79,7 @@ class HotkeysController(object):
 		return baseFunc(event)
 
 	def getHotkeyData(self, linkage, varName):
-		keyset = self._migrateKeys(self.api.config['settings'][linkage][varName])
+		keyset = self._migrateKeys(self.api.state['settings'][linkage][varName])
 		data = {
 			'linkage': linkage,
 			'varName': varName,
@@ -116,7 +115,7 @@ class HotkeysController(object):
 
 	def getAllHotkeys(self):
 		result = collections.defaultdict(dict)
-		templates = self.api.config['templates']
+		templates = self.api.state['templates']
 		for linkage, template in templates.items():
 			if linkage not in self.api.activeMods:
 				continue

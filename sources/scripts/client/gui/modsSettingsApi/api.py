@@ -26,7 +26,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		super(ModsSettingsApi, self).__init__()
 		self.__saveCallbackID = None
 		self.activeMods = set()
-		self.config = {
+		self.state = {
 			'templates': {},
 			'settings': {},
 			'storage': {},
@@ -41,12 +41,11 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.onButtonClicked = Event.Event()
 		self.onSettingsChanged = Event.Event()
 
-		self.settingsLoad()
-		self.configLoad()
+		self.loadSettings()
+		self.loadState()
 
 		g_modsListApi.addModification(
-			id=MOD_ID,
-			name=self.userSettings.get('modsListApiName') or l10n('name'),
+			id=MOD_ID, name=self.userSettings.get('modsListApiName') or l10n('name'),
 			description=self.userSettings.get('modsListApiDescription') or l10n('description'),
 			icon=self.userSettings.get('modsListApiIcon') or MOD_ICON,
 			enabled=True, login=True, lobby=True,
@@ -55,7 +54,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 		dependency._g_manager.addInstance(IModsSettingsApiInternal, self)
 
-	def settingsLoad(self):
+	def loadSettings(self):
 		if not os.path.exists(USER_SETTINGS_PATH):
 			return
 		try:
@@ -64,69 +63,71 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		except Exception:
 			_logger.exception('Error occured when trying to load user settings!')
 
-	def configLoad(self):
-		if not os.path.exists(CONFIG_PATH):
-			self.configSave()
+	def loadState(self):
+		if not os.path.exists(STATE_FILE_PATH):
+			self.saveState()
 			return
 		try:
-			with open(CONFIG_PATH, 'rb') as configFile:
-				self.config = jsonLoad(configFile)
-				self.config.setdefault('storage', {})
-				self.__migrateConfig()
+			with open(STATE_FILE_PATH, 'rb') as stateFile:
+				self.state = jsonLoad(stateFile)
+				self.state.setdefault('storage', {})
+				self.__migrateState()
 		except Exception:
-			_logger.exception('Error occured when trying to load config!')
+			_logger.exception('Error occured when trying to load state!')
 
-	def __migrateConfig(self):
-		if 'data' in self.config:
-			data = self.config.pop('data')
-			self.config['storage'] = data
+	def __migrateState(self):
+		if 'data' in self.state:
+			data = self.state.pop('data')
+			self.state['storage'] = data
 
-	def configSave(self):
+	def saveState(self):
 		if self.__saveCallbackID is None:
 			self.__saveCallbackID = BigWorld.callback(0.0, self.__save)
 
 	def __save(self):
 		self.__saveCallbackID = None
 		try:
-			configDir = os.path.dirname(CONFIG_PATH)
-			if not os.path.isdir(configDir):
-				os.makedirs(configDir)
+			stateDir = os.path.dirname(STATE_FILE_PATH)
+			if not os.path.isdir(stateDir):
+				os.makedirs(stateDir)
 		except Exception:
-			_logger.exception('Error occured when trying to recrate folder structure for config file!')
+			_logger.exception('Error occured when trying to recreate folder structure for state file!')
 		try:
-			with open(CONFIG_PATH, 'wb') as configFile:
-				configFile.write(jsonDump(self.config, True))
+			with open(STATE_FILE_PATH, 'wb') as stateFile:
+				stateFile.write(jsonDump(self.state, True))
 		except Exception:
-			_logger.exception('Error occured when trying to save config!')
+			_logger.exception('Error occured when trying to save state!')
+
+	def clearState(self):
+		for linkage in self.state['templates'].keys():
+			if linkage not in self.activeMods:
+				del self.state['templates'][linkage]
+				del self.state['settings'][linkage]
 
 	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
 		try:
 			self.activeMods.add(linkage)
-			currentTemplate = self.config['templates'].get(linkage)
+			currentTemplate = self.state['templates'].get(linkage)
 			if not currentTemplate or self.compareTemplates(template, currentTemplate):
-				self.config['templates'][linkage] = template
-				self.config['settings'][linkage] = self.getSettingsFromTemplate(template)
-				self.configSave()
+				self.state['templates'][linkage] = template
+				self.state['settings'][linkage] = self.getSettingsFromTemplate(template)
+				self.saveState()
 			self.onSettingsChanged += callback
 			if buttonHandler is not None:
 				self.onButtonClicked += buttonHandler
-			return self.getModSettings(linkage, self.config['templates'][linkage])
+			return self.getModSettings(linkage, self.state['templates'][linkage])
 		except Exception:
 			_logger.exception('Error occured when trying to register mod template!')
 
 	def getModSettings(self, linkage, template):
 		result = None
 		if template:
-			currentTemplate = self.config['templates'].get(linkage)
+			currentTemplate = self.state['templates'].get(linkage)
 			if currentTemplate:
 				if not self.compareTemplates(template, currentTemplate):
-					result = self.config['settings'].get(linkage)
+					result = self.state['settings'].get(linkage)
 				self.activeMods.add(linkage)
 		return result
-
-	def updateModSettings(self, linkage, newSettings):
-		self.config['settings'][linkage] = newSettings
-		self.onSettingsChanged(linkage, newSettings)
 
 	def registerCallback(self, linkage, callback, buttonHandler=None):
 		self.activeMods.add(linkage)
@@ -135,33 +136,29 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			self.onButtonClicked += buttonHandler
 
 	def getModData(self, linkage, version, default):
-		storage = self.config['storage']
+		storage = self.state['storage']
 		if linkage not in storage or storage[linkage]['version'] != version:
 			self.saveModData(linkage, version, default)
 		return cPickle.loads(storage[linkage]['data'])
 
 	def saveModData(self, linkage, version, data):
-		self.config['storage'][linkage] = {
+		self.state['storage'][linkage] = {
 			'version': version,
 			'data': cPickle.dumps(data, -1),
 		}
-		self.configSave()
+		self.saveState()
 
-	def getTemplatesForUI(self):
-		# Make copy of current templates and updates component's values from actual settings
-		templates = []
-		linkages = sorted(self.config['templates'], key=str.lower)
-		for linkage in linkages:
-			template = copy.deepcopy(self.config['templates'][linkage])
-			settings = self.getModSettings(linkage, template)
-			template['linkage'] = linkage
-			for column in COLUMNS:
-				if column in template:
-					for component in template[column]:
-						if 'varName' in component:
-							component['value'] = settings[component['varName']]
-			templates.append(template)
-		return templates
+	def updateModSettings(self, linkage, newSettings):
+		self.state['settings'][linkage] = newSettings
+		self.onSettingsChanged(linkage, newSettings)
+
+	def checkKeySet(self, keys):
+		return self.hotkeys.checkKeySet(keys)
+
+	def compareTemplates(self, newTemplate, oldTemplate):
+		if 'settingsVersion' in newTemplate and 'settingsVersion' in oldTemplate:
+			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
+		return jsonDump(newTemplate, True) != jsonDump(oldTemplate, True)
 
 	def getSettingsFromTemplate(self, template):
 		result = dict()
@@ -174,21 +171,29 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def getSettingsFromColumn(self, column):
 		result = dict()
-		for elem in column:
-			if 'varName' in elem and 'value' in elem:
-				result[elem['varName']] = elem['value']
+		for component in column:
+			if 'varName' in component and 'value' in component:
+				result[component['varName']] = component['value']
 		return result
 
-	def compareTemplates(self, newTemplate, oldTemplate):
-		if 'settingsVersion' in newTemplate and 'settingsVersion' in oldTemplate:
-			return newTemplate['settingsVersion'] > oldTemplate['settingsVersion']
-		return jsonDump(newTemplate, True) != jsonDump(oldTemplate, True)
+	def generateSettingsData(self):
+		# Make copy of current templates and updates component's values from actual settings
+		templates = []
+		linkages = sorted(self.state['templates'], key=str.lower)
+		for linkage in linkages:
+			template = copy.deepcopy(self.state['templates'][linkage])
+			settings = self.getModSettings(linkage, template)
+			template['linkage'] = linkage
+			for column in COLUMNS:
+				if column in template:
+					for component in template[column]:
+						if 'varName' in component:
+							component['value'] = settings[component['varName']]
+			templates.append(template)
+		return templates
 
-	def clearConfig(self):
-		for linkage in self.config['templates'].keys():
-			if linkage not in self.activeMods:
-				del self.config['templates'][linkage]
-				del self.config['settings'][linkage]
+	def getAllHotkeys(self):
+		return self.hotkeys.getAllHotkeys()
 
 	def onHotkeyStartAccept(self, linkage, varName):
 		return self.hotkeys.startAccept(linkage, varName)
@@ -201,9 +206,3 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 	def onHotkeyClear(self, linkage, varName):
 		return self.hotkeys.clear(linkage, varName)
-
-	def getAllHotkeys(self):
-		return self.hotkeys.getAllHotkeys()
-
-	def checkKeySet(self, keys):
-		return self.hotkeys.checkKeySet(keys)

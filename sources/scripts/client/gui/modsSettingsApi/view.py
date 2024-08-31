@@ -97,7 +97,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	def requestModsData(self):
 		self.api.clearConfig()
 		self.as_setLocalizationS(generateLocalizationVO(self.api.userSettings))
-		self.as_setDataS(self.api.getTemplatesForUI())
+		self.as_setDataS(self.api.generateSettingsData())
 		self.as_setHotkeysS(self.api.getAllHotkeys())
 
 	def sendModsData(self, data):
@@ -105,7 +105,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 		for linkage in data:
 			settings = data[linkage]
 			self.api.updateModSettings(linkage, settings)
-		self.api.configSave()
+		self.api.saveState()
 
 	def hotkeyAction(self, linkage, varName, action):
 		if action == HOTKEY_ACTIONS.START_ACCEPT:
@@ -119,7 +119,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 		self.api.onButtonClicked(linkage, varName, value)
 
 	def closeView(self):
-		self.api.configSave()
+		self.api.saveState()
 		self.destroy()
 
 	def __onHotkeysUpdated(self):
