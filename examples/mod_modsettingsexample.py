@@ -72,7 +72,7 @@ template  = {
 			'text': 'Включение/отключение по кнопке',
 			'tooltip': '{HEADER}Включение/отключение по кнопке{/HEADER}{BODY}Активирует либо деактивирует модификацию при нажатии кнопки/комбинации кнопок{/BODY}',
 			'value': [Keys.KEY_J],
-			'varName': 'stateKeySet'          
+			'varName': 'stateKeyset'          
 		},
 		{
 			'type': 'NumericStepper',
@@ -109,7 +109,7 @@ template  = {
 
 settings = {
 	'sixthSenseSound' : 0,
-	'stateKeySet' : [Keys.KEY_J],
+	'stateKeyset' : [Keys.KEY_J],
 	'alwaysOnArty' : True,
 	'neadHelp' : True,
 	'enabled' : True,
@@ -133,8 +133,8 @@ def onButtonClicked(linkage, varName, value):
 		print 'onButtonClicked', linkage, varName, value, clicks
 	
 def onGameKeyDown(event):
-	if g_modsSettingsApi.checkKeySet(settings['stateKeySet']):
-		print 'onHandleKeyEvent', settings['stateKeySet']
+	if g_modsSettingsApi.checkKeyset(settings['stateKeyset']):
+		print 'onHandleKeyEvent', settings['stateKeyset']
 
 savedSettings = g_modsSettingsApi.getModSettings(modLinkage, template)
 if savedSettings:

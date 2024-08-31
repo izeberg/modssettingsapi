@@ -35,7 +35,7 @@ template = {
 								 'alwaysOnArty', True,
 								 tooltip='{HEADER}Всегда оповещать о засвете при игре на артиллерии{/HEADER}{BODY}Если вы вишли в бой на артилерии, мод будет всегда оповещать о вашем засвете независимо от выставленного лимита на число оставшехся в живих союзниках{/BODY}'),
 		templates.createHotkey('Включение/отключение по кнопке',
-							   'stateKeySet', [Keys.KEY_J],
+							   'stateKeyset', [Keys.KEY_J],
 							   tooltip='{HEADER}Включение/отключение по кнопке{/HEADER}{BODY}Активирует либо деактивирует модификацию при нажатии кнопки/комбинации кнопок{/BODY}'),
 		templates.createNumericStepper('NumericStepper test',
 									   'numStepperTest', 5,
@@ -52,7 +52,7 @@ template = {
 
 settings = {
 	'sixthSenseSound' : 0,
-	'stateKeySet' : [Keys.KEY_J],
+	'stateKeyset' : [Keys.KEY_J],
 	'alwaysOnArty' : True,
 	'neadHelp' : True,
 	'enabled' : True,
@@ -76,8 +76,8 @@ def onButtonClicked(linkage, varName, value):
 		print 'onButtonClicked', linkage, varName, value, clicks
 	
 def onGameKeyDown(event):
-	if g_modsSettingsApi.checkKeySet(settings['stateKeySet']):
-		print 'onHandleKeyEvent', settings['stateKeySet']
+	if g_modsSettingsApi.checkKeyset(settings['stateKeyset']):
+		print 'onHandleKeyEvent', settings['stateKeyset']
 
 savedSettings = g_modsSettingsApi.getModSettings(modLinkage, template)
 if savedSettings:

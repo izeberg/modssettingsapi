@@ -80,12 +80,12 @@ class _ModsSettingsApi(IModsSettingsApi):
 		"""
 		return self.__instance.updateModSettings(linkage, newSettings)
 
-	def checkKeySet(self, keyset):
+	def checkKeyset(self, keyset):
 		""" Проверка нажатия клавиш
 		:param keyset: Набор клавиш для проверки
 		:return: bool
 		"""
-		return self.__instance.checkKeySet(keyset)
+		return self.__instance.checkKeyset(keyset)
 
 
 g_modsSettingsApi = ModsSettingsApi()

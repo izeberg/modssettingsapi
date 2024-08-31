@@ -39,7 +39,7 @@ class IModsSettingsApi(object):
 		"""
 		pass
 
-	def checkKeySet(self, keyset):
+	def checkKeyset(self, keyset):
 		""" Проверка нажатия клавиш
 		:param keyset: Набор клавиш для проверки
 		:return: bool

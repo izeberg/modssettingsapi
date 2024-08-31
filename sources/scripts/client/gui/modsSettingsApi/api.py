@@ -152,8 +152,12 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.state['settings'][linkage] = newSettings
 		self.onSettingsChanged(linkage, newSettings)
 
+	def checkKeyset(self, keys):
+		return self.hotkeys.checkKeyset(keys)
+
 	def checkKeySet(self, keys):
-		return self.hotkeys.checkKeySet(keys)
+		_logger.info('Method checkKeySet is deprecated! Please use checkKeyset method instead.')
+		return self.checkKeyset(keys)
 
 	def compareTemplates(self, newTemplate, oldTemplate):
 		if 'settingsVersion' in newTemplate and 'settingsVersion' in oldTemplate:

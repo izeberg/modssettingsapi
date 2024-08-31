@@ -42,7 +42,7 @@ class HotkeysController(object):
 			return False
 		return True
 
-	def checkKeySet(self, keys):
+	def checkKeyset(self, keys):
 		if not keys:
 			return False
 		return all(map(self.isKeyDown, self._migrateKeys(keys)))
@@ -79,7 +79,8 @@ class HotkeysController(object):
 		return baseFunc(event)
 
 	def getHotkeyData(self, linkage, varName):
-		keyset = self._migrateKeys(self.api.state['settings'][linkage][varName])
+		settings = self.api.state['settings'][linkage]
+		keyset = self._migrateKeys(settings[varName])
 		data = {
 			'linkage': linkage,
 			'varName': varName,

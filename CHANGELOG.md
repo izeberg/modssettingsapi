@@ -14,5 +14,6 @@
 - Fixed scrollbar enforcing when content height is smaller than container height
 - Fixed mods list blurriness
 - Fixed bug when `ColorChoice` popup would render on right mouse button
+- Renamed public API method `checkKeySet` to `checkKeyset` to unify naming style across project
 - Silenced warning about missing parent view in view loading logic
 - Refactor and cleanup
