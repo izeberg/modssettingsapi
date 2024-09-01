@@ -17,3 +17,5 @@
 - Renamed public API method `checkKeySet` to `checkKeyset` to unify naming style across project
 - Silenced warning about missing parent view in view loading logic
 - Refactor and cleanup
+
+P.S. To developers who extend `ModsSettingsApi` class to create own settings window instance - please update your code according to changes.
