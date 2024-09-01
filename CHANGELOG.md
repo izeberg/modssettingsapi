@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## WIP
+## 1.6.0
 
 - Added localization support
 - Added Belarusian, German, Hungarian, Polish and Ukranian languages support
