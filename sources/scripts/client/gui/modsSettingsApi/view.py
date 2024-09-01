@@ -95,7 +95,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 		super(ModsSettingsApiWindow, self)._dispose()
 
 	def requestModsData(self):
-		self.api.clearConfig()
+		self.api.clearState()
 		self.as_setLocalizationS(generateLocalizationVO(self.api.userSettings))
 		self.as_setDataS(self.api.generateSettingsData())
 		self.as_setHotkeysS(self.api.getAllHotkeys())
@@ -124,7 +124,7 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 
 	def __onHotkeysUpdated(self):
 		data = self.api.getAllHotkeys()
-		self.as_updateHotkeysS(data)
+		self.as_setHotkeysS(data)
 
 
 def getViewSettings():
