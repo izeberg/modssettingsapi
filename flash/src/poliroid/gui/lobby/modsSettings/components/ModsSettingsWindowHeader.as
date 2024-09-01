@@ -11,7 +11,7 @@ package poliroid.gui.lobby.modsSettings.components
 	public class ModsSettingsWindowHeader extends UIComponentEx
 	{
 		public var titleTF:TextField;
-		public var buttonClose:CloseButtonText;
+		public var closeButton:CloseButtonText;
 
 		public function ModsSettingsWindowHeader()
 		{
@@ -22,14 +22,14 @@ package poliroid.gui.lobby.modsSettings.components
 		{
 			super.configUI();
 
-			buttonClose.addEventListener(ButtonEvent.CLICK, handlebuttonCloseClick);
+			closeButton.addEventListener(ButtonEvent.CLICK, handleCloseButtonClick);
 		}
 
 		override protected function onDispose():void
 		{
-			buttonClose.removeEventListener(ButtonEvent.CLICK, handlebuttonCloseClick);
-			buttonClose.dispose();
-			buttonClose = null;
+			closeButton.removeEventListener(ButtonEvent.CLICK, handleCloseButtonClick);
+			closeButton.dispose();
+			closeButton = null;
 			titleTF = null;
 
 			super.onDispose();
@@ -38,18 +38,18 @@ package poliroid.gui.lobby.modsSettings.components
 		public function updateStage(appWidth:Number, appHeight:Number):void
 		{
 			x = int((appWidth - Constants.MOD_COMPONENT_WIDTH) / 2);
-			buttonClose.x = Constants.MOD_COMPONENT_WIDTH - 56;
+			closeButton.x = Constants.MOD_COMPONENT_WIDTH - 56;
 		}
 
 		public function setLocalization(vo:ModsSettingsLocalizationVO):void
 		{
 			titleTF.text = vo.windowTitle;
-			buttonClose.label = vo.buttonClose;
+			closeButton.label = vo.buttonClose;
 		}
 
-		private function handlebuttonCloseClick(event:ButtonEvent):void
+		private function handleCloseButtonClick(event:ButtonEvent):void
 		{
-			dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLOSE_CLICK));
+			dispatchEvent(new InteractiveEvent(InteractiveEvent.CLOSE_BUTTON_CLICK));
 		}
 	}
 }

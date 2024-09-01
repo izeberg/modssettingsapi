@@ -8,10 +8,10 @@
 		public static const BUTTON_CLICK:String = "buttonAction";
 		public static const SETTINGS_CHANGED:String = "onModSettingsChanged";
 		public static const VALUE_CHANGED:String = "onValueChanged";
-		public static const BUTTON_OK_CLICK:String = "buttonOKClick";
-		public static const BUTTON_CANCEL_CLICK:String = "buttonCancelClick";
-		public static const BUTTON_APPLY_CLICK:String = "buttonApplyClick";
-		public static const BUTTON_CLOSE_CLICK:String = "buttonCloseClick";
+		public static const OK_BUTTON_CLICK:String = "okButtonClick";
+		public static const CANCEL_BUTTON_CLICK:String = "сancelButtonClick";
+		public static const APPLY_BUTTON_CLICK:String = "applyButtonClick";
+		public static const CLOSE_BUTTON_CLICK:String = "closeButtonClick";
 
 		private var _modLinkage:String = "";
 		private var _varName:String = "";

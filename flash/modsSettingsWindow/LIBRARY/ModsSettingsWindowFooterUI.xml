@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowFooterUI" itemID="6640fd6f-00000329" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowFooter" linkageClassName="ModsSettingsWindowFooterUI" lastModified="1715535215">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowFooterUI" itemID="6640fd6f-00000329" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowFooter" linkageClassName="ModsSettingsWindowFooterUI" lastModified="1725151095">
   <timeline>
     <DOMTimeline name="ModsSettingsWindowFooterUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;/guidelines&gt;'>
       <layers>
@@ -11,7 +11,7 @@
                     <Matrix tx="-80" ty="-95"/>
                   </matrix>
                 </DOMBitmapInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="buttonApply">
+                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="applyButton">
                   <matrix>
                     <Matrix tx="720" ty="30"/>
                   </matrix>
@@ -19,7 +19,7 @@
                     <Point x="77.5" y="15"/>
                   </transformationPoint>
                 </DOMSymbolInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonSecondaryLargeUI" name="buttonCancel">
+                <DOMSymbolInstance libraryItemName="imports/ButtonSecondaryLargeUI" name="cancelButton">
                   <matrix>
                     <Matrix tx="550" ty="30"/>
                   </matrix>
@@ -27,7 +27,7 @@
                     <Point x="77.5" y="15"/>
                   </transformationPoint>
                 </DOMSymbolInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="buttonOK">
+                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="okButton">
                   <matrix>
                     <Matrix tx="380" ty="30"/>
                   </matrix>

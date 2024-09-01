@@ -7,7 +7,6 @@
 
 	public class StateSwitcher extends SoundButtonEx
 	{
-
 		private static const ICON_ENABLED:String = 'enabled';
 		private static const ICON_DISABLED:String = 'disabled';
 

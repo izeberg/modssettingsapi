@@ -52,15 +52,15 @@ package poliroid.gui.lobby.modsSettings
 			App.stage.addEventListener(Event.RESIZE, updatePositions);
 			App.gameInputMgr.setKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler, true);
 
-			header.addEventListener(InteractiveEvent.BUTTON_CLOSE_CLICK, handleButtonClose);
+			header.addEventListener(InteractiveEvent.CLOSE_BUTTON_CLICK, handleCloseButtonClick);
 
 			content.addEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
 			content.addEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
 			content.addEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
 
-			footer.addEventListener(InteractiveEvent.BUTTON_OK_CLICK, handleButtonOK);
-			footer.addEventListener(InteractiveEvent.BUTTON_CANCEL_CLICK, handleButtonCancel);
-			footer.addEventListener(InteractiveEvent.BUTTON_APPLY_CLICK, handleButtonApply);
+			footer.addEventListener(InteractiveEvent.OK_BUTTON_CLICK, handleOkButtonClick);
+			footer.addEventListener(InteractiveEvent.CANCEL_BUTTON_CLICK, handleCancelButtonClick);
+			footer.addEventListener(InteractiveEvent.APPLY_BUTTON_CLICK, handleApplyButtonClick);
 
 			updatePositions();
 			requestModsData();
@@ -72,15 +72,15 @@ package poliroid.gui.lobby.modsSettings
 			App.gameInputMgr.clearKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler);
 			App.toolTipMgr.hide();
 
-			footer.removeEventListener(InteractiveEvent.BUTTON_OK_CLICK, handleButtonOK);
-			footer.removeEventListener(InteractiveEvent.BUTTON_CANCEL_CLICK, handleButtonCancel);
-			footer.removeEventListener(InteractiveEvent.BUTTON_APPLY_CLICK, handleButtonApply);
+			header.removeEventListener(InteractiveEvent.CLOSE_BUTTON_CLICK, handleCloseButtonClick);
 
 			content.removeEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
 			content.removeEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
 			content.removeEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
 
-			header.removeEventListener(InteractiveEvent.BUTTON_CLOSE_CLICK, handleButtonClose);
+			footer.removeEventListener(InteractiveEvent.OK_BUTTON_CLICK, handleOkButtonClick);
+			footer.removeEventListener(InteractiveEvent.CANCEL_BUTTON_CLICK, handleCancelButtonClick);
+			footer.removeEventListener(InteractiveEvent.APPLY_BUTTON_CLICK, handleApplyButtonClick);
 
 			header = null;
 			content = null;
@@ -95,10 +95,10 @@ package poliroid.gui.lobby.modsSettings
 			var appWidth:Number = App.appWidth;
 			var appHeight:Number = App.appHeight;
 
-			background.updateStage(appWidth, appHeight);
 			header.updateStage(appWidth, appHeight);
 			content.updateStage(appWidth, appHeight);
 			footer.updateStage(appWidth, appHeight);
+			background.updateStage(appWidth, appHeight);
 		}
 
 		public function as_setLocalization(l10n:Object):void
@@ -171,7 +171,7 @@ package poliroid.gui.lobby.modsSettings
 		private function handleModSettingsChanged(event:InteractiveEvent):void
 		{
 			configChanged = true;
-			footer.buttonApply.enabled = true;
+			footer.applyButton.enabled = true;
 
 			if (configChangedLinkages.indexOf(event.linkage) == -1)
 				configChangedLinkages.push(event.linkage);
@@ -187,7 +187,7 @@ package poliroid.gui.lobby.modsSettings
 			hotkeyAction(event.linkage, event.varName, event.value);
 		}
 
-		private function handleButtonOK(event:InteractiveEvent):void
+		private function handleOkButtonClick(event:InteractiveEvent):void
 		{
 			if (configChanged)
 				syncModsData();
@@ -195,19 +195,19 @@ package poliroid.gui.lobby.modsSettings
 			closeView();
 		}
 
-		private function handleButtonApply(event:InteractiveEvent):void
+		private function handleApplyButtonClick(event:InteractiveEvent):void
 		{
 			syncModsData();
 			configChanged = false;
-			footer.buttonApply.enabled = false;
+			footer.applyButton.enabled = false;
 		}
 
-		private function handleButtonCancel(event:InteractiveEvent):void
+		private function handleCancelButtonClick(event:InteractiveEvent):void
 		{
 			closeView();
 		}
 
-		private function handleButtonClose(event:InteractiveEvent):void
+		private function handleCloseButtonClick(event:InteractiveEvent):void
 		{
 			closeView();
 		}
