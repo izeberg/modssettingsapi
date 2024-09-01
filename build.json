@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"id": "izeberg.modssettingsapi",
-		"name": "Mod configurator",
+		"name": "ModsSettings API",
 		"description": "This mod allows you to easily configure installed mods"
 	},
 	"flash_fla": {
