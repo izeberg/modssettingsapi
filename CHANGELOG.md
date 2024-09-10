@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.6.1
+
+- Updated German localization (CHAMPi)
+
 ## 1.6.0
 
 - Added localization support

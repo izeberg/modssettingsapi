@@ -1,11 +1,11 @@
 name: Mod Konfigurator
-description: Dieser Mod erlaubt es dir die Einstellungen vorzunehmen.
+description: Mit diesem Mod können installierte Mods einfach konfiguriert werden.
 buttons/ok: OK
 buttons/cancel: Abbrechen
 buttons/apply: Übernehmen
-buttons/close: SCHLIESSEN
-buttons/cleanup: Säubern
+buttons/close: SCHLIEßEN
 buttons/default: Standard
-stateswitcher/tooltip/header: Mod de/aktivieren
-stateswitcher/tooltip/body: Grüner Indicator - Mod ist aktiviert\nRoter Indicator - Mod ist deaktiviert
+buttons/cleanup: Zuweisung entfernen
+stateswitcher/tooltip/header: Mod aktivieren / deaktivieren
+stateswitcher/tooltip/body: Grüner Indikator - Mod ist aktiviert\nRoter Indikator - Mod ist deaktiviert
 colorchoice/header: FARBE
