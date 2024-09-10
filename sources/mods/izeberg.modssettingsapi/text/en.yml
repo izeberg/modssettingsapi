@@ -4,7 +4,7 @@ buttons/ok: OK
 buttons/cancel: Cancel
 buttons/apply: Apply
 buttons/close: CLOSE
-buttons/cleanup: Clear
+buttons/clear: Clear
 buttons/default: Default
 stateswitcher/tooltip/header: Enable / Disable mod
 stateswitcher/tooltip/body: Green indicator - mod enabled\nRed indicator - mod disabled

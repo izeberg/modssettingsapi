@@ -5,7 +5,7 @@ buttons/cancel: Abbrechen
 buttons/apply: Übernehmen
 buttons/close: SCHLIEßEN
 buttons/default: Standard
-buttons/cleanup: Zuweisung entfernen
+buttons/clear: Zuweisung entfernen
 stateswitcher/tooltip/header: Mod aktivieren / deaktivieren
 stateswitcher/tooltip/body: Grüner Indikator - Mod ist aktiviert\nRoter Indikator - Mod ist deaktiviert
 colorchoice/header: FARBE

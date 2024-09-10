@@ -4,7 +4,7 @@ buttons/ok: OK
 buttons/cancel: Mégsem
 buttons/apply: Folytatás
 buttons/close: BEZÁRÁS
-buttons/cleanup: Törlés
+buttons/clear: Törlés
 buttons/default: Alapértelmezett
 stateswitcher/tooltip/header: Mod engedélyezése / letiltása
 stateswitcher/tooltip/body: Zöld jelzés - mod engedélyezve\nPiros jelzés - mod letiltva

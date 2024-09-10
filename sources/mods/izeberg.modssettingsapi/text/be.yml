@@ -4,7 +4,7 @@ buttons/ok: OK
 buttons/cancel: Адмяніць
 buttons/apply: Ужыць
 buttons/close: ЗАКРЫЦЬ
-buttons/cleanup: Ачысціць
+buttons/clear: Ачысціць
 buttons/default: Перадвызначаны
 stateswitcher/tooltip/header: Уключыць / адключыць мод
 stateswitcher/tooltip/body: Зялёны індыкатар - мод уключаны\nЧырвоны індыкатар - мод адключаны

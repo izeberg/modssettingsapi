@@ -4,7 +4,7 @@ buttons/ok: OK
 buttons/cancel: Anuluj
 buttons/apply: Zastosuj
 buttons/close: ZAMKNIJ
-buttons/cleanup: Wyczyść
+buttons/clear: Wyczyść
 buttons/default: Domyślnie
 stateswitcher/tooltip/header: Włącz / Wyłącz moda
 stateswitcher/tooltip/body: Zielony wskaźnik - mod włączony\nCzerwony wskaźnik - mod wyłączony
