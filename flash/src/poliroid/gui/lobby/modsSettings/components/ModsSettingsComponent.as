@@ -2,7 +2,7 @@ package poliroid.gui.lobby.modsSettings.components
 {
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
+	import flash.events.Event;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import scaleform.clik.constants.InvalidationType;
@@ -57,11 +57,6 @@ package poliroid.gui.lobby.modsSettings.components
 			return result;
 		}
 
-		override protected function configUI():void
-		{
-			super.configUI();
-		}
-
 		override protected function draw():void
 		{
 			if (isInvalid(InvalidationType.DATA))
@@ -84,7 +79,6 @@ package poliroid.gui.lobby.modsSettings.components
 			if (column2)
 			{
 				var lastPosTemp:Number = createComponents(this, column2, Constants.MOD_COMPONENT_WIDTH / 2, paddingTop);
-
 				if (lastPosTemp > lastPos)
 					lastPos = lastPosTemp;
 			}
@@ -145,15 +139,16 @@ package poliroid.gui.lobby.modsSettings.components
 			_stateSwitcher.x = Constants.MOD_COMPONENT_WIDTH - 41;
 			_stateSwitcher.y = 16;
 			addChild(_stateSwitcher);
-			_stateSwitcher.addEventListener(MouseEvent.CLICK, handleStateSwitcherClick);
+			_stateSwitcher.addEventListener(Event.SELECT, handleStateSwitcherClick);
 		}
 
-		private function handleStateSwitcherClick(event:MouseEvent):void
+		private function handleStateSwitcherClick(event:Event):void
 		{
 			App.utils.focusHandler.setFocus(this);
-			var button:StateSwitcher = StateSwitcher(event.target);
 
-			modEnabled = button.selected;
+			var switcher:StateSwitcher = StateSwitcher(event.target);
+			modEnabled = switcher.selected;
+
 			handleComponentEvent();
 			updateComponentsState();
 		}

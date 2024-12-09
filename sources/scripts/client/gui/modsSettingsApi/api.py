@@ -27,8 +27,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		self.__saveCallbackID = None
 		self.activeMods = set()
 		self.state = {
-			'templates': {},
 			'settings': {},
+			'templates': {},
 			'storage': {},
 		}
 		self.userSettings = {}
@@ -190,6 +190,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			template = copy.deepcopy(self.state['templates'][linkage])
 			settings = self.getModSettings(linkage, template)
 			template['linkage'] = linkage
+			if 'enabled' in template:
+				template['enabled'] = settings['enabled']
 			for column in COLUMNS:
 				if column in template:
 					for component in template[column]:
