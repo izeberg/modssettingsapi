@@ -2,7 +2,12 @@
 
 ## 1.6.1
 
+- Fixed issue when `enabled` UI state for modification entry would desynchronize from actual state
+- Fixed `ImportError` when tried to import dependency manager on Lesta client since 1.31
+- Reorganized `Hotkey` component context menu options
 - Updated German localization (CHAMPi)
+- Updated localizations
+- Code reorganization and cleanup
 
 ## 1.6.0
 
