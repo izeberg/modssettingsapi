@@ -6,7 +6,7 @@ __credits__ = ['Andrii Andrushchyshyn', 'Renat Iliev', 'Paul Ekshmidt']
 __license__ = 'CC BY-NC-SA 4.0'
 __version__ = '1.6.0'
 __maintainer__ = 'Paul Ekshmidt'
-__email__ = 'hello@kurzdor.me'
+__email__ = 'contact@kurzdor.me'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
 import templates
