@@ -3,19 +3,23 @@
 __author__ = "Iliev Renat"
 __email__ = "me@izeberg.ru"
 
-import collections
-import functools
+import importlib
 import inspect
-import json
-import os
+import functools
+import collections
+import time
 import re
+import os
+import json
 import shutil
 import tempfile
-import time
 
 import BigWorld
 import ResMgr
+from skeletons.gui.impl import IGuiLoader
+from soft_exception import SoftException
 from constants import ARENA_GUI_TYPE
+from helpers import dependency
 
 
 DEFAULT_EXCLUDED_GUI_TYPES = {
@@ -30,7 +34,6 @@ INJECTABLE_EXCLUDED_GUI_TYPES = (
 	'EPIC_TRAINING',
 )
 
-
 def safeInjectConstants(target, src, clazz):
 	for attr in src:
 		if not hasattr(clazz, attr):
@@ -38,20 +41,50 @@ def safeInjectConstants(target, src, clazz):
 		entry = getattr(clazz, attr)
 		target.add(entry)
 
-
 safeInjectConstants(DEFAULT_EXCLUDED_GUI_TYPES, 
 					INJECTABLE_EXCLUDED_GUI_TYPES, ARENA_GUI_TYPE)
 
+def override(obj, prop, getter=None, setter=None, deleter=None):
+	""" Overrides attribute in object.
+	Attribute should be property or callable.
+	Getter, setter and deleter should be callable or None.
+	:param obj: Object
+	:param prop: Name of any attribute in object (can be not mangled)
+	:param getter: Getter function
+	:param setter: Setter function
+	:param deleter: Deleter function"""
 
-def doLog(project, *args, **kwargs):
-	""" Prints arguments to stdout with tag
-	:param project: Tag for log string
-	:param args: Arguments, it reduces to string by join with space
-	:param kwargs: Key-value arguments, it reduces to string by repr"""
+	if inspect.isclass(obj) and prop.startswith('__') and prop not in dir(obj) + dir(type(obj)):
+		prop = obj.__name__ + prop
+		if not prop.startswith('_'):
+			prop = '_' + prop
 
-	kwargs = repr(kwargs) if kwargs else ''
-	args = ' '.join([unicode(s) for s in args])
-	print '[%s] %s %s' % (project, args, kwargs)
+	src = getattr(obj, prop)
+	if type(src) is property and (getter or setter or deleter):
+		assert getter is None or callable(getter), 'Getter is not callable!'
+		assert setter is None or callable(setter), 'Setter is not callable!'
+		assert deleter is None or callable(deleter), 'Deleter is not callable!'
+
+		getter = functools.partial(getter, src.fget) if getter else src.fget
+		setter = functools.partial(setter, src.fset) if setter else src.fset
+		deleter = functools.partial(deleter, src.fdel) if deleter else src.fdel
+
+		setattr(obj, prop, property(getter, setter, deleter))
+		return getter
+	elif getter:
+		assert callable(src), 'Source property is not callable!'
+		assert callable(getter), 'Handler is not callable!'
+
+		if inspect.isclass(obj) and inspect.ismethod(src) \
+			or isinstance(src, type(BigWorld.Entity.__getattribute__)):
+			getter_new = lambda *args, **kwargs: getter(src, *args, **kwargs)
+		else:
+			getter_new = functools.partial(getter, src)
+
+		setattr(obj, prop, getter_new)
+		return getter
+	else:
+		return functools.partial(override, obj, prop)
 
 
 def byteify(data):
@@ -67,18 +100,6 @@ def byteify(data):
 		return data
 
 
-def jsonify(obj):
-	""" Returns JSON-serializable object from given object
-	:param obj: Object
-	:param needFmt: JSON-serializable object (dict or list)
-	"""
-	if isinstance(obj, collections.Mapping):
-		return {str(k): jsonify(v) for k, v in obj.iteritems()}
-	if isinstance(obj, collections.Iterable) and not isinstance(obj, (str, unicode)):
-		return list(map(jsonify, obj))
-	return obj
-
-
 def memoize(function):
 	memo = {}
 
@@ -90,6 +111,45 @@ def memoize(function):
 		return memo[key]
 
 	return wrapper
+
+
+def deepUpdate(obj, new):
+	""" Recursive updating of the dictionary (including dictionaries in it)
+	:param obj: Dictionary to be updated
+	:param new: Diff dictionary"""
+	for key, value in new.iteritems():
+		if isinstance(value, dict):
+			obj[key] = deepUpdate(obj.get(key, {}), value)
+		else:
+			obj[key] = value
+	return obj
+
+
+def safeImport(path, target):
+	try:
+		module = importlib.import_module(path)
+		return getattr(module, target, None)
+	except ImportError:
+		return None
+
+
+def readFromVFS(path):
+	file = ResMgr.openSection(path)
+	if file is not None and ResMgr.isFile(path):
+		return str(file.asBinary)
+	return None
+
+
+def readLocalization(path):
+	result = {}
+	l10nData = readFromVFS(path)
+	if l10nData:
+		for line in l10nData.splitlines():
+			if ': ' not in line:
+				continue
+			key, value = line.split(': ', 1)
+			result[key] = value.replace('\\n', '\n').strip()
+	return result
 
 
 def listVFSDir(path):
@@ -125,55 +185,16 @@ def unpackVFS(prefix, *paths):
 	return result
 
 
-def readFromVFS(path):
-	file = ResMgr.openSection(path)
-	if file is not None and ResMgr.isFile(path):
-		return str(file.asBinary)
-	return None
-
-
-def readLocalization(path):
-	result = {}
-	l10nData = readFromVFS(path)
-	if l10nData:
-		for line in l10nData.splitlines():
-			if ': ' not in line:
-				continue
-			key, value = line.split(': ', 1)
-			result[key] = value.replace('\\n', '\n')
-	return result
-
-
-def jsonDump(obj, needFmt=False):
-	""" Serializes an object into a string
+def jsonify(obj):
+	""" Returns JSON-serializable object from given object
 	:param obj: Object
-	:param needFmt: Indicates that the result should be formatted for human reading"""
-	kwargs = {
-		'encoding': 'utf-8'
-	}
-	if needFmt:
-		kwargs.update({
-			'ensure_ascii': False,
-			'indent': 4,
-			'separators': (',', ': '),
-			'sort_keys': True
-		})
-	return json.dumps(jsonify(obj), **kwargs)
-
-
-def jsonLoad(src, skipcomments=False):
-	""" Returns json data from source
-	It supports comments in json (see jsonRemoveComments)
-	:param skipcomments: Skip comments removing
-	:param src: Data source (file or string)"""
-
-	if not isinstance(src, (str, unicode)):
-		src = src.read()
-
-	if not skipcomments:
-		src = jsonRemoveComments(src)
-
-	return byteify(json.loads(src))
+	:param needFmt: JSON-serializable object (dict or list)
+	"""
+	if isinstance(obj, collections.Mapping):
+		return {str(k): jsonify(v) for k, v in obj.iteritems()}
+	if isinstance(obj, collections.Iterable) and not isinstance(obj, (str, unicode)):
+		return list(map(jsonify, obj))
+	return obj
 
 
 def jsonRemoveComments(data, strip_space=True):
@@ -235,16 +256,56 @@ def jsonParse(data, skipcomments=False):
 	return byteify(json.loads(data))
 
 
-def deepUpdate(obj, new):
-	""" Recursive updating of the dictionary (including dictionaries in it)
-	:param obj: Dictionary to be updated
-	:param new: Diff dictionary"""
-	for key, value in new.iteritems():
-		if isinstance(value, dict):
-			obj[key] = deepUpdate(obj.get(key, {}), value)
-		else:
-			obj[key] = value
-	return obj
+def jsonDump(obj, needFmt=False):
+	""" Serializes an object into a string
+	:param obj: Object
+	:param needFmt: Indicates that the result should be formatted for human reading"""
+	kwargs = {
+		'encoding': 'utf-8'
+	}
+	if needFmt:
+		kwargs.update({
+			'ensure_ascii': False,
+			'indent': 4,
+			'separators': (',', ': '),
+			'sort_keys': True
+		})
+	return json.dumps(jsonify(obj), **kwargs)
+
+
+def jsonLoad(src, skipcomments=False):
+	""" Returns json data from source
+	It supports comments in json (see jsonRemoveComments)
+	:param skipcomments: Skip comments removing
+	:param src: Data source (file or string)"""
+
+	if not isinstance(src, (str, unicode)):
+		src = src.read()
+
+	if not skipcomments:
+		src = jsonRemoveComments(src)
+
+	return byteify(json.loads(src))
+
+_dependencyManager = None
+
+def getDependencyManager():
+	global _dependencyManager
+	if _dependencyManager is not None:
+		return _dependencyManager
+	for module in ('helpers.dependency', 'dependency_injection_container', ):
+		manager = safeImport(module, '_g_manager')
+		if manager is not None:
+			_dependencyManager = manager
+			return manager
+	raise SoftException('Cannot import dependency manager')
+
+
+@dependency.replace_none_kwargs(guiLoader=IGuiLoader)
+def getParentWindow(guiLoader=None):
+	if guiLoader and guiLoader.windowsManager:
+		return guiLoader.windowsManager.getMainWindow()
+	return None
 
 
 def isDisabledByBattleType(exclude=None, include=tuple()):
@@ -266,46 +327,3 @@ def isAlly(vehicle):
 	vehicles = player.arena.vehicles
 	vehicleID = vehicle.id if isinstance(vehicle, BigWorld.Entity) else vehicle
 	return vehicleID in vehicles and vehicles[player.playerVehicleID]['team'] == vehicles[vehicleID]['team']
-
-
-def override(obj, prop, getter=None, setter=None, deleter=None):
-	""" Overrides attribute in object.
-	Attribute should be property or callable.
-	Getter, setter and deleter should be callable or None.
-	:param obj: Object
-	:param prop: Name of any attribute in object (can be not mangled)
-	:param getter: Getter function
-	:param setter: Setter function
-	:param deleter: Deleter function"""
-
-	if inspect.isclass(obj) and prop.startswith('__') and prop not in dir(obj) + dir(type(obj)):
-		prop = obj.__name__ + prop
-		if not prop.startswith('_'):
-			prop = '_' + prop
-
-	src = getattr(obj, prop)
-	if type(src) is property and (getter or setter or deleter):
-		assert getter is None or callable(getter), 'Getter is not callable!'
-		assert setter is None or callable(setter), 'Setter is not callable!'
-		assert deleter is None or callable(deleter), 'Deleter is not callable!'
-
-		getter = functools.partial(getter, src.fget) if getter else src.fget
-		setter = functools.partial(setter, src.fset) if setter else src.fset
-		deleter = functools.partial(deleter, src.fdel) if deleter else src.fdel
-
-		setattr(obj, prop, property(getter, setter, deleter))
-		return getter
-	elif getter:
-		assert callable(src), 'Source property is not callable!'
-		assert callable(getter), 'Handler is not callable!'
-
-		if inspect.isclass(obj) and inspect.ismethod(src) \
-			or isinstance(src, type(BigWorld.Entity.__getattribute__)):
-			getter_new = lambda *args, **kwargs: getter(src, *args, **kwargs)
-		else:
-			getter_new = functools.partial(getter, src)
-
-		setattr(obj, prop, getter_new)
-		return getter
-	else:
-		return functools.partial(override, obj, prop)

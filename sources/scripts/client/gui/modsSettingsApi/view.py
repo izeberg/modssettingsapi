@@ -7,24 +7,14 @@ from gui.shared.personality import ServicesLocator
 from gui.shared.view_helpers.blur_manager import CachedBlur
 from gui.shared.utils.functions import makeTooltip
 from frameworks.wulf import WindowLayer
-from skeletons.gui.impl import IGuiLoader
 from helpers import dependency
 
 from ._constants import *
 from .l10n import l10n
 from .skeleton import IModsSettingsApiInternal
-from .utils import byteify
+from .utils import byteify, getParentWindow
 
 __all__ = ('loadView', )
-
-
-@dependency.replace_none_kwargs(guiLoader=IGuiLoader)
-def getParentWindow(guiLoader=None):
-	parentWindow = None
-	if guiLoader and guiLoader.windowsManager:
-		parentWindow = guiLoader.windowsManager.getMainWindow()
-	return parentWindow
-
 
 def loadView(api):
 	parent = getParentWindow()
@@ -130,5 +120,5 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 def getViewSettings():
 	return (ViewSettings(VIEW_ALIAS, ModsSettingsApiWindow, VIEW_SWF, WindowLayer.OVERLAY, None, ScopeTemplates.GLOBAL_SCOPE), )
 
-for entry in getViewSettings():
-	g_entitiesFactories.addSettings(entry)
+for viewSettings in getViewSettings():
+	g_entitiesFactories.addSettings(viewSettings)

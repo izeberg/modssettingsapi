@@ -9,12 +9,11 @@ __maintainer__ = 'Paul Ekshmidt'
 __email__ = 'hello@kurzdor.me'
 __doc__ = 'https://wiki.wargaming.net/ru/ModsettingsAPI'
 
-from helpers import dependency
-
-from gui.modsSettingsApi import templates
-from gui.modsSettingsApi.api import ModsSettingsApi
-from gui.modsSettingsApi.skeleton import IModsSettingsApi
-from gui.modsSettingsApi._constants import SPECIAL_KEYS
+import templates
+from .api import ModsSettingsApi
+from .skeleton import IModsSettingsApi
+from .utils import getDependencyManager
+from ._constants import SPECIAL_KEYS
 
 __all__ = ('g_modsSettingsApi', 'IModsSettingsApi', 'templates', 'SPECIAL_KEYS', )
 
@@ -26,7 +25,9 @@ class _ModsSettingsApi(IModsSettingsApi):
 	def __init__(self):
 		super(_ModsSettingsApi, self).__init__()
 		self.__instance = ModsSettingsApi()
-		dependency._g_manager.addInstance(IModsSettingsApi, self)
+
+		manager = getDependencyManager()
+		manager.addInstance(IModsSettingsApi, self)
 
 	def saveModData(self, linkage, version, data):
 		""" Сохранение данных мода
