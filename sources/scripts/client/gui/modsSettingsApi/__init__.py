@@ -1,7 +1,7 @@
 # coding: utf-8
 
 __author__ = 'Renat Iliev'
-__copyright__ = 'Copyright 2024, Wargaming'
+__copyright__ = 'Copyright 2025, Wargaming'
 __credits__ = ['Andrii Andrushchyshyn', 'Renat Iliev', 'Paul Ekshmidt']
 __license__ = 'CC BY-NC-SA 4.0'
 __version__ = '1.6.1'
