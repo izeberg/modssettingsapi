@@ -82,7 +82,7 @@
                     <DOMTextRun>
                       <characters>Mods Configuration</characters>
                       <textAttrs>
-                        <DOMTextAttrs aliasText="false" lineHeight="31.15" size="26" bitmapSize="520" face="$TitleFont*" fillColor="#F3EBCE"/>
+                        <DOMTextAttrs aliasText="false" lineHeight="32.6" size="26" bitmapSize="520" face="$TitleFont*" fillColor="#F3EBCE"/>
                       </textAttrs>
                     </DOMTextRun>
                   </textRuns>

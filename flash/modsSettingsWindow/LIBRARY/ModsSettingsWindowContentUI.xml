@@ -1,12 +1,12 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowContentUI" itemID="6640fd59-00000328" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowContent" linkageClassName="ModsSettingsWindowContentUI" lastModified="1715535193">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowContentUI" itemID="6640fd59-00000328" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowContent" linkageClassName="ModsSettingsWindowContentUI" lastModified="1736612834">
   <timeline>
     <DOMTimeline name="ModsSettingsWindowContentUI">
       <layers>
-        <DOMLayer name="scrollBar" color="#FF800A" current="true" isSelected="true" autoNamed="false">
+        <DOMLayer name="scrollBar" color="#FF800A" autoNamed="false">
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMComponentInstance libraryItemName="imports/ScrollBar" name="scrollBar" selected="true" centerPoint3DX="871.5" centerPoint3DY="202" uniqueID="4">
+                <DOMComponentInstance libraryItemName="imports/ScrollBar" name="scrollBar" centerPoint3DX="871.5" centerPoint3DY="202" uniqueID="4">
                   <matrix>
                     <Matrix d="3.63633728027344" tx="865" ty="2"/>
                   </matrix>
@@ -37,11 +37,11 @@
             </DOMFrame>
           </frames>
         </DOMLayer>
-        <DOMLayer name="scrollPane" color="#00FFFF" autoNamed="false">
+        <DOMLayer name="scrollPane" color="#00FFFF" current="true" isSelected="true" autoNamed="false">
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="imports/ResizableScrollPaneUI" name="scrollPane">
+                <DOMSymbolInstance libraryItemName="controls/SmoothResizableScrollPane/SmoothResizableScrollPaneUI" name="scrollPane">
                   <transformationPoint>
                     <Point/>
                   </transformationPoint>
