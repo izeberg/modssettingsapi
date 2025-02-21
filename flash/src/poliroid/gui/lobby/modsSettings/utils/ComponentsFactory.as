@@ -281,7 +281,6 @@
 
 			function getFormattedString(format:String, value:Number):String
 			{
-				value = Math.round(value * 100) / 100;
 				return format.split(Constants.SLIDER_VALUE_KEY).join(value.toString());
 			}
 
