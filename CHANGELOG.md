@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 1.6.1
+### 1.6.2
+
+- Added smooth scrolling to the window content (credits: poliroid)
+- Fixed window resizing handling when interface scale changed
+- Cleanup
+
+### 1.6.1
 
 - Fixed issue when `enabled` UI state for modification entry would desynchronize from actual state
 - Fixed `ImportError` when tried to import dependency manager on Lesta client since 1.31
@@ -9,7 +15,7 @@
 - Updated localizations
 - Code reorganization and cleanup
 
-## 1.6.0
+### 1.6.0
 
 - Added localization support
 - Added Belarusian, German, Hungarian, Polish and Ukranian languages support
