@@ -49,7 +49,6 @@ package poliroid.gui.lobby.modsSettings
 		{
 			super.onPopulate();
 
-			App.stage.addEventListener(Event.RESIZE, updatePositions);
 			App.gameInputMgr.setKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler, true);
 
 			header.addEventListener(InteractiveEvent.CLOSE_BUTTON_CLICK, handleCloseButtonClick);
@@ -62,13 +61,11 @@ package poliroid.gui.lobby.modsSettings
 			footer.addEventListener(InteractiveEvent.CANCEL_BUTTON_CLICK, handleCancelButtonClick);
 			footer.addEventListener(InteractiveEvent.APPLY_BUTTON_CLICK, handleApplyButtonClick);
 
-			updatePositions();
 			requestModsData();
 		}
 
 		override protected function onDispose():void
 		{
-			App.stage.removeEventListener(Event.RESIZE, updatePositions);
 			App.gameInputMgr.clearKeyHandler(Keyboard.ESCAPE, KeyboardEvent.KEY_DOWN, onEscapeKeyDownHandler);
 			App.toolTipMgr.hide();
 
@@ -90,15 +87,12 @@ package poliroid.gui.lobby.modsSettings
 			super.onDispose();
 		}
 
-		private function updatePositions(event:Event = null):void
+		override public function updateStage(width:Number, height:Number):void
 		{
-			var appWidth:Number = App.appWidth;
-			var appHeight:Number = App.appHeight;
-
-			header.updateStage(appWidth, appHeight);
-			content.updateStage(appWidth, appHeight);
-			footer.updateStage(appWidth, appHeight);
-			background.updateStage(appWidth, appHeight);
+			header.updateStage(width, height);
+			content.updateStage(width, height);
+			footer.updateStage(width, height);
+			background.updateStage(width, height);
 		}
 
 		public function as_setLocalization(l10n:Object):void
