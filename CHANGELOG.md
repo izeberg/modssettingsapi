@@ -4,6 +4,7 @@
 
 - Added smooth scrolling to the window content (credits: poliroid)
 - Fixed window resizing handling when interface scale changed
+- Fixed floating point precision issue in slider
 - Cleanup
 
 ### 1.6.1
