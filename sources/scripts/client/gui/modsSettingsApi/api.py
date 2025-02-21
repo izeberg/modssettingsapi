@@ -6,6 +6,7 @@ import logging
 import BigWorld
 import cPickle
 import Event
+from helpers import dependency
 
 from gui.modsListApi import g_modsListApi
 
@@ -15,7 +16,7 @@ from .context_menu import *
 from .hotkeys import HotkeysController
 from .view import loadView
 from .skeleton import IModsSettingsApiInternal
-from .utils import jsonLoad, jsonDump, getDependencyManager
+from .utils import jsonLoad, jsonDump
 
 _logger = logging.getLogger(__name__)
 
@@ -51,8 +52,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			callback=functools.partial(loadView, self)
 		)
 
-		manager = getDependencyManager()
-		manager.addInstance(IModsSettingsApiInternal, self)
+		dependency._g_manager.addInstance(IModsSettingsApiInternal, self)
 
 	def loadSettings(self):
 		if not os.path.exists(USER_SETTINGS_PATH):

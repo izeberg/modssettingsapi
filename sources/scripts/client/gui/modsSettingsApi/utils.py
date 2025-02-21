@@ -287,19 +287,6 @@ def jsonLoad(src, skipcomments=False):
 
 	return byteify(json.loads(src))
 
-_dependencyManager = None
-
-def getDependencyManager():
-	global _dependencyManager
-	if _dependencyManager is not None:
-		return _dependencyManager
-	for module in ('helpers.dependency', 'dependency_injection_container', ):
-		manager = safeImport(module, '_g_manager')
-		if manager is not None:
-			_dependencyManager = manager
-			return manager
-	raise SoftException('Cannot import dependency manager')
-
 
 @dependency.replace_none_kwargs(guiLoader=IGuiLoader)
 def getParentWindow(guiLoader=None):
