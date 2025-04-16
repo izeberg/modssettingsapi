@@ -116,6 +116,36 @@ def deprecated(target=None):
 	return decorator
 
 
+def safeImport(path, target, initialized=False):
+	try:
+		if initialized:
+			module = sys.modules.get(path)
+		else:
+			module = importlib.import_module(path)
+		return getattr(module, target, None)
+	except ImportError:
+		return None
+
+IMPORT_CANDIDATES = (
+	('helpers.dependency', '_g_manager', ),
+	('dependency_injection_container', '_g_manager', ),
+)
+
+_dependencyManager = None
+
+def getDependencyManager():
+	global _dependencyManager
+	if _dependencyManager is not None:
+		return _dependencyManager
+	for module_path, target in IMPORT_CANDIDATES:
+		manager = safeImport(module_path, target)
+		if manager is not None:
+			_dependencyManager = manager
+			return manager
+	_logger.error('Cannot import dependency manager')
+	return None
+
+
 def byteify(data):
 	"""Encodes data with UTF-8
 	:param data: Data to encode"""
@@ -152,14 +182,6 @@ def deepUpdate(obj, new):
 		else:
 			obj[key] = value
 	return obj
-
-
-def safeImport(path, target):
-	try:
-		module = importlib.import_module(path)
-		return getattr(module, target, None)
-	except ImportError:
-		return None
 
 
 def readFromVFS(path):
