@@ -6,7 +6,7 @@ import game
 import Keys
 
 from ._constants import *
-from .utils import override
+from .utils import override, deprecated
 
 _logger = logging.getLogger(__name__)
 
@@ -133,6 +133,7 @@ class HotkeysController(object):
 # TODO: delete in next release
 class HotkeysContoller(HotkeysController):
 
+	@deprecated('HotkeysController')
 	def __init__(self, api):
 		super(HotkeysContoller, self).__init__(api)
 		_logger.warning('You are using deprecated controller class. Please use HotkeysController instead. The backwards compatibility support will be removed in future updates.')

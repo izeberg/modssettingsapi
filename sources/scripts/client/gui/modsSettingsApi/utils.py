@@ -3,6 +3,7 @@
 __author__ = "Iliev Renat"
 __email__ = "me@izeberg.ru"
 
+import sys
 import importlib
 import inspect
 import functools
@@ -13,6 +14,7 @@ import os
 import json
 import shutil
 import tempfile
+import logging
 
 import BigWorld
 import ResMgr
@@ -21,6 +23,7 @@ from soft_exception import SoftException
 from constants import ARENA_GUI_TYPE
 from helpers import dependency
 
+_logger = logging.getLogger(__name__)
 
 DEFAULT_EXCLUDED_GUI_TYPES = {
 	ARENA_GUI_TYPE.UNKNOWN,
@@ -85,6 +88,32 @@ def override(obj, prop, getter=None, setter=None, deleter=None):
 		return getter
 	else:
 		return functools.partial(override, obj, prop)
+
+
+def deprecated(target=None):
+
+	def decorator(fn):
+		callers = set()
+
+		@functools.wraps(fn)
+		def wrapper(*args, **kwargs):
+			frame = sys._getframe(1)
+			module_name = frame.f_globals.get('__name__', '<unknown>')
+			filename = frame.f_globals.get('__file__', '<unknown>')
+			lineno = frame.f_lineno
+			caller_method = frame.f_code.co_name
+			caller = (filename, module_name, lineno)
+			if caller not in callers:
+				callers.add(caller)
+				msg = "Called deprecated method %s() from %s in %s()" % (fn.func_name, module_name, caller_method)
+				if target:
+					msg += " - use %s() instead." % target
+				_logger.warning(msg)
+			return fn(*args, **kwargs)
+
+		return wrapper
+	
+	return decorator
 
 
 def byteify(data):

@@ -16,7 +16,7 @@ from .context_menu import *
 from .hotkeys import HotkeysController
 from .view import loadView
 from .skeleton import IModsSettingsApiInternal
-from .utils import jsonLoad, jsonDump
+from .utils import deprecated, jsonLoad, jsonDump
 
 _logger = logging.getLogger(__name__)
 
@@ -157,8 +157,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		return self.hotkeys.checkKeyset(keys)
 
 	# TODO: delete in next release
+	@deprecated('checkKeyset')
 	def checkKeySet(self, keys):
-		_logger.info('Method checkKeySet is deprecated! Please use checkKeyset method instead.')
 		return self.checkKeyset(keys)
 
 	def compareTemplates(self, newTemplate, oldTemplate):
