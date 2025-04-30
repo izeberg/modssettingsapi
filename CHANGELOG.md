@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 1.6.3
+
+- Fixed `ImportError` when tried to import dependency manager on Lesta client since 1.34
+- Fixed deprecated `checkKeySet` call log spam in logs
+
 ### 1.6.2
 
 - Added smooth scrolling to the window content (credits: poliroid)
