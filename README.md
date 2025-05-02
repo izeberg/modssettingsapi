@@ -1,3 +1,7 @@
+# NOTICE
+
+Repository migrated to [https://github.com/IzeBerg/modssettingsapi/](GitHub) and no longer maintained here on BitBucket.
+
 # ModsSettings API
 
 This modification provides an API for third party developers to create settings for other modifications inside game easily.  
