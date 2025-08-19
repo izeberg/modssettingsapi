@@ -305,6 +305,7 @@ def build(packageFile, config):
 			with open(path, 'rb') as f:
 				write(excludes, package, dst, f.read())
 
+	shutil.copy2(packageFile, packageFile.replace('wotmod', 'mtmod'))
 
 if __name__ == '__main__':
 	with open('./build.json', 'r') as fh:
