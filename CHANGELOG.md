@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.6.4
+
+- Fixed `AttributeError` for renamed `wg_getPreferencesFilePath` method for MT
+
 ### 1.6.3
 
 - Fixed `ImportError` when tried to import dependency manager on Lesta client since 1.34
