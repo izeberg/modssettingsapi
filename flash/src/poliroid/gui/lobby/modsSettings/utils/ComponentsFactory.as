@@ -29,7 +29,7 @@
 	import poliroid.gui.lobby.modsSettings.controls.ColorChoiceButton;
 	import poliroid.gui.lobby.modsSettings.controls.HotkeyControl;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.shared.Utilities;
+	import poliroid.gui.lobby.modsSettings.utils.Utilities;
 
 	public class ComponentsFactory
 	{
@@ -280,21 +280,16 @@
 			sliderUI.addChild(slider);
 			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
 
-			function getFormattedString(format:String, value:Number):String
-			{
-				return format.split(Constants.SLIDER_VALUE_KEY).join(value.toString());
-			}
-
 			if (format)
 			{
-				var formattedString:String = getFormattedString(format, slider.value);
+				var formattedString:String = Utilities.getFormattedSliderValue(format, slider.value.toString());
 				var valueLabel:DisplayObject = ComponentsFactory.createLabel(formattedString, '');
 
 				valueLabel.y = slider.y + 2;
 				valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
 				sliderUI.addChild(valueLabel);
 				slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
-					valueLabel['label'].text = getFormattedString(format, event.value);
+					valueLabel['label'].text = Utilities.getFormattedSliderValue(format, event.value.toString());
 				});
 			}
 
@@ -327,64 +322,67 @@
 			return result;
 		}
 
-		public static function createStepSlider(componentCFG:Object, modLinkage:String, options:Array, format:String, text:String = '', tooltip:String = '', selectedIndex:Number = 0):DisplayObject
+		public static function createStepSlider(componentConfig:Object, modLinkage:String, options:Array, format:String, text:String = '', tooltip:String = '', selectedIndex:Number = 0):DisplayObject
 		{
 			var ui:UIComponent = new UIComponent();
-			var headerMargin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
-			if (headerText)
+			if (text)
 			{
 				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip);
+
 				label.x = label.y = 0;
 				ui.addChild(label);
 			}
 
-			var slider:StepSlider = StepSlider(App.utils.classFactory.getComponent('StepSliderUI', StepSlider));
-			slider.y = headerMargin;
-			slider.width = componentCFG.hasOwnProperty('width') ? componentCFG.width : 200;
-			slider.dataProvider = new DataProvider(options);
-			slider.value = selectedIndex;
-			ui.addChild(slider);
-			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
+			var stepSlider:StepSlider = StepSlider(App.utils.classFactory.getComponent('StepSliderUI', StepSlider));
+			stepSlider.y = margin;
+			stepSlider.width = componentConfig.hasOwnProperty('width') ? componentConfig.width : 200;
+			stepSlider.dataProvider = new DataProvider(options);
+			stepSlider.value = selectedIndex;
+			ui.addChild(stepSlider);
+			stepSlider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
 
-			// todo: move to utils
-			function getFormattedString(format:String, value:Number):String
-			{
-				var label:String = slider['getItemLabel'](slider.dataProvider.requestItemAt(value));
-				return format ? format.split(Constants.SLIDER_VALUE_KEY).join(label) : label;
-			}
+			var itemLabel:String = stepSlider['getItemLabel'](stepSlider.dataProvider.requestItemAt(stepSlider.value));
+			var formattedItemLabel:String = Utilities.getFormattedSliderValue(format, itemLabel);
+			var valueLabel:DisplayObject = ComponentsFactory.createLabel(formattedItemLabel, '');
 
-			var formattedString:String = getFormattedString(format, slider.value);
-			var valueLabel:DisplayObject = ComponentsFactory.createLabel(formattedString, '');
-
-			valueLabel.y = slider.y + 2;
-			valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
+			valueLabel.y = stepSlider.y + 2;
+			valueLabel.x = stepSlider.x + stepSlider.width + Constants.SLIDER_VALUE_MARGIN;
 			ui.addChild(valueLabel);
 
-			slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
-				valueLabel['label'].text = getFormattedString(format, slider.value);
+			stepSlider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
+				var itemLabel:String = stepSlider['getItemLabel'](stepSlider.dataProvider.requestItemAt(event.value));
+				valueLabel['label'].text = Utilities.getFormattedSliderValue(format, itemLabel);
 			});
 
-			if (componentCFG.hasOwnProperty('button'))
+			if (componentConfig.hasOwnProperty('button'))
 			{
-				var positionY:Number = headerMargin;
-				var positionX:Number = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN + 15;
+				var positionY:Number = margin;
+				var positionX:Number = stepSlider.x + stepSlider.width + Constants.SLIDER_VALUE_MARGIN + 15;
 
 				if (format)
 					positionX += 15;
 
-				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
 				button.addEventListener(ButtonEvent.CLICK, function():void {
-					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, slider.value));
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, stepSlider.value));
 				});
 
 				ui.addChild(button);
 			}
 
+			stepSlider.addEventListener(MouseEvent.MOUSE_WHEEL, function(event:MouseEvent):void {
+				event.stopImmediatePropagation();
+				result.parent.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_WHEEL, event.bubbles, event.cancelable, event.localX, event.localY, event.relatedObject, event.ctrlKey, event.altKey, event.shiftKey, event.buttonDown, event.delta));
+			});
+
 			var result:MovieClip = new MovieClip();
+
 			result.addChild(ui);
-			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(slider, 'value');
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(stepSlider, 'value');
+
 			return result;
 		}
 
