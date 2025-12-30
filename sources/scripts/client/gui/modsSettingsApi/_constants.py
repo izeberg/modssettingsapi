@@ -38,6 +38,7 @@ class COMPONENT_TYPE:
 	RADIO_BUTTON_GROUP = 'RadioButtonGroup'
 	DROPDOWN = 'Dropdown'
 	SLIDER = 'Slider'
+	STEP_SLIDER = 'StepSlider'
 	TEXT_INPUT = 'TextInput'
 	NUMERIC_STEPPER = 'NumericStepper'
 	HOTKEY = 'HotKey'

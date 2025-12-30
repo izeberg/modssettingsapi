@@ -241,6 +241,29 @@ def createSlider(text, varName, value, min, max, interval, format='{{value}}', t
 	return stepper
 
 
+def createStepSlider(text, varName, options, value, format='{{value}}', tooltip=None, button=None, width=None):
+	""" Helper to create StepSlider component
+
+	:param text: Component text
+	:param varName: Variable name bound to this component that will store component's value in onModSettingsChanged callback
+	:param options: List of string value for component options
+	:type options: list or tuple of str
+	:param value: Component value
+	:param format: Component value format template, defaults to '{{value}}' optional
+	:param tooltip: Component tooltip, optional
+	:param button: Component button, optional
+	:param width: Component width, optional
+	
+	:return: StepSlider component
+	"""
+	stepper = createOptionsControl(COMPONENT_TYPE.STEP_SLIDER, text, 
+								varName, options, value, tooltip, button)
+	stepper['format'] = format
+	if width is not None:
+		stepper['width'] = width
+	return stepper
+
+
 def createInput(text, varName, value, tooltip=None, button=None, width=None):
 	""" Helper to create Input component
 

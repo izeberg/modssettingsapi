@@ -31,6 +31,8 @@ template = {
 		templates.createSlider('Число живых союзников для активации мода', 
 							   'aliveCounter', 
 							   5, 1, 15, 1),
+		templates.createStepSlider('StepSlider example', 
+								   'stepSliderTest', ['Стандартная', 'Тихая', 'Громкая'], 0),
 		templates.createCheckbox('Всегда оповещать о засвете при игре на артиллерии',
 								 'alwaysOnArty', True,
 								 tooltip='{HEADER}Всегда оповещать о засвете при игре на артиллерии{/HEADER}{BODY}Если вы вишли в бой на артилерии, мод будет всегда оповещать о вашем засвете независимо от выставленного лимита на число оставшехся в живих союзниках{/BODY}'),
@@ -61,23 +63,26 @@ settings = {
 	'numStepperTest' : 5,
 	'colorChoice' : 'FFFFFF',
 	'rangeSlider' : [20, 50],
+	'stepSliderTest': 0
 }
 
-def onModSettingsChanged(linkage, newSettings):    
+def onModSettingsChanged(linkage, newSettings):
 	if linkage == modLinkage:
-		print 'onModSettingsChanged', newSettings
+		print('onModSettingsChanged', newSettings)
 
-def onButtonClicked(linkage, varName, value):    
+
+def onButtonClicked(linkage, varName, value):
 	if linkage == modLinkage:
 		clicks = g_modsSettingsApi.getModData(modLinkage, modDataVersion, 0)
 		clicks += 1
 		g_modsSettingsApi.saveModData(modLinkage, modDataVersion, clicks)
+		print('onButtonClicked', linkage, varName, value, clicks)
 
-		print 'onButtonClicked', linkage, varName, value, clicks
-	
+
 def onGameKeyDown(event):
 	if g_modsSettingsApi.checkKeyset(settings['stateKeyset']):
-		print 'onHandleKeyEvent', settings['stateKeyset']
+		print('onHandleKeyEvent', settings['stateKeyset'])
+
 
 savedSettings = g_modsSettingsApi.getModSettings(modLinkage, template)
 if savedSettings:
