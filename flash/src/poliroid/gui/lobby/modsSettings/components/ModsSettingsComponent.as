@@ -166,36 +166,36 @@ package poliroid.gui.lobby.modsSettings.components
 			}
 		}
 
-		private function getComponentByType(componentObj:Object):DisplayObject
+		private function getComponentByType(componentConfig:Object):DisplayObject
 		{
-			switch (componentObj.type)
+			switch (componentConfig.type)
 			{
 				case 'Label':
-					return ComponentsFactory.createLabel(componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createLabel(componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'Empty':
-					return ComponentsFactory.createEmpty(400, Constants.EMPTY_COMPONENT_HEIGHT);
+					return ComponentsFactory.createEmpty(400, componentConfig.height);
 				case 'CheckBox':
-					return ComponentsFactory.createCheckBox(componentObj, modLinkage, componentObj.text, componentObj.value, componentObj.tooltip);
+					return ComponentsFactory.createCheckBox(componentConfig, modLinkage, componentConfig.text, componentConfig.value, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'RadioButtonGroup':
-					return ComponentsFactory.createRadioButtonGroup(componentObj, modLinkage, componentObj.varName, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createRadioButtonGroup(componentConfig, modLinkage, componentConfig.varName, componentConfig.options, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon, componentConfig.value);
 				case 'Slider':
-					return ComponentsFactory.createSlider(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.format, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createSlider(componentConfig, modLinkage, componentConfig.minimum, componentConfig.maximum, componentConfig.snapInterval, componentConfig.value, componentConfig.format, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'StepSlider':
-					return ComponentsFactory.createStepSlider(componentObj, modLinkage, componentObj.options, componentObj.format, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createStepSlider(componentConfig, modLinkage, componentConfig.options, componentConfig.format, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon, componentConfig.value);
 				case 'Dropdown':
-					return ComponentsFactory.createDropdown(componentObj, modLinkage, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createDropdown(componentConfig, modLinkage, componentConfig.options, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon, componentConfig.value);
 				case 'TextInput':
-					return ComponentsFactory.createTextInput(componentObj, componentObj.text, componentObj.tooltip, componentObj.value);
+					return ComponentsFactory.createTextInput(componentConfig, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon, componentConfig.value);
 				case 'HotKey':
-					return ComponentsFactory.createHotKey(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createHotKey(componentConfig, modLinkage, componentConfig.value, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'NumericStepper':
-					return ComponentsFactory.createNumericStepper(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createNumericStepper(componentConfig, modLinkage, componentConfig.minimum, componentConfig.maximum, componentConfig.snapInterval, componentConfig.value, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'ColorChoice':
-					return ComponentsFactory.createColorChoice(componentObj, modLinkage, componentObj.value, componentObj.text, componentObj.tooltip);
+					return ComponentsFactory.createColorChoice(componentConfig, modLinkage, componentConfig.value, componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 				case 'RangeSlider':
-					return ComponentsFactory.createRangeSlider(componentObj, modLinkage);
+					return ComponentsFactory.createRangeSlider(componentConfig, modLinkage);
 				default:
-					DebugUtils.LOG_ERROR('[ModsSettings API] Unexpected type of component: ', componentObj.type);
+					DebugUtils.LOG_ERROR('[ModsSettings API] Unexpected type of component: ', componentConfig.type);
 					return new MovieClip();
 			}
 		}

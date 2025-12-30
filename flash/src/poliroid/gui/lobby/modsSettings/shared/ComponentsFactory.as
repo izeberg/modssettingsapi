@@ -50,26 +50,26 @@
 			var mc:MovieClip = new MovieClip();
 
 			mc.width = width;
-			mc.height = height;
+			mc.height = height ? height : Constants.EMPTY_COMPONENT_HEIGHT;
 
 			return mc;
 		}
 
-		public static function createLabel(text:String, tooltipText:String = ''):DisplayObject
+		public static function createLabel(text:String, tooltip:String = '', tooltipIcon:String = ''):DisplayObject
 		{
-			var labelUI:UIComponent = new UIComponent();
+			var ui:UIComponent = new UIComponent();
 			var label:LabelControl = LabelControl(App.utils.classFactory.getComponent('LabelControl', LabelControl));
 
 			label.width = 800;
 			label.htmlText = text;
 
-			if (tooltipText)
+			if (tooltip)
 			{
-				label.toolTip = tooltipText;
-				label.infoIcoType = InfoIcon.TYPE_INFO;
+				label.toolTip = tooltip;
+				label.infoIcoType = tooltipIcon ? tooltipIcon : InfoIcon.TYPE_INFO;
 			}
 
-			labelUI.addChild(label);
+			ui.addChild(label);
 			label.validateNow();
 
 			// Add pointer cursor to tooltip icon if available
@@ -80,135 +80,142 @@
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(labelUI);
+			result.addChild(ui);
 			result['label'] = label;
 
 			return result;
 		}
 
-		public static function createCheckBox(componentCFG:Object, modLinkage:String, label:String, selected:Boolean, tooltipText:String = ''):DisplayObject
+		public static function createCheckBox(componentConfig:Object, modLinkage:String, text:String, value:Boolean, tooltip:String = '', tooltipIcon:String = ''):DisplayObject
 		{
-			var checkboxUI:UIComponent = new UIComponent();
-			var cb:CheckBox = CheckBox(App.utils.classFactory.getComponent('CheckBox', CheckBox));
+			var ui:UIComponent = new UIComponent();
+			var checkbox:CheckBox = CheckBox(App.utils.classFactory.getComponent('CheckBox', CheckBox));
 
-			cb.label = label;
-			cb.selected = selected;
-			cb.toolTip = tooltipText;
-			cb.infoIcoType = tooltipText ? InfoIcon.TYPE_INFO : '';
-			cb.width = 800;
-			checkboxUI.addChild(cb);
-			cb.validateNow();
+			checkbox.label = text;
+			checkbox.selected = value;
+			if (tooltip)
+			{
+				checkbox.toolTip = tooltip;
+				checkbox.infoIcoType = tooltipIcon ? tooltipIcon : InfoIcon.TYPE_INFO;
+			}
+			checkbox.width = 800;
+			ui.addChild(checkbox);
+			checkbox.validateNow();
 
 			// Add pointer cursor to tooltip icon if available
-			var infoIcon:InfoIcon = cb['_infoIco'];
+			var infoIcon:InfoIcon = checkbox['_infoIco'];
 
 			if (infoIcon)
 				infoIcon.buttonMode = true;
 
-			cb.addEventListener(Event.SELECT, handleComponentEvent);
+			checkbox.addEventListener(Event.SELECT, handleComponentEvent);
 
-			if (componentCFG.hasOwnProperty('button'))
+			if (componentConfig.hasOwnProperty('button'))
 			{
-				var positionY:Number = cb.y + Constants.MOD_MARGIN_BOTTOM - 3;
-				var positionX:Number = cb.x + cb.textField.textWidth + Constants.BUTTON_MARGIN_LEFT + 20;
+				var positionY:Number = checkbox.y + Constants.MOD_MARGIN_BOTTOM - 3;
+				var positionX:Number = checkbox.x + checkbox.textField.textWidth + Constants.BUTTON_MARGIN_LEFT + 20;
 
-				if (tooltipText)
+				if (tooltip)
 					positionX += 25;
 
-				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
 				button.addEventListener(ButtonEvent.CLICK, function():void {
-					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, cb.selected));
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, checkbox.selected));
 				});
-				checkboxUI.addChild(button);
+
+				ui.addChild(button);
 			}
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(checkboxUI);
-			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(cb, 'selected');
+			result.addChild(ui);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(checkbox, 'selected');
 
 			return result;
 		}
 
-		public static function createRadioButtonGroup(componentCFG:Object, modLinkage:String, groupName:String, options:Array, headerText:String = '', tooltipText:String = '', selectedIndex:Number = 0):DisplayObject
+		public static function createRadioButtonGroup(componentConfig:Object, modLinkage:String, groupName:String, options:Array, text:String = '', tooltip:String = '', tooltipIcon:String = '', value:Number = 0):DisplayObject
 		{
-			var radioButtonsUI:UIComponent = new UIComponent();
-			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			var ui:UIComponent = new UIComponent();
+			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
-			if (headerText)
+			if (text)
 			{
-				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 				label.x = label.y = 0;
-				radioButtonsUI.addChild(label);
+				ui.addChild(label);
 			}
 
-			var buttonGroup:ButtonGroup = ButtonGroup.getGroup(groupName, radioButtonsUI);
+			var buttonGroup:ButtonGroup = ButtonGroup.getGroup(groupName, ui);
 
 			for (var i:Number = 0; i < options.length; i++)
 			{
 				var radioButton:RadioButton = RadioButton(App.utils.classFactory.getComponent('RadioButton', RadioButton));
 
-				radioButton.y = i * Constants.RADIO_BUTTONS_MARGIN + headerMargin;
+				radioButton.y = i * Constants.RADIO_BUTTONS_MARGIN + margin;
 				radioButton.label = options[i].label;
 				radioButton.autoSize = TextFieldAutoSize.LEFT;
-				radioButtonsUI.addChild(radioButton);
+
+				ui.addChild(radioButton);
 				buttonGroup.addButton(radioButton);
+
 				radioButton.addEventListener(MouseEvent.CLICK, handleComponentEvent);
 			}
 
-			buttonGroup.setSelectedButtonByIndex(selectedIndex);
+			buttonGroup.setSelectedButtonByIndex(value);
 
-			if (componentCFG.hasOwnProperty('button'))
+			if (componentConfig.hasOwnProperty('button'))
 			{
 				var positionX:Number = 0;
 				var positionY:Number = 0;
 				radioButton = RadioButton(buttonGroup.getButtonAt(0));
 
-				if (headerText)
+				if (text)
 				{
 					positionX = label.x + label['label'].textField.textWidth + Constants.BUTTON_MARGIN_LEFT;
 
-					if (tooltipText)
+					if (tooltip)
 						positionX += 25;
 				}
 				else
 					positionX = radioButton.x + radioButton.width + Constants.BUTTON_MARGIN_LEFT;
 
-				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
 				button.addEventListener(ButtonEvent.CLICK, function():void {
-					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, buttonGroup.selectedIndex));
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, buttonGroup.selectedIndex));
 				});
-				radioButtonsUI.addChild(button);
+
+				ui.addChild(button);
 			}
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(radioButtonsUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(buttonGroup, 'selectedIndex');
 
 			return result;
 		}
 
-		public static function createDropdown(componentCFG:Object, modLinkage:String, options:Array, headerText:String = '', tooltipText:String = '', selectedIndex:Number = 0):DisplayObject
+		public static function createDropdown(componentConfig:Object, modLinkage:String, options:Array, text:String = '', tooltip:String = '', tooltipIcon:String = '', value:Number = 0):DisplayObject
 		{
-			var dropdownUI:UIComponent = new UIComponent();
-			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			var ui:UIComponent = new UIComponent();
+			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
-			if (headerText)
+			if (text)
 			{
-				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 				label.x = label.y = 0;
-				dropdownUI.addChild(label);
+				ui.addChild(label);
 			}
 
 			var dropdown:DropdownMenu = DropdownMenu(App.utils.classFactory.getObject('DropdownMenuUI'));
 
-			dropdown.y = headerMargin;
-			dropdown.width = componentCFG.hasOwnProperty('width') ? componentCFG.width : 200;
+			dropdown.y = margin;
+			dropdown.width = componentConfig.hasOwnProperty('width') ? componentConfig.width : 200;
 
 			if (options.length > SCROLL_ITEM_LIMIT)
 			{
@@ -227,57 +234,63 @@
 			dropdown.itemRenderer = App.utils.classFactory.getClass('DropDownListItemRendererSound');
 			dropdown.dropdown = 'DropdownMenu_ScrollingList';
 			dropdown.dataProvider = new DataProvider(options);
-			dropdown.selectedIndex = selectedIndex;
+			dropdown.selectedIndex = value;
 			dropdown.validateNow();
-			dropdownUI.addChild(dropdown);
+
+			ui.addChild(dropdown);
+
 			dropdown.handleScroll = false;
 			dropdown.addEventListener(ListEvent.INDEX_CHANGE, handleComponentEvent);
 			dropdown['componentInspectorSetting'] = true;
 			dropdown.inspectableMenuOffset = {'top': -5, 'right': -6, 'bottom': 0, 'left': 3};
 			dropdown['componentInspectorSetting'] = false;
 
-			if (componentCFG.hasOwnProperty('button'))
+			if (componentConfig.hasOwnProperty('button'))
 			{
 				var positionY:Number = dropdown.y + Constants.MOD_MARGIN_BOTTOM - 3;
 				var positionX:Number = dropdown.x + dropdown.width + Constants.BUTTON_MARGIN_LEFT;
-				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
 				button.addEventListener(ButtonEvent.CLICK, function():void {
-					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, dropdown.selectedIndex));
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, dropdown.selectedIndex));
 				});
-				dropdownUI.addChild(button);
+
+				ui.addChild(button);
 			}
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(dropdownUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(dropdown, 'selectedIndex');
 
 			return result;
 		}
 
-		public static function createSlider(componentCFG:Object, modLinkage:String, min:Number, max:Number, interval:Number, value:Number, format:String, headerText:String = '', tooltipText:String = ''):DisplayObject
+		public static function createSlider(componentConfig:Object, modLinkage:String, min:Number, max:Number, interval:Number, value:Number, format:String, text:String = '', tooltip:String = '', tooltipIcon:String = ''):DisplayObject
 		{
-			var sliderUI:UIComponent = new UIComponent();
-			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			var ui:UIComponent = new UIComponent();
+			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
-			if (headerText)
+			if (text)
 			{
-				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
+
 				label.x = label.y = 0;
-				sliderUI.addChild(label);
+				ui.addChild(label);
 			}
 
 			var slider:Slider = Slider(App.utils.classFactory.getComponent('Slider', Slider));
 
-			slider.y = headerMargin;
-			slider.width = componentCFG.hasOwnProperty('width') ? componentCFG.width : 200;
+			slider.y = margin;
+			slider.width = componentConfig.hasOwnProperty('width') ? componentConfig.width : 200;
 			slider.minimum = min;
 			slider.maximum = max;
 			slider.snapInterval = interval;
 			slider.snapping = true;
 			slider.value = value;
-			sliderUI.addChild(slider);
+
+			ui.addChild(slider);
+
 			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
 
 			if (format)
@@ -287,26 +300,29 @@
 
 				valueLabel.y = slider.y + 2;
 				valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
-				sliderUI.addChild(valueLabel);
+
+				ui.addChild(valueLabel);
+
 				slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
-					valueLabel['label'].text = Utilities.getFormattedSliderValue(format, event.value.toString());
+					valueLabel['label'].htmlText = Utilities.getFormattedSliderValue(format, event.value.toString());
 				});
 			}
 
-			if (componentCFG.hasOwnProperty('button'))
+			if (componentConfig.hasOwnProperty('button'))
 			{
-				var positionY:Number = headerMargin;
+				var positionY:Number = margin;
 				var positionX:Number = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN + 15;
 
 				if (format)
 					positionX += 15;
 
-				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
 				button.addEventListener(ButtonEvent.CLICK, function():void {
-					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, slider.value));
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, slider.value));
 				});
-				sliderUI.addChild(button);
+
+				ui.addChild(button);
 			}
 
 			slider.addEventListener(MouseEvent.MOUSE_WHEEL, function(event:MouseEvent):void {
@@ -316,31 +332,34 @@
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(sliderUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(slider, 'value');
 
 			return result;
 		}
 
-		public static function createStepSlider(componentConfig:Object, modLinkage:String, options:Array, format:String, text:String = '', tooltip:String = '', selectedIndex:Number = 0):DisplayObject
+		public static function createStepSlider(componentConfig:Object, modLinkage:String, options:Array, format:String, text:String = '', tooltip:String = '', tooltipIcon:String = '', selectedIndex:Number = 0):DisplayObject
 		{
 			var ui:UIComponent = new UIComponent();
 			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
 			if (text)
 			{
-				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip);
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 				label.x = label.y = 0;
 				ui.addChild(label);
 			}
 
 			var stepSlider:StepSlider = StepSlider(App.utils.classFactory.getComponent('StepSliderUI', StepSlider));
+
 			stepSlider.y = margin;
 			stepSlider.width = componentConfig.hasOwnProperty('width') ? componentConfig.width : 200;
 			stepSlider.dataProvider = new DataProvider(options);
 			stepSlider.value = selectedIndex;
+
 			ui.addChild(stepSlider);
+
 			stepSlider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
 
 			var itemLabel:String = stepSlider['getItemLabel'](stepSlider.dataProvider.requestItemAt(stepSlider.value));
@@ -349,11 +368,12 @@
 
 			valueLabel.y = stepSlider.y + 2;
 			valueLabel.x = stepSlider.x + stepSlider.width + Constants.SLIDER_VALUE_MARGIN;
+
 			ui.addChild(valueLabel);
 
 			stepSlider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
 				var itemLabel:String = stepSlider['getItemLabel'](stepSlider.dataProvider.requestItemAt(event.value));
-				valueLabel['label'].text = Utilities.getFormattedSliderValue(format, itemLabel);
+				valueLabel['label'].htmlText = Utilities.getFormattedSliderValue(format, itemLabel);
 			});
 
 			if (componentConfig.hasOwnProperty('button'))
@@ -366,7 +386,7 @@
 
 				var button:DisplayObject = createDynamicButton(componentConfig, positionX, positionY);
 
-				button.addEventListener(ButtonEvent.CLICK, function():void {
+				button.addEventListener(ButtonEvent.CLICK, function(event:ButtonEvent):void {
 					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentConfig.varName, stepSlider.value));
 				});
 
@@ -386,173 +406,148 @@
 			return result;
 		}
 
-		public static function createTextInput(componentCFG:Object, headerText:String = '', tooltipText:String = '', value:String = ''):DisplayObject
+		public static function createTextInput(componentConfig:Object, text:String = '', tooltip:String = '', tooltipIcon:String = '', value:String = ''):DisplayObject
 		{
-			var textInputUI:UIComponent = new UIComponent();
-			var headerMargin:Number = headerText ? Constants.COMPONENT_HEADER_MARGIN : 0;
+			var ui:UIComponent = new UIComponent();
+			var margin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
 
-			if (headerText)
+			if (text)
 			{
-				var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
+
 				label.x = label.y = 0;
-				textInputUI.addChild(label);
+
+				ui.addChild(label);
 			}
 
 			var textInput:TextInput = TextInput(App.utils.classFactory.getComponent('TextInput', TextInput));
 
-			textInput.y = headerMargin;
-			textInput.width = componentCFG.hasOwnProperty('width') ? componentCFG.width : 200;
+			textInput.y = margin;
+			textInput.width = componentConfig.hasOwnProperty('width') ? componentConfig.width : 200;
 			textInput.text = value;
 			textInput.validateNow();
-			textInputUI.addChild(textInput);
+
+			ui.addChild(textInput);
+
 			textInput.addEventListener(InputEvent.INPUT, handleComponentEvent);
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(textInputUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(textInput, 'text');
 
 			return result;
 		}
 
-		public static function createNumericStepper(componentCFG:Object, modLinkage:String, minimum:Number, maximum:Number, stepSize:Number, value:Number, text:String, tooltip:String):DisplayObject
+		public static function createNumericStepper(componentConfig:Object, modLinkage:String, minimum:Number, maximum:Number, stepSize:Number, value:Number, text:String, tooltip:String, tooltipIcon:String):DisplayObject
 		{
-			var numericStepperUI:UIComponent = new UIComponent();
+			var ui:UIComponent = new UIComponent();
 
 			if (text)
 			{
-				var label = ComponentsFactory.createLabel(text, tooltip);
+				var label = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 				label.y = 4;
-				numericStepperUI.addChild(label);
+				ui.addChild(label);
 			}
 
 			var numericStepper:NumericStepper = NumericStepper(App.utils.classFactory.getComponent('NumericStepper', NumericStepper));
 
 			numericStepper.x = 315;
-			if (componentCFG.hasOwnProperty('canManualInput'))
-				numericStepper.canManualInput = componentCFG.canManualInput;
+			if (componentConfig.hasOwnProperty('canManualInput'))
+				numericStepper.canManualInput = componentConfig.canManualInput;
 			numericStepper.minimum = minimum;
 			numericStepper.maximum = maximum;
 			numericStepper.stepSize = stepSize;
 			numericStepper.value = value;
 			numericStepper.validateNow();
+
+			ui.addChild(numericStepper);
+
 			numericStepper.addEventListener(IndexEvent.INDEX_CHANGE, handleComponentEvent);
-			numericStepperUI.addChild(numericStepper);
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(numericStepperUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(numericStepper, 'value');
 
 			return result;
 		}
 
-		public static function createHotKey(componentCFG:Object, modLinkage:String, value:Array, headerText:String = '', tooltipText:String = ''):DisplayObject
+		public static function createHotKey(componentConfig:Object, modLinkage:String, value:Array, text:String = '', tooltip:String = '', tooltipIcon:String = ''):DisplayObject
 		{
-			var hotKeyUI:UIComponent = new UIComponent();
-			var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+			var ui:UIComponent = new UIComponent();
+			var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 			label.x = 0;
 			label.y = 4;
-			hotKeyUI.addChild(label);
+			ui.addChild(label);
 
 			var hotkeyCtrl:HotkeyControl = App.utils.classFactory.getComponent('HotkeyControlUI', HotkeyControl);
 
 			hotkeyCtrl.x = 315;
 			hotkeyCtrl.y = 0;
-			hotKeyUI.addChild(hotkeyCtrl);
+
+			ui.addChild(hotkeyCtrl);
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(hotKeyUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(hotkeyCtrl, 'keyset');
 			result['control'] = hotkeyCtrl;
 
 			return result;
 		}
 
-		public static function createColorChoice(componentCFG:Object, modLinkage:String, value:String, headerText:String = '', tooltipText:String = ''):DisplayObject
+		public static function createColorChoice(componentConfig:Object, modLinkage:String, value:String, text:String = '', tooltip:String = '', tooltipIcon:String = ''):DisplayObject
 		{
-			var colorChoiceUI:UIComponent = new UIComponent();
-			var label:DisplayObject = ComponentsFactory.createLabel(headerText, tooltipText);
+			var ui:UIComponent = new UIComponent();
+			var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip, tooltipIcon);
 
 			label.x = 0;
 			label.y = 4;
-			colorChoiceUI.addChild(label);
+			ui.addChild(label);
 
-			var controller:ColorChoiceButton = App.utils.classFactory.getComponent('ColorChoiceButtonUI', ColorChoiceButton);
+			var colorChoice:ColorChoiceButton = App.utils.classFactory.getComponent('ColorChoiceButtonUI', ColorChoiceButton);
 
-			controller.x = 315;
-			controller.y = 0;
-			controller.color = value;
-			colorChoiceUI.addChild(controller);
+			colorChoice.x = 315;
+			colorChoice.y = 0;
+			colorChoice.color = value;
+
+			ui.addChild(colorChoice);
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(colorChoiceUI);
-			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(controller, 'color');
+			result.addChild(ui);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(colorChoice, 'color');
 
 			return result;
 		}
 
-		private static function createDynamicButton(componentCFG:Object, positionX:Number = 0, positionY:Number = 0):DisplayObject
+		public static function createRangeSlider(componentConfig:Object, modLinkage:String):DisplayObject
 		{
-			var button:*;
-
-			if (componentCFG.button.hasOwnProperty('text') && componentCFG.button.text != '')
-			{
-				button = SoundButtonEx(App.utils.classFactory.getComponent('ButtonNormal', SoundButtonEx));
-				button.label = componentCFG.button.text;
-			}
-
-			if (componentCFG.button.hasOwnProperty('iconSource') && componentCFG.button.iconSource != '')
-			{
-				button = ButtonIconNormal(App.utils.classFactory.getComponent('ButtonIconNormalUI', ButtonIconNormal));
-				button.iconSource = componentCFG.button.iconSource;
-				button.iconOffsetTop = componentCFG.button.hasOwnProperty('iconOffsetTop') ? componentCFG.button.iconOffsetTop : 0;
-				button.iconOffsetLeft = componentCFG.button.hasOwnProperty('iconOffsetLeft') ? componentCFG.button.iconOffsetLeft : 0;
-			}
-
-			button.x = positionX;
-			button.y = positionY;
-
-			if (componentCFG.button.hasOwnProperty('offsetLeft'))
-				button.x += componentCFG.button.offsetLeft;
-			if (componentCFG.button.hasOwnProperty('offsetTop'))
-				button.y += componentCFG.button.offsetTop;
-
-			button.width = componentCFG.button.hasOwnProperty('width') ? componentCFG.button.width : 30;
-			button.height = componentCFG.button.hasOwnProperty('height') ? componentCFG.button.height : 25;
-			button.validateNow();
-
-			return button;
-		}
-
-		public static function createRangeSlider(componentCFG:Object, modLinkage:String):DisplayObject
-		{
-			var rangeSliderUI:UIComponent = new UIComponent();
-			var label:DisplayObject = ComponentsFactory.createLabel(componentCFG.text, componentCFG.tooltip);
+			var ui:UIComponent = new UIComponent();
+			var label:DisplayObject = ComponentsFactory.createLabel(componentConfig.text, componentConfig.tooltip, componentConfig.tooltipIcon);
 
 			label.y = -7;
 			label.x = 0;
-			rangeSliderUI.y += 7;
-			rangeSliderUI.addChild(label);
+			ui.y += 7;
+			ui.addChild(label);
 
 			var rangeSlider:RangeSlider = RangeSlider(App.utils.classFactory.getComponent('RangeSliderUI', RangeSlider));
 
 			rangeSlider.y += 33;
 			rangeSlider.x += 5;
 			rangeSlider.width = 240;
-			rangeSlider.maximum = componentCFG.maximum;
-			rangeSlider.minimum = componentCFG.minimum;
-			rangeSlider.divisionLabelPostfix = componentCFG.divisionLabelPostfix;
-			rangeSlider.divisionLabelStep = componentCFG.divisionLabelStep;
-			rangeSlider.divisionStep = componentCFG.divisionStep;
-			rangeSlider.minRangeDistance = componentCFG.minRangeDistance;
-			rangeSlider.snapInterval = componentCFG.snapInterval;
-			rangeSlider.leftValue = componentCFG.value[0];
-			rangeSlider.rightValue = componentCFG.value[1];
+			rangeSlider.maximum = componentConfig.maximum;
+			rangeSlider.minimum = componentConfig.minimum;
+			rangeSlider.divisionLabelPostfix = componentConfig.divisionLabelPostfix;
+			rangeSlider.divisionLabelStep = componentConfig.divisionLabelStep;
+			rangeSlider.divisionStep = componentConfig.divisionStep;
+			rangeSlider.minRangeDistance = componentConfig.minRangeDistance;
+			rangeSlider.snapInterval = componentConfig.snapInterval;
+			rangeSlider.leftValue = componentConfig.value[0];
+			rangeSlider.rightValue = componentConfig.value[1];
 			rangeSlider.focusable = true;
 			rangeSlider.snapping = true;
 			rangeSlider.rangeMode = true;
@@ -562,22 +557,58 @@
 
 			valueLabel.y = rangeSlider.y + 2;
 			valueLabel.x = rangeSlider.x + rangeSlider.width + Constants.SLIDER_VALUE_MARGIN + 5;
-			valueLabel['label'].text = rangeSlider.leftValue + ' / ' + rangeSlider.rightValue;
-			rangeSliderUI.addChild(valueLabel);
+			valueLabel['label'].htmlText = rangeSlider.leftValue + ' / ' + rangeSlider.rightValue;
+
+			ui.addChild(valueLabel);
+
 			rangeSlider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
-				valueLabel['label'].text = rangeSlider.leftValue + ' / ' + rangeSlider.rightValue;
+				valueLabel['label'].htmlText = rangeSlider.leftValue + ' / ' + rangeSlider.rightValue;
 				rangeSlider['valueProxyValue'] = [rangeSlider.leftValue, rangeSlider.rightValue];
 				handleComponentEvent(event);
 			});
 			rangeSlider.validateNow();
-			rangeSliderUI.addChild(rangeSlider);
+
+			ui.addChild(rangeSlider);
 
 			var result:MovieClip = new MovieClip();
 
-			result.addChild(rangeSliderUI);
+			result.addChild(ui);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(rangeSlider, 'valueProxyValue');
 
 			return result;
+		}
+
+		private static function createDynamicButton(componentConfig:Object, positionX:Number = 0, positionY:Number = 0):DisplayObject
+		{
+			var button:*;
+
+			if (componentConfig.button.hasOwnProperty('text') && componentConfig.button.text != '')
+			{
+				button = SoundButtonEx(App.utils.classFactory.getComponent('ButtonNormal', SoundButtonEx));
+				button.label = componentConfig.button.text;
+			}
+
+			if (componentConfig.button.hasOwnProperty('iconSource') && componentConfig.button.iconSource != '')
+			{
+				button = ButtonIconNormal(App.utils.classFactory.getComponent('ButtonIconNormalUI', ButtonIconNormal));
+				button.iconSource = componentConfig.button.iconSource;
+				button.iconOffsetTop = componentConfig.button.hasOwnProperty('iconOffsetTop') ? componentConfig.button.iconOffsetTop : 0;
+				button.iconOffsetLeft = componentConfig.button.hasOwnProperty('iconOffsetLeft') ? componentConfig.button.iconOffsetLeft : 0;
+			}
+
+			button.x = positionX;
+			button.y = positionY;
+
+			if (componentConfig.button.hasOwnProperty('offsetLeft'))
+				button.x += componentConfig.button.offsetLeft;
+			if (componentConfig.button.hasOwnProperty('offsetTop'))
+				button.y += componentConfig.button.offsetTop;
+
+			button.width = componentConfig.button.hasOwnProperty('width') ? componentConfig.button.width : 30;
+			button.height = componentConfig.button.hasOwnProperty('height') ? componentConfig.button.height : 25;
+			button.validateNow();
+
+			return button;
 		}
 	}
 }
