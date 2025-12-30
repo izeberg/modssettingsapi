@@ -23,12 +23,11 @@ package poliroid.gui.lobby.modsSettings.controls
 		private var _isScrolling:Boolean = false;
 		private var _cachedMaxScroll:Number = NaN;
 
-		protected static const SCROLL_STEEP_SIZE:int = 10;
-
 		override protected function configUI():void
 		{
 			super.configUI();
-			addEventListener(ScrollPaneEvent.POSITION_CHANGED, handlePositionChange);
+
+			addEventListener(ScrollPaneEvent.POSITION_CHANGED, onScrollPanePositionChange);
 		}
 
 		/**
@@ -38,28 +37,19 @@ package poliroid.gui.lobby.modsSettings.controls
 		{
 			super.draw();
 
-			// todo: fix [Scaleform] invoking component '[object SmoothResizableScrollPaneUI]' after dispose!
-			// May be you can find a custom override method Draw and place after each gotoAnd... method next code block:if (_baseDisposed){return;}
-			// probably related to handlePositionChange
 			if(scrollBar && isInvalid(InvalidationType.SCROLL_BAR))
 				scrollBar.addEventListener(ScrollBarEvent.ON_END_DRAG, onScrollBarEndDrag);
 		}
 
-		private function handlePositionChange(event:ScrollPaneEvent):void
+		override protected function onDispose():void
 		{
-			App.utils.scheduler.scheduleOnNextFrame(function():void {
-				if (target.y != int(target.y))
-					target.y = int(target.y);
-			});
-		}
+			// prevent [Scaleform] invoking component '[object SmoothResizableScrollPaneUI]' after dispose! errors
+			App.utils.scheduler.cancelTask(normalizeTargetPosition);
+			scrollBar.removeEventListener(ScrollBarEvent.ON_END_DRAG, onScrollBarEndDrag);
+			removeEventListener(ScrollPaneEvent.POSITION_CHANGED, onScrollPanePositionChange);
+			App.stage.removeEventListener(Event.ENTER_FRAME, _smoothScrollAnimation);
 
-		/**
-		 * Update _smoothScrollPosition on manual scroll by scrollbar
-		 */
-		private function onScrollBarEndDrag(event:ScrollBarEvent):void
-		{
-			if (scrollBar)
-				_smoothScrollPosition = int(scrollBar.position);
+			super.onDispose();
 		}
 
 		/**
@@ -68,6 +58,7 @@ package poliroid.gui.lobby.modsSettings.controls
 		override protected function applyScrollBarUpdating():void
 		{
 			super.applyScrollBarUpdating();
+
 			scrollBar.setScrollProperties(scrollPageSize, 0, maxScroll, _smoothScrollStepFactor);
 		}
 
@@ -78,10 +69,13 @@ package poliroid.gui.lobby.modsSettings.controls
 		override protected function applyTargetChanges():void
 		{
 			super.applyTargetChanges();
+
 			if (!_restoreBottomPosition)
 				return;
+
 			if (_smoothScrollPosition == _cachedMaxScroll)
 				_smoothScrollPosition = scrollPosition = maxScroll;
+
 			_cachedMaxScroll = maxScroll;
 		}
 
@@ -100,6 +94,7 @@ package poliroid.gui.lobby.modsSettings.controls
 		{
 			_scrollStartTime = getTimer();
 			_scrollStartPosition = int(scrollPosition);
+
 			if (!_isScrolling)
 			{
 				_isScrolling = true;
@@ -131,7 +126,13 @@ package poliroid.gui.lobby.modsSettings.controls
 			_smoothScrollStop();
 		}
 
-		public function get smoothScrollDuration() : Number
+		private function normalizeTargetPosition():void
+		{
+			if (target.y != int(target.y))
+				target.y = int(target.y);
+		}
+
+		public function get smoothScrollDuration():Number
 		{
 			return _smoothScrollDuration;
 		}
@@ -141,7 +142,7 @@ package poliroid.gui.lobby.modsSettings.controls
 			_smoothScrollDuration = value;
 		}
 
-		public function get smoothScrollPosition() : Number
+		public function get smoothScrollPosition():Number
 		{
 			return _smoothScrollPosition;
 		}
@@ -152,7 +153,7 @@ package poliroid.gui.lobby.modsSettings.controls
 			scrollPosition = value;
 		}
 
-		public function get smoothScrollStepFactor() : Number
+		public function get smoothScrollStepFactor():Number
 		{
 			return _smoothScrollStepFactor;
 		}
@@ -162,7 +163,7 @@ package poliroid.gui.lobby.modsSettings.controls
 			_smoothScrollStepFactor = value;
 		}
 
-		public function get restoreBottomPosition() : Boolean
+		public function get restoreBottomPosition():Boolean
 		{
 			return _restoreBottomPosition;
 		}
@@ -170,6 +171,20 @@ package poliroid.gui.lobby.modsSettings.controls
 		public function set restoreBottomPosition(value:Boolean):void
 		{
 			_restoreBottomPosition = value;
+		}
+
+		private function onScrollPanePositionChange(event:ScrollPaneEvent):void
+		{
+			App.utils.scheduler.scheduleOnNextFrame(normalizeTargetPosition);
+		}
+
+		/**
+		 * Update _smoothScrollPosition on manual scroll by scrollbar
+		 */
+		private function onScrollBarEndDrag(event:ScrollBarEvent):void
+		{
+			if (scrollBar)
+				_smoothScrollPosition = int(scrollBar.position);
 		}
 	}
 }
