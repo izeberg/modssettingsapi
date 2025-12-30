@@ -10,8 +10,8 @@ package poliroid.gui.lobby.modsSettings.components
 	import net.wg.gui.components.advanced.FieldSet;
 	import poliroid.gui.lobby.modsSettings.controls.StateSwitcher;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.utils.ComponentsFactory;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.ComponentsFactory;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class ModsSettingsComponent extends UIComponent
 	{

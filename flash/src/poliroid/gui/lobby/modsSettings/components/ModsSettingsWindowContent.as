@@ -4,7 +4,7 @@ package poliroid.gui.lobby.modsSettings.components
 	import net.wg.infrastructure.base.UIComponentEx;
 	import net.wg.gui.components.controls.ScrollBar;
 	import poliroid.gui.lobby.modsSettings.controls.SmoothResizableScrollPane;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class ModsSettingsWindowContent extends UIComponentEx
 	{

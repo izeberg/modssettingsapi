@@ -1,4 +1,4 @@
-﻿package poliroid.gui.lobby.modsSettings.utils
+﻿package poliroid.gui.lobby.modsSettings.shared
 {
 	public class ValueProxy
 	{

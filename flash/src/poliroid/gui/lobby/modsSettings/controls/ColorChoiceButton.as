@@ -9,7 +9,7 @@ package poliroid.gui.lobby.modsSettings.controls
 	import net.wg.gui.interfaces.ISoundButtonEx;
 	import poliroid.gui.lobby.modsSettings.controls.ColorChoicePopup;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class ColorChoiceButton extends SoundButtonEx implements ISoundButtonEx
 	{

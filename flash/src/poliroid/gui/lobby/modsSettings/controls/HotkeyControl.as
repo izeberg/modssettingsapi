@@ -6,7 +6,7 @@ package poliroid.gui.lobby.modsSettings.controls
 	import net.wg.gui.components.controls.SoundButtonEx;
 	import poliroid.gui.lobby.modsSettings.data.HotkeyControlVO;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class HotkeyControl extends SoundButtonEx
 	{

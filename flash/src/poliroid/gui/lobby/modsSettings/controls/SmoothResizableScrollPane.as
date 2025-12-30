@@ -31,6 +31,20 @@ package poliroid.gui.lobby.modsSettings.controls
 			addEventListener(ScrollPaneEvent.POSITION_CHANGED, handlePositionChange);
 		}
 
+		/**
+		 * Subscribe for scrollbar ON_END_DRAG event
+		 */
+		override protected function draw():void
+		{
+			super.draw();
+
+			// todo: fix [Scaleform] invoking component '[object SmoothResizableScrollPaneUI]' after dispose!
+			// May be you can find a custom override method Draw and place after each gotoAnd... method next code block:if (_baseDisposed){return;}
+			// probably related to handlePositionChange
+			if(scrollBar && isInvalid(InvalidationType.SCROLL_BAR))
+				scrollBar.addEventListener(ScrollBarEvent.ON_END_DRAG, onScrollBarEndDrag);
+		}
+
 		private function handlePositionChange(event:ScrollPaneEvent):void
 		{
 			App.utils.scheduler.scheduleOnNextFrame(function():void {
@@ -46,16 +60,6 @@ package poliroid.gui.lobby.modsSettings.controls
 		{
 			if (scrollBar)
 				_smoothScrollPosition = int(scrollBar.position);
-		}
-
-		/**
-		 * Subscribe for scrollbar ON_END_DRAG event
-		 */
-		override protected function draw():void
-		{
-			super.draw();
-			if(scrollBar && isInvalid(InvalidationType.SCROLL_BAR))
-				scrollBar.addEventListener(ScrollBarEvent.ON_END_DRAG, onScrollBarEndDrag);
 		}
 
 		/**

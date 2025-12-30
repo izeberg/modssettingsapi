@@ -1,4 +1,4 @@
-﻿package poliroid.gui.lobby.modsSettings.utils
+﻿package poliroid.gui.lobby.modsSettings.shared
 {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -29,7 +29,7 @@
 	import poliroid.gui.lobby.modsSettings.controls.ColorChoiceButton;
 	import poliroid.gui.lobby.modsSettings.controls.HotkeyControl;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
-	import poliroid.gui.lobby.modsSettings.utils.Utilities;
+	import poliroid.gui.lobby.modsSettings.shared.Utilities;
 
 	public class ComponentsFactory
 	{

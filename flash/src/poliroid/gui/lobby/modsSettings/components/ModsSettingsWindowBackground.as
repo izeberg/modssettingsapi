@@ -5,7 +5,7 @@ package poliroid.gui.lobby.modsSettings.components
 	import net.wg.gui.components.controls.BitmapFill;
 	import net.wg.gui.components.controls.UILoaderAlt;
 	import net.wg.gui.events.UILoaderEvent;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class ModsSettingsWindowBackground extends UIComponentEx
 	{

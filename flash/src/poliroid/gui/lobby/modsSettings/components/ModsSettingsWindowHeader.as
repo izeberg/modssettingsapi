@@ -6,7 +6,7 @@ package poliroid.gui.lobby.modsSettings.components
 	import net.wg.infrastructure.base.UIComponentEx;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
 	import poliroid.gui.lobby.modsSettings.data.ModsSettingsLocalizationVO;
-	import poliroid.gui.lobby.modsSettings.utils.Constants;
+	import poliroid.gui.lobby.modsSettings.shared.Constants;
 
 	public class ModsSettingsWindowHeader extends UIComponentEx
 	{
