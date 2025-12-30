@@ -23,11 +23,13 @@
 	import net.wg.gui.components.controls.SoundButton;
 	import net.wg.gui.components.controls.InfoIcon;
 	import net.wg.gui.components.controls.Slider;
+	import net.wg.gui.components.controls.StepSlider;
 	import net.wg.gui.components.controls.RadioButton;
 	import net.wg.gui.components.controls.RangeSlider;
 	import poliroid.gui.lobby.modsSettings.controls.ColorChoiceButton;
 	import poliroid.gui.lobby.modsSettings.controls.HotkeyControl;
 	import poliroid.gui.lobby.modsSettings.events.InteractiveEvent;
+	import poliroid.gui.lobby.modsSettings.shared.Utilities;
 
 	public class ComponentsFactory
 	{
@@ -274,7 +276,6 @@
 			slider.maximum = max;
 			slider.snapInterval = interval;
 			slider.snapping = true;
-			slider.liveDragging = true;
 			slider.value = value;
 			sliderUI.addChild(slider);
 			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
@@ -323,6 +324,67 @@
 			result.addChild(sliderUI);
 			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(slider, 'value');
 
+			return result;
+		}
+
+		public static function createStepSlider(componentCFG:Object, modLinkage:String, options:Array, format:String, text:String = '', tooltip:String = '', selectedIndex:Number = 0):DisplayObject
+		{
+			var ui:UIComponent = new UIComponent();
+			var headerMargin:Number = text ? Constants.COMPONENT_HEADER_MARGIN : 0;
+
+			if (headerText)
+			{
+				var label:DisplayObject = ComponentsFactory.createLabel(text, tooltip);
+				label.x = label.y = 0;
+				ui.addChild(label);
+			}
+
+			var slider:StepSlider = StepSlider(App.utils.classFactory.getComponent('StepSliderUI', StepSlider));
+			slider.y = headerMargin;
+			slider.width = componentCFG.hasOwnProperty('width') ? componentCFG.width : 200;
+			slider.dataProvider = new DataProvider(options);
+			slider.value = selectedIndex;
+			ui.addChild(slider);
+			slider.addEventListener(SliderEvent.VALUE_CHANGE, handleComponentEvent);
+
+			// todo: move to utils
+			function getFormattedString(format:String, value:Number):String
+			{
+				var label:String = slider['getItemLabel'](slider.dataProvider.requestItemAt(value));
+				return format ? format.split(Constants.SLIDER_VALUE_KEY).join(label) : label;
+			}
+
+			var formattedString:String = getFormattedString(format, slider.value);
+			var valueLabel:DisplayObject = ComponentsFactory.createLabel(formattedString, '');
+
+			valueLabel.y = slider.y + 2;
+			valueLabel.x = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN;
+			ui.addChild(valueLabel);
+
+			slider.addEventListener(SliderEvent.VALUE_CHANGE, function(event:SliderEvent):void {
+				valueLabel['label'].text = getFormattedString(format, slider.value);
+			});
+
+			if (componentCFG.hasOwnProperty('button'))
+			{
+				var positionY:Number = headerMargin;
+				var positionX:Number = slider.x + slider.width + Constants.SLIDER_VALUE_MARGIN + 15;
+
+				if (format)
+					positionX += 15;
+
+				var button:DisplayObject = createDynamicButton(componentCFG, positionX, positionY);
+
+				button.addEventListener(ButtonEvent.CLICK, function():void {
+					button.dispatchEvent(new InteractiveEvent(InteractiveEvent.BUTTON_CLICK, modLinkage, componentCFG.varName, slider.value));
+				});
+
+				ui.addChild(button);
+			}
+
+			var result:MovieClip = new MovieClip();
+			result.addChild(ui);
+			result[Constants.COMPONENT_RETURN_VALUE_KEY] = new ValueProxy(slider, 'value');
 			return result;
 		}
 

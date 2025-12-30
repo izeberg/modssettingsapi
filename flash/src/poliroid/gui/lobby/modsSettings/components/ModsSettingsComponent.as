@@ -180,6 +180,8 @@ package poliroid.gui.lobby.modsSettings.components
 					return ComponentsFactory.createRadioButtonGroup(componentObj, modLinkage, componentObj.varName, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'Slider':
 					return ComponentsFactory.createSlider(componentObj, modLinkage, componentObj.minimum, componentObj.maximum, componentObj.snapInterval, componentObj.value, componentObj.format, componentObj.text, componentObj.tooltip);
+				case 'StepSlider':
+					return ComponentsFactory.createStepSlider(componentObj, modLinkage, componentObj.options, componentObj.format, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'Dropdown':
 					return ComponentsFactory.createDropdown(componentObj, modLinkage, componentObj.options, componentObj.text, componentObj.tooltip, componentObj.value);
 				case 'TextInput':
