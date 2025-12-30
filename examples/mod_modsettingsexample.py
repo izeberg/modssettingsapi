@@ -61,6 +61,17 @@ template  = {
 			'varName': 'aliveCounter'
 		},
 		{
+			'type': 'StepSlider',
+			'text': 'StepSlider example',
+			'value': 0,
+			'options':  [
+				{ 'label': 'Стандартная' },
+				{ 'label': 'Тихая' },
+				{ 'label': 'Громкая' }
+			],
+			'varName': 'stepSliderTest'
+		},
+		{
 			'type': 'CheckBox',
 			'text': 'Всегда оповещать о засвете при игре на артиллерии',
 			'tooltip': '{HEADER}Всегда оповещать о засвете при игре на артиллерии{/HEADER}{BODY}Если вы вишли в бой на артилерии, мод будет всегда оповещать о вашем засвете независимо от выставленного лимита на число оставшехся в живих союзниках{/BODY}',
@@ -118,13 +129,14 @@ settings = {
 	'numStepperTest' : 5,
 	'colorChoice' : 'FFFFFF',
 	'rangeSlider' : [20, 50],
+	'stepSliderTest': 0
 }
 
-def onModSettingsChanged(linkage, newSettings):    
+def onModSettingsChanged(linkage, newSettings):
 	if linkage == modLinkage:
 		print 'onModSettingsChanged', newSettings
 
-def onButtonClicked(linkage, varName, value):    
+def onButtonClicked(linkage, varName, value):
 	if linkage == modLinkage:
 		clicks = g_modsSettingsApi.getModData(modLinkage, modDataVersion, 0)
 		clicks += 1
@@ -141,6 +153,4 @@ if savedSettings:
 	settings = savedSettings
 	g_modsSettingsApi.registerCallback(modLinkage, onModSettingsChanged, onButtonClicked)
 else:
-	settings = g_modsSettingsApi.setModTemplate(modLinkage, template, onModSettingsChanged, onButtonClicked)   
-
-
+	settings = g_modsSettingsApi.setModTemplate(modLinkage, template, onModSettingsChanged, onButtonClicked)
