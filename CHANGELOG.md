@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### 1.7.0
+
+- Added new component: StepSlider (same as graphics settings sliders)
+- Added ability to modify height for Empty component to create bottom margins to precisily tweak component positions especially when both columns are used
+- Added ability to change tooltip icon types (i.e. info, attention and etc.)
+- Fixed scrollPane very rare dispose errors in log
+- Fixed valueLabel htmlText breakage on value update
+
 ### 1.6.4
 
 - Fixed `AttributeError` for renamed `wg_getPreferencesFilePath` method for MT
