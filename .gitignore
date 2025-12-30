@@ -2,3 +2,4 @@ bin/
 *.wotmod
 .vscode/
 *.swf
+EvalScript error.tmp/
