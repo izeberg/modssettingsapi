@@ -1,7 +1,3 @@
-# NOTICE
-
-Repository migrated to [https://github.com/IzeBerg/modssettingsapi/](GitHub) and no longer maintained here on BitBucket.
-
 # ModsSettings API
 
 This modification provides an API for third party developers to create settings for other modifications inside game easily.  
@@ -9,5 +5,7 @@ Requires [ModsList API](https://gitlab.com/wot-public-mods/mods-list) as a depen
 
 ## Preview
 
-![alt text](assets/preview_modslist.png)
-![Main Window preview](assets/preview_window.png)
+<p align="center">
+	<img src="assets/preview_modslist.png" alt="ModsSettings API item in ModsList API popover preview" />
+	<img src="assets/preview_window.png" alt="Main Window preview" />
+</p>
