@@ -1,24 +1,38 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="ModsSettingsWindowHeaderUI" itemID="6640fd7c-0000032a" linkageExportForAS="true" linkageBaseClass="poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowHeader" linkageClassName="ModsSettingsWindowHeaderUI" lastModified="1725147363" lastUniqueIdentifier="1">
+<DOMComponentItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="_imports/CloseButtonOrangeUI" itemID="5881fc6e-000006c1" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageBaseClass="net.wg.gui.components.controls.CloseButtonText" linkageClassName="CloseButtonOrangeUI" linkageURL="guiControlsLobby.swf" displayAsComponent="false" customIconID="0" actionscriptClass="net.wg.gui.components.controls.CloseButtonText" persistLivePreview11="true" editFrameIndex="1" requiredMinimumPlayerVersion="0" requiredMinimumASVersion="0" parametersAreLocked="true">
   <timeline>
-    <DOMTimeline name="ModsSettingsWindowHeaderUI" guides='&lt;guidelines&gt;&lt;guideline direction="h"&gt;100&lt;/guideline&gt;&lt;guideline direction="v"&gt;0&lt;/guideline&gt;&lt;guideline direction="v"&gt;900&lt;/guideline&gt;&lt;guideline direction="h"&gt;0&lt;/guideline&gt;&lt;/guidelines&gt;'>
+    <DOMTimeline name="CloseButtonOrangeUI">
       <layers>
-        <DOMLayer name="Слой_1" color="#00FFFF" current="true" isSelected="true">
+        <DOMLayer color="#4F4FFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer color="#4F4FFF">
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="background_highlight.png">
-                  <matrix>
-                    <Matrix a="-1" d="-1" tx="954" ty="195"/>
-                  </matrix>
-                </DOMBitmapInstance>
-                <DOMComponentInstance libraryItemName="_imports/CloseButtonOrangeUI" name="closeButton" selected="true" uniqueID="1">
-                  <matrix>
-                    <Matrix tx="800" ty="50"/>
-                  </matrix>
-                  <transformationPoint>
-                    <Point x="35" y="16"/>
-                  </transformationPoint>
-                  <parametersAsXML><![CDATA[   <property id="UIID">
+                <DOMRectangleObject objectWidth="90" objectHeight="40" x="-10" y="-4" lockFlag="true">
+                  <fill>
+                    <SolidColor color="#666666"/>
+                  </fill>
+                  <stroke>
+                    <SolidStroke>
+                      <fill>
+                        <SolidColor/>
+                      </fill>
+                    </SolidStroke>
+                  </stroke>
+                </DOMRectangleObject>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+  <parametersAsXML><![CDATA[   <property id="UIID">
       <Inspectable name="UIID" unlocalizedName="UIID" variable="UIID" category="" verbose="0" defaultValue="4294967295" type="Number"/>
    </property>
    <property id="autoRepeat">
@@ -73,25 +87,4 @@
       <Inspectable name="visible" unlocalizedName="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
    </property>
 ]]></parametersAsXML>
-                </DOMComponentInstance>
-                <DOMDynamicText name="titleTF" width="496" height="32.6" isSelectable="false">
-                  <matrix>
-                    <Matrix tx="17" ty="47"/>
-                  </matrix>
-                  <textRuns>
-                    <DOMTextRun>
-                      <characters>Mods Configuration</characters>
-                      <textAttrs>
-                        <DOMTextAttrs aliasText="false" lineHeight="32.6" size="26" bitmapSize="520" face="$TitleFont*" fillColor="#F3EBCE"/>
-                      </textAttrs>
-                    </DOMTextRun>
-                  </textRuns>
-                </DOMDynamicText>
-              </elements>
-            </DOMFrame>
-          </frames>
-        </DOMLayer>
-      </layers>
-    </DOMTimeline>
-  </timeline>
-</DOMSymbolItem>
+</DOMComponentItem>

@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="resources/background_panels" name="bgImage" selected="true">
+                <DOMSymbolInstance libraryItemName="background_panels" name="bgImage" selected="true">
                   <transformationPoint>
                     <Point x="490" y="157.5"/>
                   </transformationPoint>
@@ -19,7 +19,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="imports/UILoaderAlt" name="bgLoader">
+                <DOMSymbolInstance libraryItemName="_imports/UILoaderAlt" name="bgLoader">
                   <transformationPoint>
                     <Point/>
                   </transformationPoint>
@@ -32,7 +32,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="imports/BitmapFill" name="bgFill">
+                <DOMSymbolInstance libraryItemName="_imports/BitmapFill" name="bgFill">
                   <transformationPoint>
                     <Point/>
                   </transformationPoint>

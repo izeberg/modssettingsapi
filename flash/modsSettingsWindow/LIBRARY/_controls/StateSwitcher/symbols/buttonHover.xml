@@ -1,0 +1,17 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="_controls/StateSwitcher/symbols/buttonHover" itemID="5c4a1f06-00000169" lastModified="1717808240">
+  <timeline>
+    <DOMTimeline name="buttonHover">
+      <layers>
+        <DOMLayer name="Layer 1" color="#00FFFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMBitmapInstance selected="true" libraryItemName="_controls/StateSwitcher/resources/buttonHover.png"/>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

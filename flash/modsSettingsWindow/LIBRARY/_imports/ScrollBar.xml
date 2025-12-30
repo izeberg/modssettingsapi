@@ -1,0 +1,54 @@
+<DOMComponentItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="_imports/ScrollBar" itemID="594a3c89-00000460" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageBaseClass="net.wg.gui.components.controls.ScrollBar" linkageClassName="ScrollBar" linkageURL="guiControlsLoginBattle.swf" lastModified="1548415755" displayAsComponent="false" customIconID="0" persistLivePreview11="true" editFrameIndex="1" requiredMinimumPlayerVersion="0" requiredMinimumASVersion="0" parametersAreLocked="true">
+  <timeline>
+    <DOMTimeline name="ScrollBar">
+      <layers>
+        <DOMLayer color="#4F4FFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+        <DOMLayer color="#4F4FFF">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMRectangleObject objectWidth="13" objectHeight="110" x="0" y="0" lockFlag="true">
+                  <fill>
+                    <SolidColor color="#666666"/>
+                  </fill>
+                  <stroke>
+                    <SolidStroke>
+                      <fill>
+                        <SolidColor/>
+                      </fill>
+                    </SolidStroke>
+                  </stroke>
+                </DOMRectangleObject>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+  <parametersAsXML><![CDATA[   <property id="offsetBottom">
+      <Inspectable name="offsetBottom" unlocalizedName="offsetBottom" variable="offsetBottom" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="offsetTop">
+      <Inspectable name="offsetTop" unlocalizedName="offsetTop" variable="offsetTop" category="" verbose="0" defaultValue="0" type="Number"/>
+   </property>
+   <property id="scrollTarget">
+      <Inspectable name="scrollTarget" unlocalizedName="scrollTarget" variable="scrollTarget" category="" verbose="0" defaultValue="" type="String"/>
+   </property>
+   <property id="trackMode">
+      <Inspectable name="trackMode" unlocalizedName="trackMode" variable="trackMode" category="" verbose="0" defaultValue="scrollPage" enumeration="scrollPage,scrollToCursor" type="List"/>
+   </property>
+   <property id="visible">
+      <Inspectable name="visible" unlocalizedName="visible" variable="visible" category="" verbose="0" defaultValue="true" type="Boolean"/>
+   </property>
+   <property id="height">
+      <Inspectable name="height" unlocalizedName="height" variable="height" category="" verbose="0" defaultValue="160" type="Number"/>
+   </property>
+]]></parametersAsXML>
+</DOMComponentItem>

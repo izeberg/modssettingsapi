@@ -6,12 +6,12 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="resources/background_highlight.png">
+                <DOMBitmapInstance libraryItemName="background_highlight.png">
                   <matrix>
                     <Matrix tx="-80" ty="-95"/>
                   </matrix>
                 </DOMBitmapInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="applyButton">
+                <DOMSymbolInstance libraryItemName="_imports/ButtonAttentionLargeUI" name="applyButton">
                   <matrix>
                     <Matrix tx="720" ty="30"/>
                   </matrix>
@@ -19,7 +19,7 @@
                     <Point x="77.5" y="15"/>
                   </transformationPoint>
                 </DOMSymbolInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonSecondaryLargeUI" name="cancelButton">
+                <DOMSymbolInstance libraryItemName="_imports/ButtonSecondaryLargeUI" name="cancelButton">
                   <matrix>
                     <Matrix tx="550" ty="30"/>
                   </matrix>
@@ -27,7 +27,7 @@
                     <Point x="77.5" y="15"/>
                   </transformationPoint>
                 </DOMSymbolInstance>
-                <DOMSymbolInstance libraryItemName="imports/ButtonAttentionLargeUI" name="okButton">
+                <DOMSymbolInstance libraryItemName="_imports/ButtonAttentionLargeUI" name="okButton">
                   <matrix>
                     <Matrix tx="380" ty="30"/>
                   </matrix>

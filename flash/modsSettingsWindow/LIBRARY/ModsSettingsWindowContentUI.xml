@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMComponentInstance libraryItemName="imports/ScrollBar" name="scrollBar" centerPoint3DX="871.5" centerPoint3DY="202" uniqueID="4">
+                <DOMComponentInstance libraryItemName="_imports/ScrollBar" name="scrollBar" centerPoint3DX="871.5" centerPoint3DY="202" uniqueID="4">
                   <matrix>
                     <Matrix d="3.63633728027344" tx="865" ty="2"/>
                   </matrix>
@@ -41,7 +41,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="controls/SmoothResizableScrollPane/SmoothResizableScrollPaneUI" name="scrollPane">
+                <DOMSymbolInstance libraryItemName="_controls/SmoothResizableScrollPane/SmoothResizableScrollPaneUI" name="scrollPane">
                   <transformationPoint>
                     <Point/>
                   </transformationPoint>
@@ -54,7 +54,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="resources/background_content" name="background">
+                <DOMSymbolInstance libraryItemName="background_content" name="background">
                   <matrix>
                     <Matrix tx="-100"/>
                   </matrix>

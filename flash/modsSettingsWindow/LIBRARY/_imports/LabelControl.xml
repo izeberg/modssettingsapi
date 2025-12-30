@@ -1,0 +1,15 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="_imports/LabelControl" itemID="6953441d-000002b1" linkageImportForRS="true" linkageExportInFirstFrame="false" linkageClassName="LabelControl" linkageURL="guiControlsLobbyBattle.swf" lastModified="1767064605">
+  <timeline>
+    <DOMTimeline name="LabelControl">
+      <layers>
+        <DOMLayer name="Layer_1" color="#00FFFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements/>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>
