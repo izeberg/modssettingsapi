@@ -74,13 +74,13 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	def _populate(self):
 		super(ModsSettingsApiWindow, self)._populate()
 		self.api.onWindowOpened()
-		self.api.onHotkeysUpdated += self.__onHotkeysUpdated
+		self.api.hotkeys.onUpdated += self.__onHotkeysUpdated
 		self._blur = CachedBlur(enabled=True, ownLayer=self.layer - 1)
 
 	def _dispose(self):
 		self._blur.fini()
 		self._blur = None
-		self.api.onHotkeysUpdated -= self.__onHotkeysUpdated
+		self.api.hotkeys.onUpdated -= self.__onHotkeysUpdated
 		self.api.onWindowClosed()
 		super(ModsSettingsApiWindow, self)._dispose()
 
