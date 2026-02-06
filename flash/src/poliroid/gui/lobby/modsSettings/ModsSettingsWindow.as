@@ -7,7 +7,7 @@ package poliroid.gui.lobby.modsSettings
 	import scaleform.clik.events.InputEvent;
 	import net.wg.infrastructure.base.AbstractView;
 
-	import poliroid.gui.lobby.modsSettings.components.ModsSettingsComponent;
+	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowRenderer;
 	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowBackground;
 	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowContent;
 	import poliroid.gui.lobby.modsSettings.components.ModsSettingsWindowFooter;
@@ -29,20 +29,21 @@ package poliroid.gui.lobby.modsSettings
 		public var sendModsData:Function;
 		public var buttonAction:Function;
 		public var hotkeyAction:Function;
+		public var linkAction:Function;
 		public var closeView:Function;
 
-		private var modsArray:Array;
+		private var modifications:Array;
 		private var templates:Object;
-		private var configChanged:Boolean = false;
-		private var configChangedLinkages:Array;
+		private var dirty:Boolean = false;
+		private var dirtyLinkages:Array;
 
 		public function ModsSettingsWindow():void
 		{
 			super();
 
-			configChanged = false;
-			configChangedLinkages = new Array();
-			modsArray = new Array();
+			dirty = false;
+			dirtyLinkages = new Array();
+			modifications = new Array();
 		}
 
 		override protected function onPopulate():void
@@ -53,9 +54,10 @@ package poliroid.gui.lobby.modsSettings
 
 			header.addEventListener(InteractiveEvent.CLOSE_BUTTON_CLICK, handleCloseButtonClick);
 
-			content.addEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
-			content.addEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
-			content.addEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
+			content.addEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModsSettingsChanged);
+			content.addEventListener(InteractiveEvent.BUTTON_CLICK, handleModsSettingsButtonClick);
+			content.addEventListener(InteractiveEvent.LINK_CLICK, handleModsSettingsLinkClick);
+			content.addEventListener(InteractiveEvent.HOTKEY_ACTION, handleModsSettingsHotkeyAction);
 
 			footer.addEventListener(InteractiveEvent.OK_BUTTON_CLICK, handleOkButtonClick);
 			footer.addEventListener(InteractiveEvent.CANCEL_BUTTON_CLICK, handleCancelButtonClick);
@@ -71,9 +73,10 @@ package poliroid.gui.lobby.modsSettings
 
 			header.removeEventListener(InteractiveEvent.CLOSE_BUTTON_CLICK, handleCloseButtonClick);
 
-			content.removeEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModSettingsChanged);
-			content.removeEventListener(InteractiveEvent.BUTTON_CLICK, handleModSettingsButtonClick);
-			content.removeEventListener(InteractiveEvent.HOTKEY_ACTION, handleModSettingsHotkeyAction);
+			content.removeEventListener(InteractiveEvent.SETTINGS_CHANGED, handleModsSettingsChanged);
+			content.removeEventListener(InteractiveEvent.BUTTON_CLICK, handleModsSettingsButtonClick);
+			content.removeEventListener(InteractiveEvent.LINK_CLICK, handleModsSettingsLinkClick);
+			content.removeEventListener(InteractiveEvent.HOTKEY_ACTION, handleModsSettingsHotkeyAction);
 
 			footer.removeEventListener(InteractiveEvent.OK_BUTTON_CLICK, handleOkButtonClick);
 			footer.removeEventListener(InteractiveEvent.CANCEL_BUTTON_CLICK, handleCancelButtonClick);
@@ -110,89 +113,102 @@ package poliroid.gui.lobby.modsSettings
 
 			for each (var template:Object in templates)
 			{
-				var mod:ModsSettingsComponent = content.addMod(template);
+				var modification:ModsSettingsWindowRenderer = content.addModification(template);
 
-				modsArray.push(mod);
+				modifications.push(modification);
 			}
 		}
 
-		public function as_setHotkeys(data:Object):void
+		public function as_setHotkeys(hotkeys:Object):void
 		{
-			for each (var mod:ModsSettingsComponent in modsArray)
+			for (var linkage:String in hotkeys)
 			{
-				var linkage:String = mod.modLinkage;
+				var modification:ModsSettingsWindowRenderer = getModificationByLinkage(linkage);
+				if (!modification) continue;
 
-				if (data.hasOwnProperty(linkage))
+				for (var varName:String in hotkeys[linkage])
 				{
-					for each (var component:Object in mod.components)
-					{
-						if (component.data.hasOwnProperty('varName') && component.data.varName in data[linkage])
-						{
-							var hotkeyData:Object = data[linkage][component.data.varName];
-							var hotkeyControlVO:Object = new HotkeyControlVO(hotkeyData);
+					var component:Object = modification.getComponent(varName);
+					if (!component) continue;
 
-							component.componentObject['control'].setData(hotkeyControlVO);
-						}
-					}
+					var data:Object = hotkeys[linkage][varName];
+					var vo:Object = new HotkeyControlVO(data);
+
+					component.instance['control'].setData(vo);
 				}
 			}
 		}
 
-		private function collectModsData():Object
+		public function getModificationByLinkage(linkage:String):ModsSettingsWindowRenderer
 		{
-			var result:Object = new Object();
+			if (!linkage) return null;
 
-			for each (var mod:ModsSettingsComponent in modsArray)
+			for each (var modification:ModsSettingsWindowRenderer in modifications)
 			{
-				var linkage:String = mod.modLinkage;
-
-				if (configChangedLinkages.indexOf(linkage) != -1)
-				{
-					result[linkage] = mod.getConfigData();
-				}
+				if (linkage == modification.linkage) return modification;
 			}
 
-			return result;
+			return null;
 		}
 
-		private function syncModsData():void
+		private function collectModsSettings():Object
 		{
-			var config:Object = collectModsData();
+			var settings:Object = new Object();
 
-			sendModsData(App.utils.JSON.encode(config));
+			for each (var modification:ModsSettingsWindowRenderer in modifications)
+			{
+				var linkage:String = modification.linkage;
+
+				if (dirtyLinkages.indexOf(linkage) != -1)
+					settings[linkage] = modification.getSettingsSnapshot();
+			}
+
+			return settings;
 		}
 
-		private function handleModSettingsChanged(event:InteractiveEvent):void
+		private function syncModsSettings():void
 		{
-			configChanged = true;
+			var settings:Object = collectModsSettings();
+
+			sendModsData(App.utils.JSON.encode(settings));
+		}
+
+		private function handleModsSettingsChanged(event:InteractiveEvent):void
+		{
+			dirty = true;
 			footer.applyButton.enabled = true;
 
-			if (configChangedLinkages.indexOf(event.linkage) == -1)
-				configChangedLinkages.push(event.linkage);
+			if (dirtyLinkages.indexOf(event.linkage) == -1)
+				dirtyLinkages.push(event.linkage);
 		}
 
-		private function handleModSettingsButtonClick(event:InteractiveEvent):void
+		private function handleModsSettingsButtonClick(event:InteractiveEvent):void
 		{
 			buttonAction(event.linkage, event.varName, event.value);
 		}
 
-		private function handleModSettingsHotkeyAction(event:InteractiveEvent):void
+		private function handleModsSettingsHotkeyAction(event:InteractiveEvent):void
 		{
 			hotkeyAction(event.linkage, event.varName, event.value);
 		}
 
+		private function handleModsSettingsLinkClick(event:InteractiveEvent):void
+		{
+			linkAction(event.linkage, event.varName, event.value);
+		}
+
 		private function handleOkButtonClick(event:InteractiveEvent):void
 		{
-			if (configChanged)
-				syncModsData();
+			if (dirty)
+				syncModsSettings();
 
 			closeView();
 		}
 
 		private function handleApplyButtonClick(event:InteractiveEvent):void
 		{
-			syncModsData();
-			configChanged = false;
+			syncModsSettings();
+			dirty = false;
 			footer.applyButton.enabled = false;
 		}
 

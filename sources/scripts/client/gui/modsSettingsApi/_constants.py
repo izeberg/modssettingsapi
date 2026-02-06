@@ -34,6 +34,7 @@ COLUMNS = ('column1', 'column2')
 class COMPONENT_TYPE:
 	EMPTY = 'Empty'
 	LABEL = 'Label'
+	LINK = 'Link'
 	CHECKBOX = 'CheckBox'
 	RADIO_BUTTON_GROUP = 'RadioButtonGroup'
 	DROPDOWN = 'Dropdown'

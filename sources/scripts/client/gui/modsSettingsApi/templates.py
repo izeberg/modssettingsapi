@@ -40,7 +40,7 @@ def createControl(type, text, varName, value, tooltip=None, tooltipIcon=None, bu
 
 
 def generateOptions(entries):
-	""" Options generator for supported controls with tooltip generation support 
+	""" Options generator for supported controls with tooltip generation support
 	
 	:param entries: Option entries
 	:type list-like of str, dict or list-like, i.e. (('label', 'tooltip', ), ('label', ), 'label', { 'label': 'label5' }, { 'label': 'label6', 'tooltip': 'tooltip' })
@@ -171,6 +171,20 @@ def createLabel(text, tooltip=None, tooltipIcon=None):
 	:return: Label component
 	"""
 	return createBase(COMPONENT_TYPE.LABEL, text, tooltip, tooltipIcon)
+
+
+def createLink(text, id, url):
+	""" Helper to create Link component
+
+	:param text: Link text
+	:param id Link id
+	:param url: Link url
+
+	:return: Link component
+	"""
+	link = createBase(COMPONENT_TYPE.LINK, text)
+	link.update({'id': id, 'url': url})
+	return link
 
 
 def createCheckbox(text, varName, value, tooltip=None, tooltipIcon=None, button=None):

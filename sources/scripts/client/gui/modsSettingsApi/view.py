@@ -16,6 +16,8 @@ from .utils import byteify, getParentWindow
 
 __all__ = ('loadView', )
 
+openWebBrowser = BigWorld.wg_openWebBrowser if hasattr(BigWorld, 'wg_openWebBrowser') else BigWorld.openWebBrowser
+
 def loadView(api):
 	parent = getParentWindow()
 	app = ServicesLocator.appLoader.getDefLobbyApp()
@@ -47,6 +49,9 @@ class ModsSettingsApiWindowMeta(View):
 
 	def buttonAction(self, linkage, varName, value):
 		self._printOverrideError('buttonAction')
+
+	def linkAction(self, linkage, url):
+		self._printOverrideError('linkAction')
 
 	def closeView(self):
 		self._printOverrideError('closeView')
@@ -108,13 +113,17 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 	def buttonAction(self, linkage, varName, value):
 		self.api.onButtonClicked(linkage, varName, value)
 
+	def linkAction(self, linkage, id, url):
+		openWebBrowser(url)
+		self.api.onLinkClicked(linkage, id, url)
+
 	def closeView(self):
 		self.api.saveState()
 		self.destroy()
 
 	def __onHotkeysUpdated(self):
-		data = self.api.getAllHotkeys()
-		self.as_setHotkeysS(data)
+		hotkeys = self.api.getAllHotkeys()
+		self.as_setHotkeysS(hotkeys)
 
 
 def getViewSettings():

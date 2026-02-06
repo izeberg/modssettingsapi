@@ -127,8 +127,9 @@ class HotkeysController(object):
 					continue
 				for component in template[column]:
 					if component.get('type') == COMPONENT_TYPE.HOTKEY and 'varName' in component:
-						hotkeyData = self.getHotkeyData(linkage, component.get('varName'))
-						result[linkage][component['varName']] = hotkeyData
+						varName = component['varName']
+						hotkeyData = self.getHotkeyData(linkage, varName)
+						result[linkage][varName] = hotkeyData
 		return dict(result)
 
 # Backwards compatibility with mods that still use wrongly named class in imports

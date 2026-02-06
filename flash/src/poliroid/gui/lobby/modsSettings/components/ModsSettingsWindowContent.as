@@ -55,18 +55,18 @@ package poliroid.gui.lobby.modsSettings.components
 			background.height = int(appHeight - 200);
 		}
 
-		public function addMod(template:Object):ModsSettingsComponent
+		public function addModification(template:Object):ModsSettingsWindowRenderer
 		{
 			var linkage:String = template.linkage;
-			var renderer:ModsSettingsComponent = new ModsSettingsComponent(linkage);
+			var renderer:ModsSettingsWindowRenderer = new ModsSettingsWindowRenderer(linkage);
 			var targetPosition:int = 0;
 
-			renderer.setData(template);
+			renderer.setTemplate(template);
 			renderer.validateNow();
 
 			for (var i:int = 0; i < container.numChildren; i++)
 			{
-				var child:ModsSettingsComponent = container.getChildAt(i) as ModsSettingsComponent;
+				var child:ModsSettingsWindowRenderer = container.getChildAt(i) as ModsSettingsWindowRenderer;
 				var nextRendererPosition:int = child.y + child.height + Constants.MOD_MARGIN_BOTTOM;
 
 				targetPosition = Math.max(targetPosition, nextRendererPosition);

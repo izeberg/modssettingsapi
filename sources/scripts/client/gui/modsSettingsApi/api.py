@@ -35,9 +35,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 
 		self.onWindowOpened = Event.Event()
 		self.onWindowClosed = Event.Event()
-		# TODO: remove from public API
-		self.onHotkeysUpdated = Event.Event()
 		self.onButtonClicked = Event.Event()
+		self.onLinkClicked = Event.Event()
 		self.onSettingsChanged = Event.Event()
 
 		self.loadSettings()
@@ -106,7 +105,7 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 				del self.state['templates'][linkage]
 				del self.state['settings'][linkage]
 
-	def setModTemplate(self, linkage, template, callback, buttonHandler=None):
+	def setModTemplate(self, linkage, template, callback, buttonHandler=None, linkHandler=None):
 		try:
 			self.activeMods.add(linkage)
 			currentTemplate = self.state['templates'].get(linkage)
@@ -117,6 +116,8 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 			self.onSettingsChanged += callback
 			if buttonHandler is not None:
 				self.onButtonClicked += buttonHandler
+			if linkHandler is not None:
+				self.onLinkClicked += linkHandler
 			return self.getModSettings(linkage, self.state['templates'][linkage])
 		except Exception:
 			_logger.exception('Error occured when trying to register mod template!')
@@ -131,11 +132,13 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 				self.activeMods.add(linkage)
 		return result
 
-	def registerCallback(self, linkage, callback, buttonHandler=None):
+	def registerCallback(self, linkage, callback, buttonHandler=None, linkHandler=None):
 		self.activeMods.add(linkage)
 		self.onSettingsChanged += callback
 		if buttonHandler is not None:
 			self.onButtonClicked += buttonHandler
+		if linkHandler is not None:
+			self.onLinkClicked += linkHandler
 
 	def getModData(self, linkage, version, default):
 		storage = self.state['storage']

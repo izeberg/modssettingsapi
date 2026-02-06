@@ -8,9 +8,9 @@
 		public function ValueProxy(target:*, key:*)
 		{
 			if (!target)
-				throw new Error("[ModsSettings API] Target is missing!");
+				throw new Error("[ModsSettingsAPI] Target is missing!");
 			if (!key)
-				throw new Error("[ModsSettings API] Key is missing!");
+				throw new Error("[ModsSettingsAPI] Key is missing!");
 
 			_target = target;
 			_key = key;
