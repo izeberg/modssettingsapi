@@ -4,6 +4,7 @@ import logging
 import BigWorld
 import game
 import Keys
+import Event
 
 from ._constants import *
 from .utils import override, deprecated
@@ -15,15 +16,16 @@ class HotkeysController(object):
 	def __init__(self, api):
 		self.api = api
 		self.acceptingKey = None
+		self.onUpdated = Event.Event()
 		override(game, 'handleKeyEvent', self._game_handleKeyEvent)
 
 	def startAccept(self, linkage, varName):
 		self.acceptingKey = (linkage, varName, )
-		self.api.onHotkeysUpdated()
+		self.onUpdated()
 
 	def stopAccept(self):
 		self.acceptingKey = None
-		self.api.onHotkeysUpdated()
+		self.onUpdated()
 
 	def clear(self, linkage, varName):
 		self.api.state['settings'][linkage][varName] = []
@@ -71,7 +73,7 @@ class HotkeysController(object):
 							currentKeys.add(special)
 					linkage, varName = self.acceptingKey
 					self.api.state['settings'][linkage][varName] = list(currentKeys)
-					self.api.onHotkeysUpdated()
+					self.onUpdated()
 					return True
 				if event.isKeyUp():
 					self.stopAccept()
