@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMBitmapInstance libraryItemName="background_highlight.png">
+                <DOMBitmapInstance libraryItemName="_resources/background_highlight.png">
                   <matrix>
                     <Matrix tx="-80" ty="-95"/>
                   </matrix>

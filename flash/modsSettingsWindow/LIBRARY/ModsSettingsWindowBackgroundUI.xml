@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="background_panels" name="bgImage" selected="true">
+                <DOMSymbolInstance libraryItemName="_resources/background_panels" name="bgImage" selected="true">
                   <transformationPoint>
                     <Point x="490" y="157.5"/>
                   </transformationPoint>

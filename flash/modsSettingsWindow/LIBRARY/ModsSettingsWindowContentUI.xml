@@ -54,7 +54,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="background_content" name="background">
+                <DOMSymbolInstance libraryItemName="_resources/background_content" name="background">
                   <matrix>
                     <Matrix tx="-100"/>
                   </matrix>
