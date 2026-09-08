@@ -150,7 +150,7 @@ def byteify(data):
 	"""Encodes data with UTF-8
 	:param data: Data to encode"""
 	if isinstance(data, dict):
-		return {byteify(key): byteify(data) for key, data in data.iteritems()}
+		return {byteify(key): byteify(value) for key, value in data.iteritems()}
 	elif isinstance(data, list):
 		return [byteify(element) for element in data]
 	elif isinstance(data, unicode):

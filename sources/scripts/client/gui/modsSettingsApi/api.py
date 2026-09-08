@@ -6,6 +6,7 @@ import logging
 import BigWorld
 import cPickle
 import Event
+import base64
 
 from gui.modsListApi import g_modsListApi
 
@@ -95,8 +96,15 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		except Exception:
 			_logger.exception('Error occured when trying to recreate folder structure for state file!')
 		try:
-			with open(STATE_FILE_PATH, 'wb') as stateFile:
+			temporaryPath = STATE_FILE_PATH + '.tmp'
+			with open(temporaryPath, 'wb') as stateFile:
 				stateFile.write(jsonDump(self.state, True))
+				stateFile.flush()
+			try:
+				os.remove(STATE_FILE_PATH)
+			except OSError:
+				pass
+			os.rename(temporaryPath, STATE_FILE_PATH)
 		except Exception:
 			_logger.exception('Error occured when trying to save state!')
 
@@ -141,12 +149,17 @@ class ModsSettingsApi(IModsSettingsApiInternal):
 		storage = self.state['storage']
 		if linkage not in storage or storage[linkage]['version'] != version:
 			self.saveModData(linkage, version, default)
-		return cPickle.loads(storage[linkage]['data'])
+		data = storage[linkage]['data']
+		try:
+			data = base64.b64decode(data)
+		except (TypeError, ValueError):
+			pass
+		return cPickle.loads(data)
 
 	def saveModData(self, linkage, version, data):
 		self.state['storage'][linkage] = {
 			'version': version,
-			'data': cPickle.dumps(data, -1),
+			'data': base64.b64encode(cPickle.dumps(data, -1)),
 		}
 		self.saveState()
 
