@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.7.1
+
+- Fixed view settings registration for WoT 2.4.1
+
 ### 1.7.0
 - Added new component: StepSlider (same as graphics settings sliders)
 - Added ability to modify height for the Empty component to create bottom margins to precisely tweak component positions, especially when both columns are used
