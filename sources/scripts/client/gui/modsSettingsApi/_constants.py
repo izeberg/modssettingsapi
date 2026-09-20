@@ -3,16 +3,16 @@ import os
 import BigWorld
 import Keys
 from external_strings_utils import unicode_from_utf8
+from constants import CURRENT_REALM
 
 MOD_ID = 'modsSettingsApi'
 MOD_ICON = 'gui/maps/icons/modsSettingsApi/icon.png'
 
 USER_SETTINGS_PATH = os.path.join('mods', 'configs', 'modsSettingsApi.json')
 
-try:
-	_path_getter = BigWorld.wg_getPreferencesFilePath
-except AttributeError:
-	_path_getter = BigWorld.getPreferencesFilePath
+IS_WG = CURRENT_REALM != 'RU'
+
+_path_getter = BigWorld.wg_getPreferencesFilePath if IS_WG else BigWorld.getPreferencesFilePath
 _preferences_path = unicode_from_utf8(_path_getter())[1]
 STATE_FILE_PATH = os.path.normpath(os.path.join(os.path.dirname(_preferences_path), 'mods', 'modsettings.dat'))
 del _path_getter, _preferences_path

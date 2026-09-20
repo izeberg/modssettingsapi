@@ -19,7 +19,6 @@ import logging
 import BigWorld
 import ResMgr
 from skeletons.gui.impl import IGuiLoader
-from soft_exception import SoftException
 from constants import ARENA_GUI_TYPE
 from helpers import dependency
 
@@ -340,7 +339,19 @@ def jsonLoad(src, skipcomments=False):
 
 
 @dependency.replace_none_kwargs(guiLoader=IGuiLoader)
+def getEntitiesFactory(guiLoader=None):
+	"""Resolves the Scaleform entities factory
+	required to register Scaleform view settings"""
+	try:
+		from gui.Scaleform.framework import g_entitiesFactories
+		return g_entitiesFactories
+	except ImportError:
+		return guiLoader.entitiesFactory
+
+
+@dependency.replace_none_kwargs(guiLoader=IGuiLoader)
 def getParentWindow(guiLoader=None):
+	"""Resolves the main window to fix missing parent argument"""
 	if guiLoader and guiLoader.windowsManager:
 		return guiLoader.windowsManager.getMainWindow()
 	return None

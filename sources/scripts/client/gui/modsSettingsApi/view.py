@@ -1,6 +1,6 @@
 import json
 
-from gui.Scaleform.framework import ScopeTemplates, ViewSettings, g_entitiesFactories
+from gui.Scaleform.framework import ScopeTemplates, ViewSettings
 from gui.Scaleform.framework.entities.View import View
 from gui.Scaleform.framework.managers.loaders import SFViewLoadParams
 from gui.shared.personality import ServicesLocator
@@ -12,9 +12,10 @@ from helpers import dependency
 from ._constants import *
 from .l10n import l10n
 from .skeleton import IModsSettingsApiInternal
-from .utils import byteify, getParentWindow
+from .utils import byteify, getEntitiesFactory, getParentWindow
 
 __all__ = ('loadView', )
+
 
 def loadView(api):
 	parent = getParentWindow()
@@ -113,12 +114,14 @@ class ModsSettingsApiWindow(ModsSettingsApiWindowMeta):
 		self.destroy()
 
 	def __onHotkeysUpdated(self):
-		data = self.api.getAllHotkeys()
-		self.as_setHotkeysS(data)
+		hotkeys = self.api.getAllHotkeys()
+		self.as_setHotkeysS(hotkeys)
 
 
 def getViewSettings():
 	return (ViewSettings(VIEW_ALIAS, ModsSettingsApiWindow, VIEW_SWF, WindowLayer.OVERLAY, None, ScopeTemplates.GLOBAL_SCOPE), )
 
-for viewSettings in getViewSettings():
-	g_entitiesFactories.addSettings(viewSettings)
+entitiesFactory = getEntitiesFactory()
+viewSettings = getViewSettings()
+for entry in viewSettings:
+	entitiesFactory.addSettings(entry)
